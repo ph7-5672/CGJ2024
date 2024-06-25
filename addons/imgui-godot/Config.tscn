@@ -1,0 +1,39 @@
+[gd_scene load_steps=11 format=3 uid="uid://cyyuaskyox3eb"]
+
+[ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfigNode.gd" id="1_ac7kg"]
+[ext_resource type="FontFile" uid="uid://bevxifxmt1o0g" path="res://fonts/cour.ttf" id="2_ytsq6"]
+[ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiFont.gd" id="3_d0ebs"]
+[ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfig.gd" id="4_gwpw1"]
+[ext_resource type="FontFile" uid="uid://bkg6ugbar2jcl" path="res://fonts/STXINGKA.TTF" id="4_lxhcl"]
+[ext_resource type="FontFile" uid="uid://b2bkgejdy2jsc" path="res://fonts/FREESCPT.TTF" id="5_bm88w"]
+
+[sub_resource type="Resource" id="Resource_57h0m"]
+script = ExtResource("3_d0ebs")
+FontData = ExtResource("2_ytsq6")
+FontSize = 16
+Merge = true
+
+[sub_resource type="Resource" id="Resource_i4se3"]
+script = ExtResource("3_d0ebs")
+FontData = ExtResource("4_lxhcl")
+FontSize = 16
+Merge = true
+
+[sub_resource type="Resource" id="Resource_5dcmc"]
+script = ExtResource("3_d0ebs")
+FontData = ExtResource("5_bm88w")
+FontSize = 24
+Merge = true
+
+[sub_resource type="Resource" id="Resource_y5fq4"]
+script = ExtResource("4_gwpw1")
+Fonts = Array[ExtResource("3_d0ebs")]([SubResource("Resource_57h0m"), SubResource("Resource_i4se3"), SubResource("Resource_5dcmc")])
+AddDefaultFont = true
+Scale = 1.0
+IniFilename = "user://imgui.ini"
+Renderer = "RenderingDevice"
+Layer = 128
+
+[node name="Config" type="Node"]
+script = ExtResource("1_ac7kg")
+Config = SubResource("Resource_y5fq4")
