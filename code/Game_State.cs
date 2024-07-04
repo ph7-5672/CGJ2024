@@ -24,6 +24,12 @@ public partial class Game
 
     public State CurrentState { get; private set; }
 
+    void EnterTree_State()
+    {
+        StateEntered += EnterState;
+        StateExited += ExitState;
+    }
+
     public static void ChangeState(State state)
     {
         var current = Instance.CurrentState;

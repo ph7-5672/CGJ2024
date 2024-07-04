@@ -13,10 +13,10 @@ public partial class Game : Node2D
     public override void _EnterTree()
     {
         Instance = this;
+        ChangeState(State.Preloading);
 
-        StateEntered += EnterState;
-        StateExited += ExitState;
-
+        EnterTree_State();
+        EnterTree_UI();
     }
 
     void EnterState(State state)
