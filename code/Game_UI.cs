@@ -1,8 +1,9 @@
-﻿
+﻿/*
+ * ImGui，负责UI显示。
+ */
 using Godot;
 using ImGuiGodot;
 using ImGuiNET;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Cgj_2024.code;
 
@@ -29,7 +30,6 @@ public partial class Game
             ("紫", Colors.Purple)
             );
         ImGui.End();
-        ImGuiGD.Scale = 4;
     }
 
 

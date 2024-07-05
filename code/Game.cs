@@ -13,10 +13,11 @@ public partial class Game : Node2D
     public override void _EnterTree()
     {
         Instance = this;
-        ChangeState(State.Preloading);
-
+        // 各个模块的初始化。
         EnterTree_State();
         EnterTree_UI();
+
+        ChangeState(State.Preloading);
     }
 
     void EnterState(State state)
