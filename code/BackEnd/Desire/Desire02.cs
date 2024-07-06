@@ -5,7 +5,8 @@
 	/// </summary>
 	public class Desire02 : Desire
 	{
-		public Desire02()
+		public Desire02(Tribe tribe)
+			: base(tribe)
 		{
 			// 随机选择一个其他部落作为比较目标
 		}
@@ -18,7 +19,14 @@
 			// 否则检查部落总财宝是否大于比较目标部落的总财宝
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }

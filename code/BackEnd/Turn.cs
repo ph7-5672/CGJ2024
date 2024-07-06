@@ -50,7 +50,9 @@ namespace Cgj_2024.code.BackEnd
                 }
                 else
                 {
+                    CurrentRound.End();
                     CurrentRound = AIRound;
+                    CurrentRound.Begin();
                 }
             }
 

@@ -88,7 +88,7 @@ public partial class Game
             ImGui.SameLine(180f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 18f));
-            var icon = tribe.IsMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
+            var icon = tribe.CanBeMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
             var rect = Image(icon, icon.GetSize() * uiScale);
 
             if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))

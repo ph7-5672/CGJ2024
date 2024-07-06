@@ -5,13 +5,25 @@
 	/// </summary>
 	internal class Desire09 : Desire
 	{
+		public Desire09(Tribe tribe)
+			: base(tribe)
+		{
+		}
+
 		public override bool IsSatisefied()
 		{
 			// 如果当前回合是游戏的第一回合，则返回true
 			// 否则获取上一回合人类方的行动信息，检查哥布林方防御是否成功
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }

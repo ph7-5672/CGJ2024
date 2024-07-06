@@ -5,7 +5,8 @@
 	/// </summary>
 	public class Desire04 : Desire
 	{
-		public Desire04()
+		public Desire04(Tribe tribe)
+			: base(tribe)
 		{
 			// 随机选择一个其他部落作为比较目标
 		}
@@ -18,7 +19,14 @@
 			// 否则检查部落领地数量是否大于比较目标部落的领地数量
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }
