@@ -67,6 +67,8 @@ namespace Cgj_2024.code.BackEnd
         public World World { get; private set; }
         public Faction CurrentContorl { get; private set; }
 
+        public bool BattleResult { get; set; }
+
         public Territory TargetedTerritory { get; set; }
         public IList<Tribe> PlayerMobilizedTribes { get; set; }
         public IList<Tribe> AIMobilizedTribes { get; set; }

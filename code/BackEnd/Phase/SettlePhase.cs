@@ -13,7 +13,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             base.Begin();
 
-            Turn.BattleResult = Turn.CurrentRound.PlayerMobilizedTribes.Sum(t => t.Troops)
+            Turn.CurrentRound.BattleResult = Turn.CurrentRound.PlayerMobilizedTribes.Sum(t => t.Troops)
                 > Turn.CurrentRound.AIMobilizedTribes.Sum(t => t.Troops);
         }
 
@@ -23,11 +23,11 @@ namespace Cgj_2024.code.BackEnd.Phase
 
             if (IsPlayerContorl)
             {
-                HandleAttack(Turn.BattleResult);
+                HandleAttack(Turn.CurrentRound.BattleResult);
             }
             else
             {
-                HandleDefence(Turn.BattleResult);
+                HandleDefence(Turn.CurrentRound.BattleResult);
             }
         }
 

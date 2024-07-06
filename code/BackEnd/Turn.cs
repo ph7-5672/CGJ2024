@@ -69,8 +69,6 @@ namespace Cgj_2024.code.BackEnd
 
         public bool IsPlayerContorl => CurrentRound == PlayerRound;
 
-        public bool BattleResult { get; set; }
-
         public Tribe TerritoryRewaredTribeHuman { get; set; }
 
         public Tribe TerritoryRewaredTribeGoblin { get; set; }

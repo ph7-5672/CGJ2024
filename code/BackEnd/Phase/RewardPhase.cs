@@ -14,7 +14,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             Treasure = Turn.CurrentRound.TargetedTerritory.Treasure;
             if (!IsPlayerContorl)
             {
-                HandleDefence(Turn.BattleResult);
+                HandleDefence(Turn.CurrentRound.BattleResult);
             }
         }
 
