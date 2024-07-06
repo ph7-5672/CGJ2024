@@ -25,6 +25,8 @@ namespace Cgj_2024.code.BackEnd
 
         public bool BattleResult {  get; set; }
 
-        public Tribe RewaredTribe { get; set; }
+        public Tribe TerritoryRewaredTribe { get; set; }
+
+        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; }
     }
 }

@@ -12,6 +12,10 @@ namespace Cgj_2024.code.BackEnd.Phase
             {
                 AIMobilize();
             }
+            else
+            {
+                AIMobilizedTribes = [Turn.TargetedTerritory.Tribe];
+            }
         }
 
         public override void End()

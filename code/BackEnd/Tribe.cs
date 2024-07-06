@@ -29,11 +29,18 @@ namespace Cgj_2024.code.BackEnd
             Desires.Add(Desire.New(this));
         }
 
+        public void RewardTreasure(int treasure)
+        {
+            Treasure += treasure;
+        }
+
         public string Name { get; set; }
         public List<Desire> Desires { get; protected set; } = [];
         public List<Territory> Territory { get; set; } = [];
 
         public int Troops => Territory.Sum(t => t.Troops);
+
+        public int Treasure { get; protected set; }
 
         public bool IsMobilized { get; protected set; } = false;
         public bool CanBeMobilized => Desires.Count == 0 || Desires.TrueForAll(d => d.IsSatisefied());
