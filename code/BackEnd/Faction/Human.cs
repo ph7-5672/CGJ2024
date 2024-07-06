@@ -8,5 +8,8 @@ namespace Cgj_2024.code.BackEnd.Factions
 {
     public class Human : Faction
     {
+        public Human(World world) : base(world)
+        {
+        }
     }
 }

@@ -14,11 +14,16 @@ namespace Cgj_2024.code.BackEnd
         [Export] public int WorldSize;
 
         [ExportGroup("Territory")]
-        [Export] public int TreasureMin;
-        [Export] public int TreasureMax;
+        [Export] public int TreasureMin = 1;
+        [Export] public int TreasureMax = 5;
 
-        [Export] public int TroopMin;
-        [Export] public int TroopMax;
+        [Export] public int TroopMin = 1;
+        [Export] public int TroopMax = 5;
+
+        [Export] public int SizeMin = 1;
+        [Export] public int SizeMax = 5;
+
+        [Export] public float TribeSplitChance = 0.4f;
 
 
         public override void _EnterTree()

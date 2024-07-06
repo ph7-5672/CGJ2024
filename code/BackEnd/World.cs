@@ -11,8 +11,8 @@ namespace Cgj_2024.code.BackEnd
             Rng = new RandomNumberGenerator();
 
             Territory = [];
-            Goblin = new Goblin();
-            Human = new Human();
+            Goblin = new Goblin(this);
+            Human = new Human(this);
         }
 
         public void Initialzize(Parameters parameters)
@@ -24,7 +24,8 @@ namespace Cgj_2024.code.BackEnd
                 var territory = new Territory
                 {
                     Troops = Rng.RandiRange(parameters.TroopMin, parameters.TroopMax),
-                    Treasure = Rng.RandiRange(parameters.TreasureMin, parameters.TreasureMax)
+                    Treasure = Rng.RandiRange(parameters.TreasureMin, parameters.TreasureMax),
+                    Size = Rng.RandiRange(parameters.SizeMin, parameters.SizeMax),
                 };
                 Territory.Add(territory);
             }
@@ -70,6 +71,19 @@ namespace Cgj_2024.code.BackEnd
             CurrentPhase.Begin();
         }
 
+        public WorldState IsWin()
+        {
+            if (Goblin.Tribes.Count == 0)
+            {
+                return WorldState.Lose;
+            }
+            else if (Human.Tribes.Count == 0)
+            {
+                return WorldState.Win;
+            }
+            return WorldState.Ongoing;
+        }
+
         public RandomNumberGenerator Rng { get; private set; }
 
         public List<Territory> Territory { get; private set; }
@@ -96,5 +110,11 @@ namespace Cgj_2024.code.BackEnd
         Settle,
         Reward,
         End,
+    }
+    public enum WorldState
+    {
+        Ongoing,
+        Win,
+        Lose,
     }
 }

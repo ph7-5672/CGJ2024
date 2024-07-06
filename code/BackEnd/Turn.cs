@@ -24,5 +24,7 @@ namespace Cgj_2024.code.BackEnd
         public bool IsPlayerContorl { get; private set; }
 
         public bool BattleResult {  get; set; }
+
+        public Tribe RewaredTribe { get; set; }
     }
 }

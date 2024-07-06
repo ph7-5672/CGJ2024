@@ -31,7 +31,17 @@ namespace Cgj_2024.code.BackEnd.Phase
             }
         }
 
-        void HandleAttack(bool win) { }
+        void HandleAttack(bool win) {
+            if (win)
+            {
+                var territory = Turn.TargetedTerritory;
+                var tribe = territory.Tribe;
+                if (tribe.Territory.Count == 1)
+                {
+                    World.Human.Tribes.Remove(tribe);
+                }
+            }
+        }
         void HandleDefence(bool win) {
             if (!win)
             {
@@ -41,8 +51,6 @@ namespace Cgj_2024.code.BackEnd.Phase
                 {
                     World.Goblin.Tribes.Remove(tribe);
                 }
-
-
             }
         }
     }
