@@ -11,6 +11,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         public override void Begin()
         {
             base.Begin();
+            Treasure = Turn.TargetedTerritory.Treasure;
             if (!IsPlayerContorl)
             {
                 HandleDefence(Turn.BattleResult);
@@ -21,7 +22,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             if (IsPlayerContorl)
             {
-                RewaredTribe?.MakeADesire();
+                TerritoryRewaredTribe?.MakeADesire();
             }
             base.End();
         }
@@ -31,10 +32,13 @@ namespace Cgj_2024.code.BackEnd.Phase
             if (!win)
             {
                 World.Human.Tribes.Sort((t1, t2) => t1.Territory.Count.CompareTo(t2.Territory.Count));
-                Turn.RewaredTribe = World.Human.Tribes.First();
+                Turn.TerritoryRewaredTribe = World.Human.Tribes.First();
             }
         }
 
-        public Tribe RewaredTribe { get; set; }
+        public Tribe TerritoryRewaredTribe { get; set; }
+
+        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; }
+        public int Treasure { get; private set; }
     }
 }
