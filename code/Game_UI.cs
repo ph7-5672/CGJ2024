@@ -83,7 +83,7 @@ public partial class Game
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
-            Text(tribe.Name ?? "部落", Colors.AliceBlue);
+            Text($"{tribe.Name}部落", Colors.AliceBlue);
             ImGui.EndGroup();
             ImGui.SameLine(180f);
             ImGui.BeginGroup();
@@ -184,7 +184,7 @@ public partial class Game
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
-            Text(tribe.Name ?? "领主", Colors.AliceBlue);
+            Text($"{tribe.Name}大人", Colors.AliceBlue);
             ImGui.EndGroup();
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
