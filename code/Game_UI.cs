@@ -64,7 +64,6 @@ public partial class Game
         ImGui.Begin("##哥布林领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
         {
             Image(goblinBg, size);
-
         }
         ImGui.End();
 
@@ -119,10 +118,9 @@ public partial class Game
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
-                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 ImGui.Text(territory.Name ?? "领地");
                 ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.SameLine(0f, 20f);
                 ImGui.Text($"财力：{territory.Treasure}");
                 ImGui.EndGroup();
             }
@@ -191,10 +189,9 @@ public partial class Game
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
-                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 ImGui.Text(territory.Name ?? "领地");
                 ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.SameLine(0f, 20f);
                 ImGui.Text($"财力：{territory.Treasure}");
                 ImGui.EndGroup();
             }
@@ -213,6 +210,8 @@ public partial class Game
     /// </summary>
     void Interact_UI()
     {
+        
+        
         /*var windowSize = new Vector2(100f, );
         ImGui.SetNextWindowPos();
         ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
@@ -273,9 +272,28 @@ public partial class Game
         { 
             size = texture.GetSize();
         }
-        var id = ImGuiGD.BindTexture(texture);
-        Widgets.Image(texture, size.ToSystemNumerics());
+        var resizedTexture = ResizeTextureNearest(texture, (int)size.X, (int)size.Y);
+        Widgets.Image(resizedTexture, size.ToSystemNumerics());
         return new Rect2(pos.ToGodotNumerics(), size);
+    }
+
+
+    static Dictionary<Rid, Texture2D> resizeMap = new();
+
+    public static Texture2D ResizeTextureNearest(Texture2D source, int width, int height)
+    {
+        var rid = source.GetRid();
+        if (resizeMap.TryGetValue(rid, out var resizedTexture))
+        {
+            return resizedTexture;
+        }
+
+        // 创建一个新的Image对象，用于存储放大后的图像数据  
+        var image = source.GetImage();
+        image.Resize(width, height, Godot.Image.Interpolation.Nearest);
+        resizedTexture = ImageTexture.CreateFromImage(image);
+        resizeMap.Add(rid, resizedTexture);
+        return resizedTexture;
     }
 
 
