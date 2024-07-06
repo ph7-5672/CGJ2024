@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Cgj 2024"
-run/main_scene="res://scene/WorldTesting.tscn"
+run/main_scene="res://scene/main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,10 +21,8 @@ ImGuiRoot="*res://addons/imgui-godot/data/ImGuiRoot.tscn"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/stretch/mode="canvas_items"
-window/stretch/aspect="ignore"
+window/size/viewport_width=1600
+window/size/viewport_height=1200
 window/vsync/vsync_mode=0
 
 [dotnet]
