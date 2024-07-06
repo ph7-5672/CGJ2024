@@ -16,7 +16,14 @@
 			// 否则检查部落领地数量是否为最多
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }

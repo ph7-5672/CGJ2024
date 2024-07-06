@@ -16,7 +16,14 @@
 			// 否则获取上一回合人类方的行动信息，检查哥布林方防御是否成功
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }

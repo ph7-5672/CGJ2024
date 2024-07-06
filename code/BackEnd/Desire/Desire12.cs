@@ -16,7 +16,14 @@
 			// 否则获取上一回合人类方的行动信息，检查其他部落的领地受到进攻
 			// ...
 
-			return base.IsSatisefied();
+			var result = false;
+			var lastTurn = Tribe.Faction.World.LastTurn;
+			if (lastTurn == null)
+			{
+				result = true;
+			}
+
+			return result;
 		}
 	}
 }
