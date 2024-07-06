@@ -24,7 +24,7 @@
 			}
 			else
 			{
-				result = !Tribe.Territory.Contains(lastTurn.TargetedTerritory);
+				result = !Tribe.Territory.Contains(lastTurn.AIRound.TargetedTerritory);
 			}
 
 			return result;

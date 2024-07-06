@@ -67,6 +67,10 @@ namespace Cgj_2024.code.BackEnd
         public World World { get; private set; }
         public Faction CurrentContorl { get; private set; }
 
+        public Territory TargetedTerritory { get; set; }
+        public IList<Tribe> PlayerMobilizedTribes { get; set; }
+        public IList<Tribe> AIMobilizedTribes { get; set; }
+
         public PhaseType PhaseType { get; private set; }
         public RoundPhase CurrentPhase { get; private set; }
     }

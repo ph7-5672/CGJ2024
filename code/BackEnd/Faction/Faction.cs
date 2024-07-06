@@ -29,10 +29,6 @@ namespace Cgj_2024.code.BackEnd.Factions
         public virtual void EndTurn()
         {
             GD.Print($"{this} End Turn");
-            foreach (var tribe in Tribes)
-            {
-                tribe.EndTurn();
-            }
         }
 
         public virtual void Initialze(IList<Territory> territories)

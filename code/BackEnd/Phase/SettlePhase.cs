@@ -13,8 +13,8 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             base.Begin();
 
-            Turn.BattleResult = Turn.PlayerMobilizedTribes.Sum(t => t.Troops)
-                > Turn.AIMobilizedTribes.Sum(t => t.Troops);
+            Turn.BattleResult = Turn.CurrentRound.PlayerMobilizedTribes.Sum(t => t.Troops)
+                > Turn.CurrentRound.AIMobilizedTribes.Sum(t => t.Troops);
         }
 
         public override void End()
@@ -34,7 +34,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         void HandleAttack(bool win) {
             if (win)
             {
-                var territory = Turn.TargetedTerritory;
+                var territory = Turn.CurrentRound.TargetedTerritory;
                 var tribe = territory.Tribe;
                 if (tribe.Territory.Count == 1)
                 {
@@ -45,7 +45,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         void HandleDefence(bool win) {
             if (!win)
             {
-                var territory = Turn.TargetedTerritory;
+                var territory = Turn.CurrentRound.TargetedTerritory;
                 var tribe = territory.Tribe;
                 if(tribe.Territory.Count == 1)
                 {
