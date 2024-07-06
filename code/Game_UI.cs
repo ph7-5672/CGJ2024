@@ -40,7 +40,7 @@ public partial class Game
     [Export]
     Texture2D attackButtonTexture;
 
-    List<int> selectedGoblinIndices;
+    List<int> selectedGoblinIndices = new List<int>();
 
     int selectedHumanIndex = -1;
 
@@ -105,8 +105,18 @@ public partial class Game
             {
                 ImGui.SetNextWindowBgAlpha(0);
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
+                // 每行最多显示11个等距像素字符
                 ImGui.BeginTooltip();
                 Image(goblinTipsBg, goblinTipsBg.GetSize() * uiScale);
+                ImGui.SameLine(35f);
+                ImGui.BeginGroup();
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 20f));
+				Text($"欲望{(tribe.CanBeMobilized ? "已" : "未")}被满足", Colors.Black);
+                foreach (var desire in tribe.Desires)
+                {
+                    Text("欲望", Colors.Black);
+                }
+				ImGui.EndGroup();
                 ImGui.EndTooltip();
                 ImGui.PopStyleVar();
             }
