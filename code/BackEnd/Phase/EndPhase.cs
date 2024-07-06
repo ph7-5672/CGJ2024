@@ -8,14 +8,47 @@ namespace Cgj_2024.code.BackEnd.Phase
 {
     public class EndPhase : TurnPhase
     {
-        public override void Begin(bool isPlayerContorl)
+        public override void Begin()
         {
-            base.Begin(isPlayerContorl);
+            base.Begin();
+
+            if (IsPlayerContorl)
+            {
+                SplitTribe(World.Goblin.Tribes);
+            }
+            else
+            {
+                SplitTribe(World.Human.Tribes);
+            }
         }
 
-        public override void End(bool isPlayerContorl)
+        public override void End()
         {
-            base.End(isPlayerContorl);
+            base.End();
+        }
+
+        void SplitTribe(IList<Tribe> list)
+        {
+            var newList = new List<Tribe>();
+            foreach (Tribe t in list)
+            {
+                if (t.Territory.Count > 1
+                    && World.Rng.Randf() > Parameters.Instance.TribeSplitChance)
+                {
+                    var newSize = t.Territory.Count >> 1;
+                    var tribe = new Tribe(World, t.Faction);
+
+                    var territory = t.Territory;
+                    t.Territory = territory[..newSize];
+                    tribe.Territory = territory[newSize..];
+                    newList.Add(tribe);
+                }
+            }
+
+            foreach (var item in newList)
+            {
+                list.Add(item);
+            }
         }
     }
 }

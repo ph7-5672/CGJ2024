@@ -1,21 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Cgj_2024.code.BackEnd.Phase
 {
     public class MobilisePhase : TurnPhase
     {
-        public override void Begin(bool isPlayerContorl)
+        public override void Begin()
         {
-            base.Begin(isPlayerContorl);
+            base.Begin();
+
+            if (!IsPlayerContorl)
+            {
+                AIMobilize();
+            }
+            else
+            {
+                AIMobilizedTribes = [Turn.TargetedTerritory.Tribe];
+            }
         }
 
-        public override void End(bool isPlayerContorl)
+        public override void End()
         {
-            base.End(isPlayerContorl);
+            base.End();
+            Turn.AIMobilizedTribes = AIMobilizedTribes;
+            Turn.PlayerMobilizedTribes = PlayerMobilizedTribes;
         }
+
+        void AIMobilize()
+        {
+            var tribes = World.Human.Tribes;
+            tribes.Sort((t1, t2) => t1.Troops.CompareTo(t2.Troops));
+            int tot = 0;
+            for (int i = 0;
+                i < tribes.Count && tot < Turn.TargetedTerritory.Troops;
+                i++)
+            {
+                tot += tribes[i].Troops;
+                AIMobilizedTribes.Add(tribes[i]);
+            }
+        }
+
+        public List<Tribe> PlayerMobilizedTribes = [];
+        public List<Tribe> AIMobilizedTribes = [];
     }
 }

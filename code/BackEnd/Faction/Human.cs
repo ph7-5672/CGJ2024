@@ -8,13 +8,8 @@ namespace Cgj_2024.code.BackEnd.Factions
 {
     public class Human : Faction
     {
-        public override void BeginTurn(bool emptyWish)
+        public Human(World world) : base(world)
         {
-            base.BeginTurn(emptyWish);
-            foreach (var tribe in Tribes)
-            {
-                tribe.BeginTurn(true);
-            }
         }
     }
 }

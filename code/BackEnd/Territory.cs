@@ -12,6 +12,7 @@ namespace Cgj_2024.code.BackEnd
         public Tribe Tribe { get; set; }
 
         public int Treasure {  get; set; }
-        public int Troops {  get; set; }
+        public int Troops { get; set; }
+        public int Size { get; set; }
     }
 }
