@@ -5,6 +5,7 @@ using Godot;
 using Godot.Collections;
 using ImGuiGodot;
 using ImGuiNET;
+using System;
 
 namespace Cgj_2024.code;
 
@@ -93,9 +94,7 @@ public partial class Game
             if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
             {
                 ImGui.SetNextWindowBgAlpha(0);
-                ImGui.GetWindowDrawList().AddCallback(0, 0);
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
-                
                 ImGui.BeginTooltip();
                 Image(goblinTipsBg, goblinTipsBg.GetSize() * uiScale);
                 ImGui.EndTooltip();
@@ -219,8 +218,6 @@ public partial class Game
         ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
         ImGui.Button("准备进攻！");
         ImGui.End();*/
-
-       
         
     }
 
@@ -277,7 +274,7 @@ public partial class Game
             size = texture.GetSize();
         }
         var id = ImGuiGD.BindTexture(texture);
-        ImGui.Image(id, size.ToSystemNumerics());
+        Widgets.Image(texture, size.ToSystemNumerics());
         return new Rect2(pos.ToGodotNumerics(), size);
     }
 
