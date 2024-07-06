@@ -38,7 +38,7 @@ public partial class Game : Node2D
         base._Process(delta);
         Process_UI(delta);
 
-        TurnPhase = World.PhaseType;
+        TurnPhase = World.CurrentTurn.CurrentRound.PhaseType;
         IsPlayerControl = World.IsPlayerControl;
     }
 
