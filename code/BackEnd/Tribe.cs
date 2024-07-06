@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cgj_2024.code.BackEnd.Factions;
 using Godot;
@@ -27,7 +28,52 @@ namespace Cgj_2024.code.BackEnd
                 Territory.Add(territory);
                 territory.Tribe = this;
             }
+
+            if (Faction is Goblin)
+            {
+                Name = GenerateRandomGoblinTribeName();
+				while (usedGoblinTribeNames.Contains(Name))
+				{
+					Name = GenerateRandomGoblinTribeName();
+				}
+
+				usedGoblinTribeNames.Add(Name);
+			}
+            else if (Faction is Human)
+            {
+                Name = GenerateRandomHumanLordName();
+                while (usedHumanLordNames.Contains(Name))
+                {
+					Name = GenerateRandomHumanLordName();
+				}
+
+                usedHumanLordNames.Add(Name);
+            }
+
+            GD.Print(Name);
         }
+
+        string GenerateRandomGoblinTribeName()
+        {
+            var rand = new Random();
+            return $"{goblinTribeNamePrefixes[rand.Next(goblinTribeNamePrefixes.Length)]}{goblinTribeNameSuffixes[rand.Next(goblinTribeNameSuffixes.Length)]}";
+		}
+
+		string[] goblinTribeNamePrefixes = ["毒", "恶", "尖", "大", "滑", "泥", "臭", "绿", "小", "邪"];
+        string[] goblinTribeNameSuffixes = ["骨", "锤", "狼", "棒", "蛇", "猪", "粪", "矛", "皮", "头"];
+
+		static HashSet<string> usedGoblinTribeNames = new HashSet<string>();
+
+		string GenerateRandomHumanLordName()
+        {
+            var rand = new Random();
+			return $"{humanLordNamePrefixes[rand.Next(humanLordNamePrefixes.Length)]}{humanLordNameSuffixes[rand.Next(humanLordNameSuffixes.Length)]}";
+		}
+
+		string[] humanLordNamePrefixes = ["乔", "魏", "佩", "汤", "杰", "伊", "豪", "杜", "弗", "林"];
+		string[] humanLordNameSuffixes = ["治", "廉", "琪", "姆", "克", "森", "斯", "宾", "浪", "肯"];
+
+        static HashSet<string> usedHumanLordNames = new HashSet<string>();
 
 		public virtual void BeginTurn(bool emptyWish)
         {
