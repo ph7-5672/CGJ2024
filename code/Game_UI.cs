@@ -113,10 +113,10 @@ public partial class Game
                 ImGui.SameLine(35f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 20f));
-				Text($"欲望{(tribe.CanBeMobilized ? "已" : "未")}被满足", Colors.Black);
+				Text($"欲望{(tribe.CanBeMobilized ? "已" : "未")}被满足", Colors.Black, 11);
                 foreach (var desire in tribe.Desires)
                 {
-                    Text("欲望", Colors.Black);
+                    Text($"- {desire.Description}", Colors.Black, 11);
                 }
 				ImGui.EndGroup();
                 ImGui.EndTooltip();

@@ -35,5 +35,6 @@ namespace Cgj_2024.code.BackEnd
 
 		public virtual bool IsSatisefied() => false;
 		public Tribe Tribe { get; }
+		public abstract string Description { get; }
 	}
 }

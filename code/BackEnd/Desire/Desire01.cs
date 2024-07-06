@@ -31,5 +31,7 @@ namespace Cgj_2024.code.BackEnd
 
 			return result;
 		}
+
+		public override string Description => "领地总财宝最多";
 	}
 }
