@@ -15,7 +15,7 @@ namespace Cgj_2024.code.BackEnd.Factions
         }
         public virtual void BeginTurn(bool EmptyWish = false)
         {
-            GD.Print($"{this} Begin");
+            GD.Print($"{this} Begin Turn");
             foreach (var tribe in Tribes)
             {
                 tribe.BeginTurn(EmptyWish);
@@ -24,7 +24,7 @@ namespace Cgj_2024.code.BackEnd.Factions
 
         public virtual void EndTurn()
         {
-            GD.Print($"{this} End");
+            GD.Print($"{this} End Turn");
             foreach (var tribe in Tribes)
             {
                 tribe.EndTurn();

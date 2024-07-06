@@ -2,11 +2,11 @@
 
 namespace Cgj_2024.code.BackEnd.Phase
 {
-    public abstract class TurnPhase
+    public abstract class RoundPhase
     {
-        public static TurnPhase New(PhaseType turnPhase, World world, Turn turn)
+        public static RoundPhase New(PhaseType turnPhase, World world, Turn turn)
         {
-            TurnPhase phase = null;
+            RoundPhase phase = null;
             switch (turnPhase)
             {
                 case PhaseType.Begin:
