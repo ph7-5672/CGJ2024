@@ -23,7 +23,7 @@
 			}
 			else
 			{
-				result = Tribe == lastTurn.TerritoryRewaredTribe;
+				result = Tribe == lastTurn.TerritoryRewaredTribeGoblin;
 			}
 
 			return result;
