@@ -6,6 +6,7 @@ using Godot;
 using Godot.Collections;
 using ImGuiGodot;
 using ImGuiNET;
+using System.Collections.Generic;
 
 namespace Cgj_2024.code;
 
@@ -39,6 +40,11 @@ public partial class Game
     [Export]
     Texture2D attackButtonTexture;
 
+    List<int> selectedGoblinIndices;
+
+    int selectedHumanIndex = -1;
+
+
     // TODO 领地分配 和 金币分配
     void EnterTree_UI()
     {
@@ -51,7 +57,10 @@ public partial class Game
     /// </summary>
     void GoblinTerritories_UI()
     {
-        var visible = World.CurrentPhase is not SelectTerritoryPhase;
+        var phaseType = World.CurrentTurn.PlayerRound.PhaseType;
+        var visible = phaseType == BackEnd.PhaseType.Begin
+                   || phaseType == BackEnd.PhaseType.Mobilise;
+
 
         var pos = new System.Numerics.Vector2(10f, 10f);
         var size = goblinBg.GetSize() * uiScale;
@@ -82,7 +91,7 @@ public partial class Game
             Image(title, title.GetSize() * uiScale);
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
-            ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
+            ImGui.Dummy(new System.Numerics.Vector2(0f, 28f));
             Text($"{tribe.Name}部落", Colors.AliceBlue);
             ImGui.EndGroup();
             ImGui.SameLine(180f);
@@ -151,6 +160,10 @@ public partial class Game
     /// </summary>
     void HumanTerritories_UI()
     {
+        var phaseType = World.CurrentTurn.PlayerRound.PhaseType;
+        var visible = phaseType == BackEnd.PhaseType.Begin
+                   || phaseType == BackEnd.PhaseType.SelectEnemyTerritory;
+
         var displaySize = DisplayServer.WindowGetSize();
         var offset = new System.Numerics.Vector2(10f, 10f);
         var size = goblinBg.GetSize() * uiScale;
@@ -175,12 +188,14 @@ public partial class Game
         ImGui.SetNextWindowPos(pos + padding);
 
         ImGui.Begin("##人类领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
+        
         for (int i = 0; i < World.Human.Tribes.Count; i++)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Human.Tribes[i];
             var title = humanTibreRowsBg[0];
-            Image(title, title.GetSize() * uiScale);
+            var rect = Image(title, title.GetSize() * uiScale);
+            rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
@@ -189,18 +204,27 @@ public partial class Game
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
                 var territory = tribe.Territory[j];
+                float height;
                 if (j == tribe.Territory.Count - 1)
                 {
-                    Image(humanTibreRowsBg[3], title.GetSize() * uiScale);
+                    height = Image(humanTibreRowsBg[3], title.GetSize() * uiScale).Size.Y;
                 }
                 else if (j == 0)
                 {
-                    Image(humanTibreRowsBg[1], title.GetSize() * uiScale);
+                    height = Image(humanTibreRowsBg[1], title.GetSize() * uiScale).Size.Y;
                 }
                 else
                 {
-                    Image(humanTibreRowsBg[2], title.GetSize() * uiScale);
+                    height = Image(humanTibreRowsBg[2], title.GetSize() * uiScale).Size.Y;
                 }
+                rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
+                if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory 
+                    && Input.IsMouseButtonPressed(MouseButton.Left) 
+                    && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
+                {
+                    selectedHumanIndex = i;
+                }
+
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
@@ -211,61 +235,27 @@ public partial class Game
             }
             ImGui.PopStyleVar();
             ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
+
+            if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory && selectedHumanIndex != i)
+            {
+                var drawList = ImGui.GetWindowDrawList();
+                drawList.AddRectFilled(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
+            }
         }
 
         ImGui.End();
         ImGui.PopStyleVar(2);
-    }
 
-
-
-    /// <summary>
-    /// 游戏交互区域。
-    /// </summary>
-    void Interact_UI()
-    {
-        /*var windowSize = new Vector2(320f, 480f) * uiScale;
-
-        ImGui.SetNextWindowPos(ScreenCenterPos(windowSize).ToSystemNumerics());
-        ImGui.SetNextWindowSize(windowSize.ToSystemNumerics());
-        ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
-        var buttonSize = new Vector2(100f, 40f);
-        var buttonPos = WindowCenterPos(buttonSize).ToSystemNumerics();
-        ImGui.Dummy(new System.Numerics.Vector2(0f, buttonPos.Y));
-        ImGui.Dummy(new System.Numerics.Vector2(buttonPos.X, 0f));
-        ImGui.SameLine(0f, 0f);
-        if (Widgets.ImageButton("准备进攻", attackButtonTexture, buttonSize.ToSystemNumerics()))
+        // 遮罩
+        if (visible)
         {
-            World.NextPhase();
+            return;
         }
-        var childSize = windowSize / 3;
-        ImGui.SetNextWindowPos(ScreenCenterPos(childSize).ToSystemNumerics() + new System.Numerics.Vector2(0f, 320f));
-        ImGui.BeginChild("##提示信息", childSize.ToSystemNumerics());
-        if (World.CurrentPhase is BeginPhase)
-        {
-            ImGui.Text("轮到你的回合");
-        }
-        if (World.CurrentPhase is SelectTerritoryPhase)
-        {
-            ImGui.Text("请选择要进攻的人类领地。");
-        }
-        if (World.CurrentPhase is MobilisePhase)
-        {
-            ImGui.Text("请选择要动员的部落。");
-        }
-
-        ImGui.EndChild();
-        ImGui.End();*/
-    }
-
-
-
-    /// <summary>
-    /// 领地分配
-    /// </summary>    
-    void DispenseTerritory_UI()
-    { 
-
+        ImGui.SetNextWindowBgAlpha(0.5f);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics());
+        ImGui.SetNextWindowPos(pos);
+        ImGui.Begin("##人类列表遮罩", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
+        ImGui.End();
     }
 
 
@@ -273,7 +263,6 @@ public partial class Game
     {
         GoblinTerritories_UI();
         HumanTerritories_UI();
-        Interact_UI();
     }
 
 
@@ -315,8 +304,7 @@ public partial class Game
         return new Rect2(pos.ToGodotNumerics(), size);
     }
 
-
-    static Dictionary<Rid, Texture2D> resizeMap = new();
+    static System.Collections.Generic.Dictionary<Rid, Texture2D> resizeMap = new();
 
     public static Texture2D ResizeTextureNearest(Texture2D source, int width, int height)
     {
