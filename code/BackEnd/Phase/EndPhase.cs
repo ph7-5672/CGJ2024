@@ -27,7 +27,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             base.End();
         }
 
-        void SplitTribe(IList<Tribe> list)
+        void SplitTribe(List<Tribe> list)
         {
             Tribe newTribe = null;
             foreach (Tribe t in list)

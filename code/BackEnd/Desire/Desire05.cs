@@ -23,7 +23,7 @@
 			}
 			else
 			{
-				result = lastTurn.TreasureRewaredTribes.ContainsKey(Tribe);
+				result = lastTurn.TreasureRewaredTribes?.ContainsKey(Tribe) ?? false;
 			}
 
 			return result;
