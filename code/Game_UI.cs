@@ -40,10 +40,11 @@ public partial class Game
     [Export]
     Texture2D attackButtonTexture;
 
-    List<int> selectedGoblinIndices;
+    public System.Collections.Generic.Dictionary<int, bool> SelectedGoblinMap { get; private set; } = new();
 
-    int selectedHumanIndex = -1;
+    public int SelectedHumanIndex { get; private set; } = -1;
 
+    bool mousePressedLastFrame;
 
     // TODO 领地分配 和 金币分配
     void EnterTree_UI()
@@ -88,7 +89,8 @@ public partial class Game
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Goblin.Tribes[i];
             var title = goblinTibreRowsBg[0];
-            Image(title, title.GetSize() * uiScale);
+            var tribeRect = Image(title, title.GetSize() * uiScale);
+            tribeRect.Position = new Vector2(tribeRect.Position.X, tribeRect.Position.Y - ImGui.GetScrollY());
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 28f));
@@ -98,9 +100,9 @@ public partial class Game
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 18f));
             var icon = tribe.CanBeMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
-            var rect = Image(icon, icon.GetSize() * uiScale);
-            rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
-            var isHovered = ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics());
+            var inconRect = Image(icon, icon.GetSize() * uiScale);
+            inconRect.Position = new Vector2(inconRect.Position.X, inconRect.Position.Y - ImGui.GetScrollY());
+            var isHovered = ImGui.IsMouseHoveringRect(inconRect.Position.ToSystemNumerics(), inconRect.Position.ToSystemNumerics() + inconRect.Size.ToSystemNumerics());
             if (visible && isHovered)
             {
                 ImGui.SetNextWindowBgAlpha(0);
@@ -115,17 +117,18 @@ public partial class Game
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
                 var territory = tribe.Territory[j];
+                float height;
                 if (j == 0)
                 {
-                    Image(goblinTibreRowsBg[1], title.GetSize() * uiScale);
+                    height = Image(goblinTibreRowsBg[1], title.GetSize() * uiScale).Size.Y;
                 }
                 else if (j == tribe.Territory.Count - 1)
                 {
-                    Image(goblinTibreRowsBg[3], title.GetSize() * uiScale);
+                    height = Image(goblinTibreRowsBg[3], title.GetSize() * uiScale).Size.Y;
                 }
                 else
                 {
-                    Image(goblinTibreRowsBg[2], title.GetSize() * uiScale);
+                    height = Image(goblinTibreRowsBg[2], title.GetSize() * uiScale).Size.Y;
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
@@ -134,9 +137,38 @@ public partial class Game
                 ImGui.Text($"兵力：{territory.Troops}");
                 ImGui.Text($"财力：{territory.Treasure}");
                 ImGui.EndGroup();
+
+                tribeRect.Size = new Vector2(tribeRect.Size.X, tribeRect.Size.Y + height);
             }
             ImGui.PopStyleVar();
             ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
+
+            if (phaseType == BackEnd.PhaseType.Mobilise)
+            {
+                if (tribe.CanBeMobilized 
+                    && !Input.IsMouseButtonPressed(MouseButton.Left) && mousePressedLastFrame
+                    && ImGui.IsMouseHoveringRect(tribeRect.Position.ToSystemNumerics(), tribeRect.Size.ToSystemNumerics() + tribeRect.Position.ToSystemNumerics()))
+                {
+                    if (SelectedGoblinMap.TryGetValue(i, out var selected))
+                    {
+                        selected = !selected;
+                        SelectedGoblinMap[i] = selected;
+                    }
+                    else
+                    {
+                        SelectedGoblinMap.Add(i, true);
+                    }
+                }
+
+                if (!SelectedGoblinMap.TryGetValue(i, out var s) || !s)
+                {
+                    var drawList = ImGui.GetWindowDrawList();
+                    drawList.AddRectFilled(tribeRect.Position.ToSystemNumerics(), tribeRect.Position.ToSystemNumerics() + tribeRect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
+                }
+
+                
+            }
+
         }
 
         ImGui.End();
@@ -147,7 +179,7 @@ public partial class Game
         {
             return;
         }
-        ImGui.SetNextWindowBgAlpha(0.5f);
+        ImGui.SetNextWindowBgAlpha(0.7f);
         ImGui.SetNextWindowSize(size.ToSystemNumerics());
         ImGui.SetNextWindowPos(pos);
         ImGui.Begin("##哥布林列表遮罩", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
@@ -162,7 +194,8 @@ public partial class Game
     {
         var phaseType = World.CurrentTurn.PlayerRound.PhaseType;
         var visible = phaseType == BackEnd.PhaseType.Begin
-                   || phaseType == BackEnd.PhaseType.SelectEnemyTerritory;
+                   || phaseType == BackEnd.PhaseType.SelectEnemyTerritory
+                   || phaseType == BackEnd.PhaseType.Mobilise;
 
         var displaySize = DisplayServer.WindowGetSize();
         var offset = new System.Numerics.Vector2(10f, 10f);
@@ -217,14 +250,6 @@ public partial class Game
                 {
                     height = Image(humanTibreRowsBg[2], title.GetSize() * uiScale).Size.Y;
                 }
-                rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
-                if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory 
-                    && Input.IsMouseButtonPressed(MouseButton.Left) 
-                    && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
-                {
-                    selectedHumanIndex = i;
-                }
-
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
@@ -232,11 +257,21 @@ public partial class Game
                 Text($"兵力：{territory.Troops}", Colors.White);
                 Text($"财力：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
+
+                rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
             }
             ImGui.PopStyleVar();
             ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
 
-            if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory && selectedHumanIndex != i)
+            if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory
+                    && Input.IsMouseButtonPressed(MouseButton.Left)
+                    && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
+            {
+                SelectedHumanIndex = i;
+                World.NextPhase();
+            }
+
+            if (visible && SelectedHumanIndex != i)
             {
                 var drawList = ImGui.GetWindowDrawList();
                 drawList.AddRectFilled(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
@@ -251,7 +286,7 @@ public partial class Game
         {
             return;
         }
-        ImGui.SetNextWindowBgAlpha(0.5f);
+        ImGui.SetNextWindowBgAlpha(0.7f);
         ImGui.SetNextWindowSize(size.ToSystemNumerics());
         ImGui.SetNextWindowPos(pos);
         ImGui.Begin("##人类列表遮罩", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
@@ -263,6 +298,7 @@ public partial class Game
     {
         GoblinTerritories_UI();
         HumanTerritories_UI();
+        mousePressedLastFrame = Input.IsMouseButtonPressed(MouseButton.Left);
     }
 
 
@@ -332,6 +368,7 @@ public partial class Game
     {
         return (ImGui.GetWindowSize().ToGodotNumerics() - size) / 2;
     }
+
 
 }
 
