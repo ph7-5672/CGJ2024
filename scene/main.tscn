@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=26 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bd3g8rctotmr0" path="res://textures/human/领土3.png" id="14_ho0an"]
 [ext_resource type="Texture2D" uid="uid://clk3ntmjxctpg" path="res://icon.svg" id="15_0ll46"]
 [ext_resource type="Texture2D" uid="uid://cyqaa3j0ja166" path="res://textures/background.jpg" id="16_ox671"]
+[ext_resource type="AudioStream" uid="uid://d3b6qmtpt4pie" path="res://sounds/background2.wav" id="17_h15om"]
 [ext_resource type="Texture2D" uid="uid://ca2rwtrmtr12y" path="res://textures/button/开战.png" id="18_5cokb"]
 [ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
 [ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
@@ -109,3 +110,7 @@ text = "请选择你的英雄"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("18_pdy4a")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h15om")
+autoplay = true
