@@ -5,5 +5,14 @@
 	/// </summary>
 	internal class Desire11 : Desire
 	{
+		public override bool IsSatisefied()
+		{
+			// 如果当前回合是游戏的第一回合，则返回true
+			// 否则获取上一回合人类方的行动信息，检查本部落的领地没有受到进攻
+			// 或者本部落领地受到进攻且哥布林方防御成功
+			// ...
+
+			return base.IsSatisefied();
+		}
 	}
 }
