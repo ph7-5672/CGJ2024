@@ -59,7 +59,7 @@ namespace Cgj_2024.code.BackEnd
             return nextTurn;
         }
 
-        public RoundPhase CurrentPhasse => CurrentRound.CurrentPhase;
+        public RoundPhase CurrentPhase => CurrentRound.CurrentPhase;
         public Round CurrentRound { get; private set; }
 
         public Round PlayerRound { get; private set; }
@@ -67,17 +67,12 @@ namespace Cgj_2024.code.BackEnd
 
         public World World { get; private set; }
 
-        public Territory TargetedTerritory { get; set; }
-
-        public IList<Tribe> PlayerMobilizedTribes { get; set; }
-        public IList<Tribe> AIMobilizedTribes { get; set; }
-
         public bool IsPlayerContorl => CurrentRound == PlayerRound;
 
-        public bool BattleResult { get; set; }
+        public Tribe TerritoryRewaredTribeHuman { get; set; }
 
-        public Tribe TerritoryRewaredTribe { get; set; }
+        public Tribe TerritoryRewaredTribeGoblin { get; set; }
 
-        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; }
+        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; } = new Dictionary<Tribe, int>();
     }
 }

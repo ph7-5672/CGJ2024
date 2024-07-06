@@ -1,11 +1,11 @@
 ﻿using Cgj_2024.code.BackEnd.Factions;
-using System.Collections.Generic;
-using Godot;
 using Cgj_2024.code.BackEnd.Phase;
+using Godot;
+using System.Collections.Generic;
 
 namespace Cgj_2024.code.BackEnd
 {
-    public class World
+	public class World
     {
         public World() {
             Rng = new RandomNumberGenerator();
@@ -19,20 +19,8 @@ namespace Cgj_2024.code.BackEnd
         {
             Rng.Seed = (ulong)parameters.Seed;
 
-            for (int i = 0; i < parameters.WorldSize; i++)
-            {
-                var territory = new Territory
-                {
-                    Troops = Rng.RandiRange(parameters.TroopMin, parameters.TroopMax),
-                    Treasure = Rng.RandiRange(parameters.TreasureMin, parameters.TreasureMax),
-                    Size = Rng.RandiRange(parameters.SizeMin, parameters.SizeMax),
-                };
-                Territory.Add(territory);
-            }
-
-            int size = Territory.Count >> 1;
-            Goblin.Initialze(Territory[..size]);
-            Human.Initialze(Territory[size..]);
+            Goblin.Initialze(Rng.RandiRange(4, parameters.WorldSize), Rng, parameters);
+            Human.Initialze(Rng.RandiRange(4, parameters.WorldSize), Rng, parameters);
 
             CurrentTurn = new Turn(this);
             CurrentTurn.Begin();

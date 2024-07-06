@@ -24,7 +24,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             base.End();
 
-            Turn.TargetedTerritory = SeletecedTerritory;
+            Turn.CurrentRound.TargetedTerritory = SeletecedTerritory;
         }
 
         public Territory SeletecedTerritory { get; set; }

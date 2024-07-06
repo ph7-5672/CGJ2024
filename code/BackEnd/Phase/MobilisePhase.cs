@@ -16,20 +16,20 @@ namespace Cgj_2024.code.BackEnd.Phase
             else
             {
                 //debug
-                if (Turn.TargetedTerritory is null)
+                if (Turn.CurrentRound.TargetedTerritory is null)
                 {
-                    Turn.TargetedTerritory = World.Human.Territories.First();
+                    Turn.CurrentRound.TargetedTerritory = World.Human.Territories.First();
                 }
 
-                AIMobilizedTribes = [Turn.TargetedTerritory.Tribe];
+                AIMobilizedTribes = [Turn.CurrentRound.TargetedTerritory.Tribe];
             }
         }
 
         public override void End()
         {
             base.End();
-            Turn.AIMobilizedTribes = AIMobilizedTribes;
-            Turn.PlayerMobilizedTribes = PlayerMobilizedTribes;
+            Turn.CurrentRound.AIMobilizedTribes = AIMobilizedTribes;
+            Turn.CurrentRound.PlayerMobilizedTribes = PlayerMobilizedTribes;
         }
 
         void AIMobilize()
@@ -38,7 +38,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             tribes.Sort((t1, t2) => t1.Troops.CompareTo(t2.Troops));
             int tot = 0;
             for (int i = 0;
-                i < tribes.Count && tot < Turn.TargetedTerritory.Troops;
+                i < tribes.Count && tot < Turn.CurrentRound.TargetedTerritory.Troops;
                 i++)
             {
                 tot += tribes[i].Troops;

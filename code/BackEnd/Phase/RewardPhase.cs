@@ -11,10 +11,10 @@ namespace Cgj_2024.code.BackEnd.Phase
         public override void Begin()
         {
             base.Begin();
-            Treasure = Turn.TargetedTerritory.Treasure;
+            Treasure = Turn.CurrentRound.TargetedTerritory.Treasure;
             if (!IsPlayerContorl)
             {
-                HandleDefence(Turn.BattleResult);
+                HandleDefence(Turn.CurrentRound.BattleResult);
             }
         }
 
@@ -22,7 +22,14 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             if (IsPlayerContorl)
             {
-                TerritoryRewaredTribe?.MakeADesire();
+                // Todo: 解注释这行开启额外特性
+                // 封赏新领地后增加欲望
+                //TerritoryRewaredTribe?.MakeADesire();
+                if (TreasureRewaredTribes is not null)
+                    foreach (var (tribe, treasure) in TreasureRewaredTribes)
+                    {
+                        tribe.RewardTreasure(treasure);
+                    }
             }
             base.End();
         }
@@ -32,11 +39,9 @@ namespace Cgj_2024.code.BackEnd.Phase
             if (!win)
             {
                 World.Human.Tribes.Sort((t1, t2) => t1.Territory.Count.CompareTo(t2.Territory.Count));
-                Turn.TerritoryRewaredTribe = World.Human.Tribes.First();
+                Turn.TerritoryRewaredTribeHuman = World.Human.Tribes.First();
             }
         }
-
-        public Tribe TerritoryRewaredTribe { get; set; }
 
         public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; }
         public int Treasure { get; private set; }
