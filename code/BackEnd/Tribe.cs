@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cgj_2024.code.BackEnd.Factions;
-using Cgj_2024.code.BackEnd.WishType;
 
 namespace Cgj_2024.code.BackEnd
 {
