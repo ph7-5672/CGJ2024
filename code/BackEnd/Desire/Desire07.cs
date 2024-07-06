@@ -14,13 +14,16 @@
 		{
 			// 如果当前回合是游戏的第一回合，则返回true
 			// 否则获取上一回合哥布林方的行动信息，检查部落是否被赏赐领地
-			// ...
 
 			var result = false;
 			var lastTurn = Tribe.Faction.World.LastTurn;
 			if (lastTurn == null)
 			{
 				result = true;
+			}
+			else
+			{
+				result = Tribe == lastTurn.TerritoryRewaredTribe;
 			}
 
 			return result;
