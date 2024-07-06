@@ -1,4 +1,7 @@
-﻿namespace Cgj_2024.code.BackEnd
+﻿using System.Linq;
+using Cgj_2024.code.BackEnd.Factions;
+
+namespace Cgj_2024.code.BackEnd
 {
 	/// <summary>
 	/// 06 上一回合被赏赐了最多财宝
@@ -14,13 +17,19 @@
 		{
 			// 如果当前回合是游戏的第一回合，则返回true
 			// 否则获取上一回合哥布林方的行动信息，检查部落是否被赏赐最多财宝
-			// ...
 
 			var result = false;
 			var lastTurn = Tribe.Faction.World.LastTurn;
 			if (lastTurn == null)
 			{
 				result = true;
+			}
+			else
+			{
+				if (lastTurn.TreasureRewaredTribes.TryGetValue(Tribe, out var rewardedTreasure))
+				{
+					result = rewardedTreasure == lastTurn.TreasureRewaredTribes.Where(tribe => tribe.Key.Faction is Goblin).Max().Value;
+				}
 			}
 
 			return result;
