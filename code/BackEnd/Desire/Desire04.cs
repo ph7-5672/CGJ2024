@@ -5,7 +5,8 @@
 	/// </summary>
 	public class Desire04 : Desire
 	{
-		public Desire04()
+		public Desire04(Tribe tribe)
+			: base(tribe)
 		{
 			// 随机选择一个其他部落作为比较目标
 		}
