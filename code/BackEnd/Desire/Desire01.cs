@@ -1,4 +1,6 @@
-﻿namespace Cgj_2024.code.BackEnd
+﻿using System.Linq;
+
+namespace Cgj_2024.code.BackEnd
 {
 	/// <summary>
 	/// 01 领地总财宝最多
@@ -21,6 +23,11 @@
 			if (lastTurn == null)
 			{
 				result = true;
+			}
+			else
+			{
+				var allTribes = Tribe.Faction.Tribes;
+				result = Tribe.Treasure == allTribes.Max(tribe => tribe.Treasure);
 			}
 
 			return result;

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cgj_2024.code.BackEnd.Factions;
 
 namespace Cgj_2024.code.BackEnd
 {
-    public class Tribe
+	public class Tribe
     {
         public Tribe(World world, Faction faction)
         {
@@ -30,7 +29,7 @@ namespace Cgj_2024.code.BackEnd
 
         public void RewardTreasure(int treasure)
         {
-            Treasure += treasure;
+            TotalRewardedTreasure += treasure;
         }
 
         public string Name { get; set; }
@@ -38,8 +37,9 @@ namespace Cgj_2024.code.BackEnd
         public List<Territory> Territory { get; set; } = [];
 
         public int Troops => Territory.Sum(t => t.Troops);
+        public int Treasure => Territory.Sum(t => t.Treasure);
 
-        public int Treasure { get; protected set; }
+        public int TotalRewardedTreasure { get; protected set; }
 
         public bool IsMobilized { get; protected set; } = false;
         public bool CanBeMobilized => Desires.Count == 0 || Desires.TrueForAll(d => d.IsSatisefied());
