@@ -14,13 +14,18 @@
 		{
 			// 如果当前回合是游戏的第一回合，则返回true
 			// 否则获取上一回合哥布林方的行动信息，检查部落是否被动员且进攻成功，或部落没有被动员
-			// ...
 
 			var result = false;
 			var lastTurn = Tribe.Faction.World.LastTurn;
 			if (lastTurn == null)
 			{
 				result = true;
+			}
+			else
+			{
+				var lastPlayerRound = lastTurn.PlayerRound;
+				result = lastPlayerRound.PlayerMobilizedTribes.Contains(Tribe) && lastPlayerRound.BattleResult
+					|| !lastPlayerRound.PlayerMobilizedTribes.Contains(Tribe);
 			}
 
 			return result;
