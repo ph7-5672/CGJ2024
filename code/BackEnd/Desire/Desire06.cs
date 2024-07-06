@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Cgj_2024.code.BackEnd.Factions;
 
 namespace Cgj_2024.code.BackEnd
 {
@@ -28,7 +27,7 @@ namespace Cgj_2024.code.BackEnd
 			{
 				if (lastTurn.TreasureRewaredTribes.TryGetValue(Tribe, out var rewardedTreasure))
 				{
-					result = rewardedTreasure == lastTurn.TreasureRewaredTribes.Where(tribe => tribe.Key.Faction is Goblin).Max().Value;
+					result = rewardedTreasure == lastTurn.TreasureRewaredTribes.Max(tribe => tribe.Value);
 				}
 			}
 
