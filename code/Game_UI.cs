@@ -118,6 +118,9 @@ public partial class Game
                 {
                     Text($"- {desire.Description}", Colors.Black, 11);
                 }
+                Text(string.Empty, Colors.Black, 11);
+                Text($"总兵力：{tribe.Troops}", Colors.Black, 11);
+                Text($"被赏赐财宝：{tribe.TotalRewardedTreasure}", Colors.Black, 11);
 				ImGui.EndGroup();
                 ImGui.EndTooltip();
                 ImGui.PopStyleVar();
