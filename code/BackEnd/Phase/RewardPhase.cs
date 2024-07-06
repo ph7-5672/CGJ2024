@@ -1,5 +1,4 @@
-﻿using Cgj_2024.code.BackEnd.WishType;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

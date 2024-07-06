@@ -10,17 +10,40 @@ namespace Cgj_2024.code;
 
 public partial class Game
 {
-    /// <summary>
-    /// 满足和不满足的图标。
-    /// </summary>
+
+    ImGuiStylePtr style;
+
+    Vector2 uiScale;
+
+    [ExportGroup("UI素材导入")]
+
     [Export]
-    Array<Texture2D> satisfiedIcons;
+    Texture2D goblinBg;
+  
+    [Export]
+    Array<Texture2D> goblinTibreRowsBg;
+
+    [Export]
+    Array<Texture2D> goblinEmotionsIcon;
+
+    [Export]
+    Texture2D goblinTipsBg;
+
+    [Export]
+    Texture2D humanBg;
+
+    [Export]
+    Array<Texture2D> humanTibreRowsBg;
+
+    
 
 
     // TODO 领地分配 和 金币分配
     void EnterTree_UI()
     {
+        uiScale = DisplayServer.WindowGetSize() / new Vector2(640, 480);
         ImGui.StyleColorsLight();
+        style = ImGui.GetStyle();
     }
 
     /// <summary>
@@ -28,94 +51,88 @@ public partial class Game
     /// </summary>
     void GoblinTerritories_UI()
     {
-        ImGui.PushStyleColor(ImGuiCol.WindowBg, Colors.LightYellow.ToVector4());
-        ImGui.Begin("##goblin_territories", ImGuiWindowFlags.NoTitleBar);
-        // 部落层。
-        if (ImGui.BeginTable("tribes", 1))
+        var pos = new System.Numerics.Vector2(10f, 10f);
+        var size = goblinBg.GetSize() * uiScale;
+        ImGui.SetNextWindowBgAlpha(0);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics());
+        ImGui.SetNextWindowPos(pos);
+
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, System.Numerics.Vector2.Zero);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 0);
+
+        ImGui.Begin("##哥布林领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
         {
-            ImGui.TableNextColumn();
+            Image(goblinBg, size);
 
-            ImGui.Text("部落A");
-            ImGui.SameLine(0f, 0f);
-
-            var mobilized = true;
-            var index = mobilized ? 0 : 1;
-            var texture = satisfiedIcons[index];
-            var size = new Vector2(32f, 32f);
-            var rect = Image(texture, size);
-            
-            if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
-            {
-                ImGui.BeginTooltip();
-                var tooltip = mobilized ? "满足" : "不满足";
-                ImGui.Text(tooltip);
-                ImGui.EndTooltip();
-            }
-            
-            // 领地层。
-            ImGui.PushStyleColor(ImGuiCol.TableRowBg, Colors.Burlywood.ToVector4());
-            ImGui.PushStyleColor(ImGuiCol.TableRowBgAlt, Colors.Transparent.ToVector4());
-            if (ImGui.BeginTable("territories", 1, ImGuiTableFlags.RowBg))
-            {
-                ImGui.TableNextColumn();
-                ImGui.Text("领地A");
-                ImGui.Text("兵力：5");
-                ImGui.Text("财力：5");
-
-                // 空白行。
-                ImGui.TableNextColumn();
-
-                ImGui.TableNextColumn();
-                ImGui.Text("领地B");
-                ImGui.Text("兵力：1");
-                ImGui.Text("财力：2");
-                ImGui.EndTable();
-            }
-
-            ImGui.TableNextColumn();
-            ImGui.Text("部落B");
-            ImGui.SameLine(0f, 0f);
-
-            mobilized = false;
-            index = mobilized ? 0 : 1;
-            texture = satisfiedIcons[index];
-            size = new Vector2(32f, 32f);
-            rect = Image(texture, size);
-
-            if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
-            {
-                ImGui.BeginTooltip();
-                var tooltip = mobilized ? "满足" : "不满足";
-                ImGui.Text(tooltip);
-                ImGui.EndTooltip();
-            }
-
-            // 领地层。
-            if (ImGui.BeginTable("territories", 1, ImGuiTableFlags.RowBg))
-            {
-                ImGui.TableNextColumn();
-                ImGui.Text("领地C");
-                ImGui.Text("兵力：5");
-                ImGui.Text("财力：5");
-
-                // 空白行。
-                ImGui.TableNextColumn();
-
-                ImGui.TableNextColumn();
-                ImGui.Text("领地D");
-                ImGui.Text("兵力：1");
-                ImGui.Text("财力：2");
-                ImGui.EndTable();
-            }
-
-            ImGui.PopStyleColor();
-            ImGui.PopStyleColor();
-
-            ImGui.EndTable();
         }
-        
         ImGui.End();
-        ImGui.PopStyleColor();
+
+        var padding = new System.Numerics.Vector2(30f, 37f);
+        ImGui.SetNextWindowBgAlpha(0);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics() - padding * 2);
+        ImGui.SetNextWindowPos(pos + padding);
+
+        ImGui.Begin("##哥布林领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
+        for (int i = 0; i < World.Goblin.Tribes.Count; i++)
+        {
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
+            var tribe = World.Goblin.Tribes[i];
+            var title = goblinTibreRowsBg[0];
+            Image(title, title.GetSize() * uiScale);
+            ImGui.SameLine(20f, 0f);
+            ImGui.BeginGroup();
+            ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
+            Text(tribe.Name ?? "部落", Colors.AliceBlue);
+            ImGui.EndGroup();
+            ImGui.SameLine(180f);
+            ImGui.BeginGroup();
+            ImGui.Dummy(new System.Numerics.Vector2(0f, 18f));
+            var icon = tribe.IsMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
+            var rect = Image(icon, icon.GetSize() * uiScale);
+
+            if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
+            {
+                ImGui.SetNextWindowBgAlpha(0);
+                ImGui.GetWindowDrawList().AddCallback(0, 0);
+                ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
+                
+                ImGui.BeginTooltip();
+                Image(goblinTipsBg, goblinTipsBg.GetSize() * uiScale);
+                ImGui.EndTooltip();
+                ImGui.PopStyleVar();
+            }
+            ImGui.EndGroup();
+
+            for (int j = 0; j < tribe.Territory.Count; ++j)
+            {
+                var territory = tribe.Territory[j];
+                if (j == 0)
+                {
+                    Image(goblinTibreRowsBg[1], title.GetSize() * uiScale);
+                }
+                else if (j == tribe.Territory.Count - 1)
+                {
+                    Image(goblinTibreRowsBg[3], title.GetSize() * uiScale);
+                }
+                else
+                {
+                    Image(goblinTibreRowsBg[2], title.GetSize() * uiScale);
+                }
+                ImGui.SameLine(20f, 0f);
+                ImGui.BeginGroup();
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
+                ImGui.Text(territory.Name ?? "领地");
+                ImGui.Text($"兵力：{territory.Troops}");
+                ImGui.SameLine(0f, 20f);
+                ImGui.Text($"财力：{territory.Treasure}");
+                ImGui.EndGroup();
+            }
+            ImGui.PopStyleVar();
+            ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
+        }
+
+        ImGui.End();
+        ImGui.PopStyleVar(2);
     }
 
     /// <summary>
@@ -123,79 +140,91 @@ public partial class Game
     /// </summary>
     void HumanTerritories_UI()
     {
-        ImGui.Begin("##human_territories", ImGuiWindowFlags.NoTitleBar);
-        TribesTable();
+        var displaySize = DisplayServer.WindowGetSize();
+        var offset = new System.Numerics.Vector2(10f, 10f);
+        var size = goblinBg.GetSize() * uiScale;
+        var pos = new System.Numerics.Vector2(displaySize.X - size.X - offset.X, offset.Y);
+        ImGui.SetNextWindowBgAlpha(0);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics());
+        ImGui.SetNextWindowPos(pos);
+
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, System.Numerics.Vector2.Zero);
+        ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 0);
+
+        ImGui.Begin("##人类领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
+        {
+            Image(goblinBg, size);
+
+        }
         ImGui.End();
+
+        var padding = new System.Numerics.Vector2(30f, 37f);
+        ImGui.SetNextWindowBgAlpha(0);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics() - padding * 2);
+        ImGui.SetNextWindowPos(pos + padding);
+
+        ImGui.Begin("##人类领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
+        for (int i = 0; i < World.Goblin.Tribes.Count; i++)
+        {
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
+            var tribe = World.Human.Tribes[i];
+            var title = goblinTibreRowsBg[0];
+            Image(title, title.GetSize() * uiScale);
+            ImGui.SameLine(20f, 0f);
+            ImGui.BeginGroup();
+            ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
+            Text(tribe.Name ?? "领主", Colors.AliceBlue);
+            ImGui.EndGroup();
+            for (int j = 0; j < tribe.Territory.Count; ++j)
+            {
+                var territory = tribe.Territory[j];
+                if (j == 0)
+                {
+                    Image(goblinTibreRowsBg[1], title.GetSize() * uiScale);
+                }
+                else if (j == tribe.Territory.Count - 1)
+                {
+                    Image(goblinTibreRowsBg[3], title.GetSize() * uiScale);
+                }
+                else
+                {
+                    Image(goblinTibreRowsBg[2], title.GetSize() * uiScale);
+                }
+                ImGui.SameLine(20f, 0f);
+                ImGui.BeginGroup();
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
+                ImGui.Text(territory.Name ?? "领地");
+                ImGui.Text($"兵力：{territory.Troops}");
+                ImGui.SameLine(0f, 20f);
+                ImGui.Text($"财力：{territory.Treasure}");
+                ImGui.EndGroup();
+            }
+            ImGui.PopStyleVar();
+            ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
+        }
+
+        ImGui.End();
+        ImGui.PopStyleVar(2);
     }
 
+
+
     /// <summary>
-    /// 游戏状态信息。
+    /// 游戏交互区域。
     /// </summary>
-    void GameState_UI()
+    void Interact_UI()
     {
-        ImGui.Begin("##游戏状态");
+        /*var windowSize = new Vector2(100f, );
+        ImGui.SetNextWindowPos();
+        ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
+        ImGui.Button("准备进攻！");
+        ImGui.End();*/
 
-
-
-        ImGui.End();
-
-        /*ImGui.OpenPopup("Dialog");
-        if (ImGui.BeginPopupModal("Dialog"))
-        {
-            ImGui.Text("测试");
-            ImGui.Separator();
-            ImGui.EndPopup();
-        }*/
-
-        /*ImGui.BeginTooltip();
-        ImGui.Text("测试提示信息");
-        ImGui.EndTooltip();*/
+       
         
     }
 
 
-    void TribesTable()
-    {
-        ImGui.BeginTable("tribes", 1);
-
-        ImGui.TableNextColumn();
-        ImGui.Text("部落A");
-
-        var mobilized = true;
-        if (mobilized)
-        {
-            // 笑脸图标。
-            ImGui.SameLine();
-            ImGui.Text("😀");
-        }
-        TerritoriesTable();
-
-
-        ImGui.TableNextColumn();
-        ImGui.Text("部落B");
-
-        TerritoriesTable();
-
-        ImGui.EndTable();
-    }
-
-
-    void TerritoriesTable()
-    {
-        ImGui.BeginTable("territories", 1, ImGuiTableFlags.BordersOuter | ImGuiTableFlags.BordersInnerH);
-
-        ImGui.TableNextColumn();
-        ImGui.Text("领地A");
-        ImGui.Text("兵力：5");
-        ImGui.Text("财力：5");
-
-        ImGui.TableNextColumn();
-        ImGui.Text("领地B");
-        ImGui.Text("兵力：1");
-        ImGui.Text("财力：2");
-
-        ImGui.EndTable();
-    }
 
     /// <summary>
     /// 领地分配
@@ -206,11 +235,11 @@ public partial class Game
     }
 
 
-    public override void _Process(double delta)
+    public void Process_UI(double delta)
     {
         GoblinTerritories_UI();
         HumanTerritories_UI();
-        GameState_UI();
+        Interact_UI();
     }
 
 
@@ -251,6 +280,7 @@ public partial class Game
         ImGui.Image(id, size.ToSystemNumerics());
         return new Rect2(pos.ToGodotNumerics(), size);
     }
+
 
 }
 
