@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=3 uid="uid://cyyuaskyox3eb"]
 
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfigNode.gd" id="1_ac7kg"]
-[ext_resource type="FontFile" uid="uid://b5sjaugimcmfa" path="res://fonts/STFANGSO.TTF" id="2_5202q"]
+[ext_resource type="FontFile" uid="uid://ggcsylhvgdk5" path="res://fonts/ArkPixel.ttf" id="2_fd2rx"]
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiFont.gd" id="3_d0ebs"]
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfig.gd" id="4_gwpw1"]
 
 [sub_resource type="Resource" id="Resource_i4se3"]
 script = ExtResource("3_d0ebs")
-FontData = ExtResource("2_5202q")
+FontData = ExtResource("2_fd2rx")
 FontSize = 16
 Merge = true
 
