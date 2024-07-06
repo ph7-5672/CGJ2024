@@ -5,6 +5,7 @@ using Godot;
 using Godot.Collections;
 using ImGuiGodot;
 using ImGuiNET;
+using System;
 
 namespace Cgj_2024.code;
 
@@ -35,8 +36,8 @@ public partial class Game
     [Export]
     Array<Texture2D> humanTibreRowsBg;
 
-    
-
+    [Export]
+    Texture2D attackButtonTexture;
 
     // TODO 领地分配 和 金币分配
     void EnterTree_UI()
@@ -63,7 +64,6 @@ public partial class Game
         ImGui.Begin("##哥布林领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
         {
             Image(goblinBg, size);
-
         }
         ImGui.End();
 
@@ -89,13 +89,11 @@ public partial class Game
             ImGui.Dummy(new System.Numerics.Vector2(0f, 18f));
             var icon = tribe.CanBeMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
             var rect = Image(icon, icon.GetSize() * uiScale);
-
+            rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
             if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
             {
                 ImGui.SetNextWindowBgAlpha(0);
-                ImGui.GetWindowDrawList().AddCallback(0, 0);
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
-                
                 ImGui.BeginTooltip();
                 Image(goblinTipsBg, goblinTipsBg.GetSize() * uiScale);
                 ImGui.EndTooltip();
@@ -120,10 +118,9 @@ public partial class Game
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
-                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 ImGui.Text(territory.Name ?? "领地");
                 ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.SameLine(0f, 20f);
                 ImGui.Text($"财力：{territory.Treasure}");
                 ImGui.EndGroup();
             }
@@ -153,7 +150,7 @@ public partial class Game
 
         ImGui.Begin("##人类领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
         {
-            Image(goblinBg, size);
+            Image(humanBg, size);
 
         }
         ImGui.End();
@@ -164,11 +161,11 @@ public partial class Game
         ImGui.SetNextWindowPos(pos + padding);
 
         ImGui.Begin("##人类领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
-        for (int i = 0; i < World.Goblin.Tribes.Count; i++)
+        for (int i = 0; i < World.Human.Tribes.Count; i++)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Human.Tribes[i];
-            var title = goblinTibreRowsBg[0];
+            var title = humanTibreRowsBg[0];
             Image(title, title.GetSize() * uiScale);
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
@@ -178,25 +175,24 @@ public partial class Game
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
                 var territory = tribe.Territory[j];
-                if (j == 0)
+                if (j == tribe.Territory.Count - 1)
                 {
-                    Image(goblinTibreRowsBg[1], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[3], title.GetSize() * uiScale);
                 }
-                else if (j == tribe.Territory.Count - 1)
+                else if (j == 0)
                 {
-                    Image(goblinTibreRowsBg[3], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[1], title.GetSize() * uiScale);
                 }
                 else
                 {
-                    Image(goblinTibreRowsBg[2], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[2], title.GetSize() * uiScale);
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
-                ImGui.Dummy(new System.Numerics.Vector2(0f, 10f));
-                ImGui.Text(territory.Name ?? "领地");
-                ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.SameLine(0f, 20f);
-                ImGui.Text($"财力：{territory.Treasure}");
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
+                Text(territory.Name ?? "领地", Colors.White);
+                Text($"兵力：{territory.Troops}", Colors.White);
+                Text($"财力：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
             }
             ImGui.PopStyleVar();
@@ -214,14 +210,14 @@ public partial class Game
     /// </summary>
     void Interact_UI()
     {
-        /*var windowSize = new Vector2(100f, );
-        ImGui.SetNextWindowPos();
-        ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
-        ImGui.Button("准备进攻！");
-        ImGui.End();*/
+        var windowSize = new Vector2(120f, 40f);
 
-       
-        
+        var pos = (DisplayServer.WindowGetSize() - windowSize) / 2;
+        ImGui.SetNextWindowPos(pos.ToSystemNumerics());
+        ImGui.SetNextWindowSize(windowSize.ToSystemNumerics());
+        ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
+        Widgets.ImageButton("准备进攻", attackButtonTexture, new System.Numerics.Vector2(100f, 20f));
+        ImGui.End();
     }
 
 
@@ -276,9 +272,28 @@ public partial class Game
         { 
             size = texture.GetSize();
         }
-        var id = ImGuiGD.BindTexture(texture);
-        ImGui.Image(id, size.ToSystemNumerics());
+        var resizedTexture = ResizeTextureNearest(texture, (int)size.X, (int)size.Y);
+        Widgets.Image(resizedTexture, size.ToSystemNumerics());
         return new Rect2(pos.ToGodotNumerics(), size);
+    }
+
+
+    static Dictionary<Rid, Texture2D> resizeMap = new();
+
+    public static Texture2D ResizeTextureNearest(Texture2D source, int width, int height)
+    {
+        var rid = source.GetRid();
+        if (resizeMap.TryGetValue(rid, out var resizedTexture))
+        {
+            return resizedTexture;
+        }
+
+        // 创建一个新的Image对象，用于存储放大后的图像数据  
+        var image = source.GetImage();
+        image.Resize(width, height, Godot.Image.Interpolation.Nearest);
+        resizedTexture = ImageTexture.CreateFromImage(image);
+        resizeMap.Add(rid, resizedTexture);
+        return resizedTexture;
     }
 
 

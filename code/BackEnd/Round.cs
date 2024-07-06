@@ -70,8 +70,8 @@ namespace Cgj_2024.code.BackEnd
         public bool BattleResult { get; set; }
 
         public Territory TargetedTerritory { get; set; }
-        public IList<Tribe> PlayerMobilizedTribes { get; set; }
-        public IList<Tribe> AIMobilizedTribes { get; set; }
+        public IList<Tribe> PlayerMobilizedTribes { get; set; } = new List<Tribe>();
+        public IList<Tribe> AIMobilizedTribes { get; set; } = new List<Tribe>();
 
         public PhaseType PhaseType { get; private set; }
         public RoundPhase CurrentPhase { get; private set; }

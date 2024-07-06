@@ -73,6 +73,6 @@ namespace Cgj_2024.code.BackEnd
 
         public Tribe TerritoryRewaredTribeGoblin { get; set; }
 
-        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; }
+        public Dictionary<Tribe, int> TreasureRewaredTribes { get; set; } = new Dictionary<Tribe, int>();
     }
 }

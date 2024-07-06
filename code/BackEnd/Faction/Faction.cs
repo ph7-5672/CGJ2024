@@ -28,15 +28,13 @@ namespace Cgj_2024.code.BackEnd.Factions
             GD.Print($"{this} End Turn");
         }
 
-		public virtual void Initialze(IList<Territory> territories)
+		public virtual void Initialze(int tribeCount, RandomNumberGenerator rng, Parameters parameters)
 		{
-			Tribes = new List<Tribe>(territories.Count);
-			for (int i = 0; i < territories.Count; i++)
+			for (var i = 0; i < tribeCount; i++)
 			{
 				var tribe = new Tribe(World, this);
-				tribe.Territory.Add(territories[i]);
-				territories[i].Tribe = tribe;
 				Tribes.Add(tribe);
+				tribe.Initialize(rng, parameters);
 			}
 		}
 
@@ -45,7 +43,7 @@ namespace Cgj_2024.code.BackEnd.Factions
 			return Tribes.Except([tribe]);
 		}
 
-		public List<Tribe> Tribes { get; private set; }
+		public List<Tribe> Tribes { get; private set; } = new List<Tribe>();
 		public IEnumerable<Territory> Territories => Tribes.SelectMany(t => t.Territory);
 		public World World { get; private set; }
 	}
