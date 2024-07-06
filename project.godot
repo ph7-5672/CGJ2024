@@ -34,6 +34,10 @@ project/assembly_name="Cgj 2024"
 
 enabled=PackedStringArray("res://addons/imgui-godot/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://fonts/ArkPixel.ttf"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
