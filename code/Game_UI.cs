@@ -164,7 +164,7 @@ public partial class Game
         ImGui.SetNextWindowPos(pos + padding);
 
         ImGui.Begin("##人类领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
-        for (int i = 0; i < World.Goblin.Tribes.Count; i++)
+        for (int i = 0; i < World.Human.Tribes.Count; i++)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Human.Tribes[i];
