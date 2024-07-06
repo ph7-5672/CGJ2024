@@ -1,10 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=2 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
-[ext_resource type="Texture2D" uid="uid://clk3ntmjxctpg" path="res://icon.svg" id="2_i7hi7"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rkd1a")
-satisfiedIcons = Array[Texture2D]([ExtResource("2_i7hi7"), ExtResource("2_i7hi7")])
 
 [node name="Camera2D" type="Camera2D" parent="."]

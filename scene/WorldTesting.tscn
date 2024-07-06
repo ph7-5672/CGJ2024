@@ -9,7 +9,3 @@ script = ExtResource("1_bll23")
 [node name="Parameters" type="Node" parent="."]
 script = ExtResource("2_nyxxq")
 WorldSize = 7
-TreasureMin = 1
-TreasureMax = 5
-TroopMin = 1
-TroopMax = 5

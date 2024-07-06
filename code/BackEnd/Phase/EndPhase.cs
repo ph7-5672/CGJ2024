@@ -36,7 +36,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                     && World.Rng.Randf() > Parameters.Instance.TribeSplitChance)
                 {
                     var newSize = t.Territory.Count >> 1;
-                    var tribe = new Tribe();
+                    var tribe = new Tribe(World, t.Faction);
 
                     var territory = t.Territory;
                     t.Territory = territory[..newSize];

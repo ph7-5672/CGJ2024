@@ -22,7 +22,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             if (IsPlayerContorl)
             {
-                RewaredTribe.MakeADesire();
+                RewaredTribe?.MakeADesire();
             }
             base.End();
         }
