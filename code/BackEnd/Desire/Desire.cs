@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cgj_2024.code.BackEnd
 {
@@ -11,27 +8,32 @@ namespace Cgj_2024.code.BackEnd
 		public static Desire New(Tribe tribe)
 		{
 			var maker = makers[(int)(tribe.World.Rng.Randi() % makers.Count)];
-			var d = maker();
-			d.Tribe = tribe;
+			var d = maker(tribe);
 			return d;
 		}
 
-		static readonly List<Func<Desire>> makers =
+		static readonly List<Func<Tribe, Desire>> makers =
 		[
-			() => new Desire01(),
-			() => new Desire02(),
-			() => new Desire03(),
-			() => new Desire05(),
-			() => new Desire06(),
-			() => new Desire07(),
-			() => new Desire08(),
-			() => new Desire09(),
-			() => new Desire10(),
-			() => new Desire11(),
-			() => new Desire12(),
+			(tribe) => new Desire01(tribe),
+			(tribe) => new Desire02(tribe),
+			(tribe) => new Desire03(tribe),
+			(tribe) => new Desire04(tribe),
+			(tribe) => new Desire05(tribe),
+			(tribe) => new Desire06(tribe),
+			(tribe) => new Desire07(tribe),
+			(tribe) => new Desire08(tribe),
+			(tribe) => new Desire09(tribe),
+			(tribe) => new Desire10(tribe),
+			(tribe) => new Desire11(tribe),
+			(tribe) => new Desire12(tribe),
 		];
 
+		public Desire(Tribe tribe)
+		{
+			Tribe = tribe;
+		}
+
 		public virtual bool IsSatisefied() => false;
-		public Tribe Tribe { get; private set; }
+		public Tribe Tribe { get; }
 	}
 }

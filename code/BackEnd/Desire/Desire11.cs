@@ -5,6 +5,11 @@
 	/// </summary>
 	internal class Desire11 : Desire
 	{
+		public Desire11(Tribe tribe)
+			: base(tribe)
+		{
+		}
+
 		public override bool IsSatisefied()
 		{
 			// 如果当前回合是游戏的第一回合，则返回true
