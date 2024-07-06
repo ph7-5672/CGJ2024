@@ -1,26 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://cyyuaskyox3eb"]
+[gd_scene load_steps=7 format=3 uid="uid://cyyuaskyox3eb"]
 
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfigNode.gd" id="1_ac7kg"]
-[ext_resource type="FontFile" uid="uid://bevxifxmt1o0g" path="res://fonts/cour.ttf" id="2_ytsq6"]
+[ext_resource type="FontFile" uid="uid://b5sjaugimcmfa" path="res://fonts/STFANGSO.TTF" id="2_5202q"]
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiFont.gd" id="3_d0ebs"]
 [ext_resource type="Script" path="res://addons/imgui-godot/scripts/ImGuiConfig.gd" id="4_gwpw1"]
-[ext_resource type="FontFile" uid="uid://bkg6ugbar2jcl" path="res://fonts/STXINGKA.TTF" id="4_lxhcl"]
-
-[sub_resource type="Resource" id="Resource_57h0m"]
-script = ExtResource("3_d0ebs")
-FontData = ExtResource("2_ytsq6")
-FontSize = 16
-Merge = true
 
 [sub_resource type="Resource" id="Resource_i4se3"]
 script = ExtResource("3_d0ebs")
-FontData = ExtResource("4_lxhcl")
+FontData = ExtResource("2_5202q")
 FontSize = 16
 Merge = true
 
 [sub_resource type="Resource" id="Resource_y5fq4"]
 script = ExtResource("4_gwpw1")
-Fonts = Array[ExtResource("3_d0ebs")]([SubResource("Resource_57h0m"), SubResource("Resource_i4se3")])
+Fonts = Array[ExtResource("3_d0ebs")]([SubResource("Resource_i4se3")])
 AddDefaultFont = true
 Scale = 1.5
 IniFilename = "user://imgui.ini"
