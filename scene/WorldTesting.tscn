@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bngwhrm15atpw"]
+
+[ext_resource type="Script" path="res://code/WorldTesting.cs" id="1_bll23"]
+[ext_resource type="Script" path="res://code/BackEnd/Parameters.cs" id="2_nyxxq"]
+
+[node name="WorldTesting" type="Node2D"]
+script = ExtResource("1_bll23")
+
+[node name="Parameters" type="Node" parent="."]
+script = ExtResource("2_nyxxq")
+WorldSize = 7
+TreasureMin = 1
+TreasureMax = 5
+TroopMin = 1
+TroopMax = 5

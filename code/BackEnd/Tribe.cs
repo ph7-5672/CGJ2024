@@ -18,7 +18,8 @@ namespace Cgj_2024.code.Data
 
         }
 
-        public List<Territory> Territory { get; set; }
+        public string Name { get; set; }
+        public List<Territory> Territory { get; private set; } = [];
 
         public Wish Wish { get; set; }
 
