@@ -89,7 +89,7 @@ public partial class Game
             ImGui.Dummy(new System.Numerics.Vector2(0f, 18f));
             var icon = tribe.CanBeMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
             var rect = Image(icon, icon.GetSize() * uiScale);
-
+            rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
             if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
             {
                 ImGui.SetNextWindowBgAlpha(0);
@@ -218,7 +218,6 @@ public partial class Game
         ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
         Widgets.ImageButton("准备进攻", attackButtonTexture, new System.Numerics.Vector2(100f, 20f));
         ImGui.End();
-        
     }
 
 
