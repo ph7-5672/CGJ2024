@@ -4,7 +4,7 @@ namespace Cgj_2024.code.BackEnd.Phase
 {
     public abstract class TurnPhase
     {
-        public static TurnPhase New(PhaseType turnPhase)
+        public static TurnPhase New(PhaseType turnPhase, World world, Turn turn)
         {
             TurnPhase phase = null;
             switch (turnPhase)
@@ -31,17 +31,22 @@ namespace Cgj_2024.code.BackEnd.Phase
                     GD.PrintErr($"Unknow TurnPhase: {turnPhase}");
                     break;
             }
-
+            phase.World = world;
+            phase.Turn = turn;
             return phase;
         }
 
-        public virtual void Begin(bool isPlayerContorl)
+        public virtual void Begin()
         {
             GD.Print($"{this} Begin");
         }
-        public virtual void End(bool isPlayerContorl)
+        public virtual void End()
         {
             GD.Print($"{this} End");
         }
+
+        public World World { get; private set; }
+        public Turn Turn { get; private set;}
+        public bool IsPlayerContorl => Turn.IsPlayerContorl;
     }
 }

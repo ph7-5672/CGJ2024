@@ -12,6 +12,7 @@ namespace Cgj_2024.code.BackEnd
             if (emptyWish)
             {
                 Wish = new EmptyWish();
+                CanBeMobilized = true;
             }
             else
             {
@@ -25,12 +26,12 @@ namespace Cgj_2024.code.BackEnd
         }
 
         public string Name { get; set; }
-        public Wish Wish { get; private set; }
-        public List<Territory> Territory { get; private set; } = [];
+        public Wish Wish { get; protected set; }
+        public List<Territory> Territory { get; protected set; } = [];
 
         public int Troops => Territory.Sum(t => t.Troops);
 
-        public bool IsMobilized { get; private set; } = false;
-        public bool CanBeMobilized => Wish.IsSatisefied();
+        public bool IsMobilized { get; protected set; } = false;
+        public bool CanBeMobilized { get; protected set; }
     }
 }

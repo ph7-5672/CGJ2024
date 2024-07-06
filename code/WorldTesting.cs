@@ -18,7 +18,7 @@ public partial class WorldTesting : Node2D
     public override void _Ready()
     {
         base._Ready();
-        World.Initialzize();
+        World.Initialzize(Parameters.Instance);
     }
 
     public override void _Process(double delta)

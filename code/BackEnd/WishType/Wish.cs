@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace Cgj_2024.code.BackEnd.WishType
 {
-    public class Wish
+    public abstract class Wish
     {
         public static Wish New(Tribe tribe)
         {
             // todo: randomize here
-            return new Wish();
+            var wish = new EmptyWish();
+            wish.Tribe = tribe;
+            return wish;
         }
-        public virtual bool IsSatisefied()
-        {
-            return false;
-        }
+        public virtual bool IsSatisefied() => false;
         public Tribe Tribe { get; private set; }
     }
 
