@@ -31,6 +31,6 @@
 			return result;
 		}
 
-		public override string Description => "领地总财宝最多";
+		public override string Description => "上回合进攻成功或未动员";
 	}
 }

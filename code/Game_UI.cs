@@ -119,8 +119,10 @@ public partial class Game
                     Text($"- {desire.Description}", Colors.Black, 11);
                 }
                 Text(string.Empty, Colors.Black, 11);
+                Text($"领地：{tribe.Territory.Count}", Colors.Black, 11);
                 Text($"总兵力：{tribe.Troops}", Colors.Black, 11);
-                Text($"被赏赐财宝：{tribe.TotalRewardedTreasure}", Colors.Black, 11);
+                Text($"总收入：{tribe.Treasure}", Colors.Black, 11);
+                Text($"总赏赐：{tribe.TotalRewardedTreasure}", Colors.Black, 11);
 				ImGui.EndGroup();
                 ImGui.EndTooltip();
                 ImGui.PopStyleVar();
@@ -148,7 +150,7 @@ public partial class Game
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 ImGui.Text(territory.Name ?? "领地");
                 ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.Text($"财力：{territory.Treasure}");
+                ImGui.Text($"收入：{territory.Treasure}");
                 ImGui.EndGroup();
 
                 tribeRect.Size = new Vector2(tribeRect.Size.X, tribeRect.Size.Y + height);
@@ -268,7 +270,7 @@ public partial class Game
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 Text(territory.Name ?? "领地", Colors.White);
                 Text($"兵力：{territory.Troops}", Colors.White);
-                Text($"财力：{territory.Treasure}", Colors.White);
+                Text($"收入：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
 
                 rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
