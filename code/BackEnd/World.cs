@@ -62,6 +62,7 @@ namespace Cgj_2024.code.BackEnd
             if (takeControl)
             {
                 CurrentControl.EndTurn();
+                LastTurn = CurrentTurn;
                 CurrentTurn = new Turn(this);
                 CurrentControl = IsPlayerControl ? Goblin : Human;
                 CurrentControl.BeginTurn(EmptyWish: !IsPlayerControl);
@@ -98,6 +99,7 @@ namespace Cgj_2024.code.BackEnd
 
         #region Turn
         public Turn CurrentTurn { get; private set; }
+        public Turn LastTurn { get; private set; }
 
         #endregion Turn
     }
