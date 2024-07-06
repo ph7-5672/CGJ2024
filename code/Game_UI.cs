@@ -312,11 +312,27 @@ public partial class Game
     }
 
 
-    public static void Text(string text, Color color)
+    public static void Text(string text, Color color, int newLineCharCount = 0)
     {
+        var textToDisplay = text;
+        var remainingText = string.Empty;
+        if (newLineCharCount > 0)
+        {
+            textToDisplay = text.Substr(0, newLineCharCount);
+            if (text.Length > newLineCharCount)
+            {
+                remainingText = text.Substr(newLineCharCount, text.Length);
+            }
+        }
+
         ImGui.PushStyleColor(ImGuiCol.Text, color.ToVector4());
-        ImGui.Text(text);
+        ImGui.Text(textToDisplay);
         ImGui.PopStyleColor();
+
+        if (remainingText.Length > 0)
+        {
+            Text(remainingText, color, newLineCharCount);
+        }
     }
 
     public static void Text(params (string, Color)[] texts)
