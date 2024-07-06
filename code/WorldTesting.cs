@@ -25,7 +25,7 @@ public partial class WorldTesting : Node2D
     {
         base._Process(delta);
 
-        TurnPhase = World.PhaseType;
+        TurnPhase = World.CurrentTurn.CurrentRound.PhaseType;
         IsPlayerControl = World.IsPlayerControl;
     }
 

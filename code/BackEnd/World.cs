@@ -35,41 +35,18 @@ namespace Cgj_2024.code.BackEnd
             Human.Initialze(Territory[size..]);
 
             CurrentTurn = new Turn(this);
-
-            PhaseType = PhaseType.Begin;
-            CurrentPhase = TurnPhase.New(PhaseType, this, CurrentTurn);
-            IsPlayerControl = true;
-            CurrentControl = Goblin;
-            Goblin.BeginTurn(true);
-            CurrentPhase.Begin();
+            CurrentTurn.Begin();
         }
 
         public void NextPhase()
         {
-            bool takeControl = false;
-            if (PhaseType != PhaseType.End)
+            if (CurrentTurn.Next())
             {
-                PhaseType++;
-            }
-            else
-            {
-                PhaseType = PhaseType.Begin;
-                takeControl = true;
-                IsPlayerControl = !IsPlayerControl;
-            }
-
-            CurrentPhase.End();
-            if (takeControl)
-            {
-                CurrentControl.EndTurn();
+                CurrentTurn.End();
                 LastTurn = CurrentTurn;
                 CurrentTurn = new Turn(this);
-                CurrentControl = IsPlayerControl ? Goblin : Human;
-                CurrentControl.BeginTurn(EmptyWish: !IsPlayerControl);
+                CurrentTurn.Begin();
             }
-
-            CurrentPhase = TurnPhase.New(PhaseType, this, CurrentTurn);
-            CurrentPhase.Begin();
         }
 
         public WorldState IsWin()
@@ -92,10 +69,9 @@ namespace Cgj_2024.code.BackEnd
         public Goblin Goblin { get; private set; }
         public Human Human { get; private set; }
 
-        public TurnPhase CurrentPhase { get; private set; }
-        public PhaseType PhaseType { get; private set; }
-        public Faction CurrentControl { get; private set; }
-        public bool IsPlayerControl { get; private set; }
+        public RoundPhase CurrentPhase => CurrentTurn.CurrentRound.CurrentPhase;
+        public Faction CurrentControl => CurrentTurn.IsPlayerContorl ? Goblin : Human;
+        public bool IsPlayerControl => CurrentTurn.IsPlayerContorl;
 
         #region Turn
         public Turn CurrentTurn { get; private set; }
@@ -104,15 +80,6 @@ namespace Cgj_2024.code.BackEnd
         #endregion Turn
     }
 
-    public enum PhaseType
-    {
-        Begin,
-        SelectEnemyTerritory,
-        Mobilise,
-        Settle,
-        Reward,
-        End,
-    }
     public enum WorldState
     {
         Ongoing,

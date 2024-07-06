@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Cgj_2024.code.BackEnd.Phase
 {
-    public class MobilisePhase : TurnPhase
+    public class MobilisePhase : RoundPhase
     {
         public override void Begin()
         {
@@ -14,6 +15,12 @@ namespace Cgj_2024.code.BackEnd.Phase
             }
             else
             {
+                //debug
+                if (Turn.TargetedTerritory is null)
+                {
+                    Turn.TargetedTerritory = World.Human.Territories.First();
+                }
+
                 AIMobilizedTribes = [Turn.TargetedTerritory.Tribe];
             }
         }

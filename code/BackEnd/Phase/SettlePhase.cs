@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cgj_2024.code.BackEnd.Phase
 {
-    public class SettlePhase : TurnPhase
+    public class SettlePhase : RoundPhase
     {
         public override void Begin()
         {

@@ -5,5 +5,20 @@
 	/// </summary>
 	public class Desire04 : Desire
 	{
+		public Desire04()
+		{
+			// 随机选择一个其他部落作为比较目标
+		}
+
+		readonly Tribe compareTargetTribe;
+
+		public override bool IsSatisefied()
+		{
+			// 如果当前回合是游戏的第一回合，则返回true
+			// 否则检查部落领地数量是否大于比较目标部落的领地数量
+			// ...
+
+			return base.IsSatisefied();
+		}
 	}
 }
