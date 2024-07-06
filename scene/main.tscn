@@ -23,9 +23,5 @@ goblinTipsBg = ExtResource("9_8x8ai")
 [node name="Parameters" type="Node" parent="."]
 script = ExtResource("3_pg3ul")
 WorldSize = 7
-TreasureMin = 1
-TreasureMax = 5
-TroopMin = 1
-TroopMax = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
