@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=17 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -10,6 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://ddlfchi6gnxci" path="res://textures/goblin/哥布林表情0.png" id="7_purc8"]
 [ext_resource type="Texture2D" uid="uid://d2syt0snwnagq" path="res://textures/goblin/哥布林表情1.png" id="8_dbhky"]
 [ext_resource type="Texture2D" uid="uid://dey60aojakp8i" path="res://textures/goblin/对话框.png" id="9_8x8ai"]
+[ext_resource type="Texture2D" uid="uid://cuqku78oigqiv" path="res://textures/human/背景.png" id="10_jal8e"]
+[ext_resource type="Texture2D" uid="uid://dxnmjjvqitds5" path="res://textures/human/领土0.png" id="11_dmcmo"]
+[ext_resource type="Texture2D" uid="uid://co58i0uu65urw" path="res://textures/human/领土1.png" id="12_5cvut"]
+[ext_resource type="Texture2D" uid="uid://b3i77gka40571" path="res://textures/human/领土2.png" id="13_mea6x"]
+[ext_resource type="Texture2D" uid="uid://bd3g8rctotmr0" path="res://textures/human/领土3.png" id="14_ho0an"]
+[ext_resource type="Texture2D" uid="uid://clk3ntmjxctpg" path="res://icon.svg" id="15_0ll46"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rkd1a")
@@ -17,6 +23,9 @@ goblinBg = ExtResource("2_vlhxf")
 goblinTibreRowsBg = Array[Texture2D]([ExtResource("3_3m4i5"), ExtResource("4_0ia4k"), ExtResource("5_kt5wd"), ExtResource("6_duv1i")])
 goblinEmotionsIcon = Array[Texture2D]([ExtResource("7_purc8"), ExtResource("8_dbhky")])
 goblinTipsBg = ExtResource("9_8x8ai")
+humanBg = ExtResource("10_jal8e")
+humanTibreRowsBg = Array[Texture2D]([ExtResource("11_dmcmo"), ExtResource("12_5cvut"), ExtResource("13_mea6x"), ExtResource("14_ho0an")])
+attackButtonTexture = ExtResource("15_0ll46")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

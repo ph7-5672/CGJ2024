@@ -36,8 +36,8 @@ public partial class Game
     [Export]
     Array<Texture2D> humanTibreRowsBg;
 
-    
-
+    [Export]
+    Texture2D attackButtonTexture;
 
     // TODO 领地分配 和 金币分配
     void EnterTree_UI()
@@ -150,7 +150,7 @@ public partial class Game
 
         ImGui.Begin("##人类领地背景", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoInputs);
         {
-            Image(goblinBg, size);
+            Image(humanBg, size);
 
         }
         ImGui.End();
@@ -161,11 +161,11 @@ public partial class Game
         ImGui.SetNextWindowPos(pos + padding);
 
         ImGui.Begin("##人类领地列表", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
-        for (int i = 0; i < World.Goblin.Tribes.Count; i++)
+        for (int i = 0; i < World.Human.Tribes.Count; i++)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Human.Tribes[i];
-            var title = goblinTibreRowsBg[0];
+            var title = humanTibreRowsBg[0];
             Image(title, title.GetSize() * uiScale);
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
@@ -175,24 +175,24 @@ public partial class Game
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
                 var territory = tribe.Territory[j];
-                if (j == 0)
+                if (j == tribe.Territory.Count - 1)
                 {
-                    Image(goblinTibreRowsBg[1], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[3], title.GetSize() * uiScale);
                 }
-                else if (j == tribe.Territory.Count - 1)
+                else if (j == 0)
                 {
-                    Image(goblinTibreRowsBg[3], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[1], title.GetSize() * uiScale);
                 }
                 else
                 {
-                    Image(goblinTibreRowsBg[2], title.GetSize() * uiScale);
+                    Image(humanTibreRowsBg[2], title.GetSize() * uiScale);
                 }
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
-                ImGui.Text(territory.Name ?? "领地");
-                ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.Text($"财力：{territory.Treasure}");
+                Text(territory.Name ?? "领地", Colors.White);
+                Text($"兵力：{territory.Troops}", Colors.White);
+                Text($"财力：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
             }
             ImGui.PopStyleVar();
@@ -210,13 +210,14 @@ public partial class Game
     /// </summary>
     void Interact_UI()
     {
-        
-        
-        /*var windowSize = new Vector2(100f, );
-        ImGui.SetNextWindowPos();
+        var windowSize = new Vector2(120f, 40f);
+
+        var pos = (DisplayServer.WindowGetSize() - windowSize) / 2;
+        ImGui.SetNextWindowPos(pos.ToSystemNumerics());
+        ImGui.SetNextWindowSize(windowSize.ToSystemNumerics());
         ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
-        ImGui.Button("准备进攻！");
-        ImGui.End();*/
+        Widgets.ImageButton("准备进攻", attackButtonTexture, new System.Numerics.Vector2(100f, 20f));
+        ImGui.End();
         
     }
 
