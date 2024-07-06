@@ -148,9 +148,9 @@ public partial class Game
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
-                ImGui.Text(territory.Name ?? "领地");
-                ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.Text($"收入：{territory.Treasure}");
+                Text("领地", Colors.Black);
+                Text($"兵力：{territory.Troops}", Colors.Black);
+                Text($"收入：{territory.Treasure}", Colors.Black);
                 ImGui.EndGroup();
 
                 tribeRect.Size = new Vector2(tribeRect.Size.X, tribeRect.Size.Y + height);
