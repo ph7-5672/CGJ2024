@@ -46,11 +46,11 @@ public partial class Game : Node2D
     {
         base._Input(@event);
 
-        if (@event is InputEventMouseButton mouseEvent
+        /*if (@event is InputEventMouseButton mouseEvent
             && mouseEvent.IsReleased() && mouseEvent.ButtonIndex == MouseButton.Left)
         {
             World.NextPhase();
-        }
+        }*/
     }
 
 

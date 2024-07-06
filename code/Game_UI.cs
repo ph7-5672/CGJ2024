@@ -1,11 +1,11 @@
 ﻿/*
  * ImGui，负责UI显示。
  */
+using Cgj_2024.code.BackEnd.Phase;
 using Godot;
 using Godot.Collections;
 using ImGuiGodot;
 using ImGuiNET;
-using System;
 
 namespace Cgj_2024.code;
 
@@ -43,7 +43,6 @@ public partial class Game
     void EnterTree_UI()
     {
         uiScale = DisplayServer.WindowGetSize() / new Vector2(640, 480);
-        ImGui.StyleColorsLight();
         style = ImGui.GetStyle();
     }
 
@@ -52,6 +51,8 @@ public partial class Game
     /// </summary>
     void GoblinTerritories_UI()
     {
+        var visible = World.CurrentPhase is not SelectTerritoryPhase;
+
         var pos = new System.Numerics.Vector2(10f, 10f);
         var size = goblinBg.GetSize() * uiScale;
         ImGui.SetNextWindowBgAlpha(0);
@@ -90,7 +91,8 @@ public partial class Game
             var icon = tribe.CanBeMobilized ? goblinEmotionsIcon[0] : goblinEmotionsIcon[1];
             var rect = Image(icon, icon.GetSize() * uiScale);
             rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
-            if (ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
+            var isHovered = ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics());
+            if (visible && isHovered)
             {
                 ImGui.SetNextWindowBgAlpha(0);
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
@@ -130,6 +132,18 @@ public partial class Game
 
         ImGui.End();
         ImGui.PopStyleVar(2);
+
+        // 遮罩
+        if (visible)
+        {
+            return;
+        }
+        ImGui.SetNextWindowBgAlpha(0.5f);
+        ImGui.SetNextWindowSize(size.ToSystemNumerics());
+        ImGui.SetNextWindowPos(pos);
+        ImGui.Begin("##哥布林列表遮罩", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
+        ImGui.End();
+
     }
 
     /// <summary>
@@ -210,14 +224,38 @@ public partial class Game
     /// </summary>
     void Interact_UI()
     {
-        var windowSize = new Vector2(120f, 40f);
+        /*var windowSize = new Vector2(320f, 480f) * uiScale;
 
-        var pos = (DisplayServer.WindowGetSize() - windowSize) / 2;
-        ImGui.SetNextWindowPos(pos.ToSystemNumerics());
+        ImGui.SetNextWindowPos(ScreenCenterPos(windowSize).ToSystemNumerics());
         ImGui.SetNextWindowSize(windowSize.ToSystemNumerics());
         ImGui.Begin("##游戏交互", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoBackground | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoResize);
-        Widgets.ImageButton("准备进攻", attackButtonTexture, new System.Numerics.Vector2(100f, 20f));
-        ImGui.End();
+        var buttonSize = new Vector2(100f, 40f);
+        var buttonPos = WindowCenterPos(buttonSize).ToSystemNumerics();
+        ImGui.Dummy(new System.Numerics.Vector2(0f, buttonPos.Y));
+        ImGui.Dummy(new System.Numerics.Vector2(buttonPos.X, 0f));
+        ImGui.SameLine(0f, 0f);
+        if (Widgets.ImageButton("准备进攻", attackButtonTexture, buttonSize.ToSystemNumerics()))
+        {
+            World.NextPhase();
+        }
+        var childSize = windowSize / 3;
+        ImGui.SetNextWindowPos(ScreenCenterPos(childSize).ToSystemNumerics() + new System.Numerics.Vector2(0f, 320f));
+        ImGui.BeginChild("##提示信息", childSize.ToSystemNumerics());
+        if (World.CurrentPhase is BeginPhase)
+        {
+            ImGui.Text("轮到你的回合");
+        }
+        if (World.CurrentPhase is SelectTerritoryPhase)
+        {
+            ImGui.Text("请选择要进攻的人类领地。");
+        }
+        if (World.CurrentPhase is MobilisePhase)
+        {
+            ImGui.Text("请选择要动员的部落。");
+        }
+
+        ImGui.EndChild();
+        ImGui.End();*/
     }
 
 
@@ -296,6 +334,16 @@ public partial class Game
         return resizedTexture;
     }
 
+
+    public static Vector2 ScreenCenterPos(Vector2 size)
+    {
+        return (DisplayServer.WindowGetSize() - size) / 2;
+    }
+
+    public static Vector2 WindowCenterPos(Vector2 size)
+    {
+        return (ImGui.GetWindowSize().ToGodotNumerics() - size) / 2;
+    }
 
 }
 

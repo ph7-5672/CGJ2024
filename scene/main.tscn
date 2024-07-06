@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=26 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -18,6 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://clk3ntmjxctpg" path="res://icon.svg" id="15_0ll46"]
 [ext_resource type="Texture2D" uid="uid://cyqaa3j0ja166" path="res://textures/background.jpg" id="16_ox671"]
 [ext_resource type="AudioStream" uid="uid://d3b6qmtpt4pie" path="res://sounds/background2.wav" id="17_h15om"]
+[ext_resource type="Texture2D" uid="uid://ca2rwtrmtr12y" path="res://textures/button/开战.png" id="18_5cokb"]
+[ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
+[ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6i7db"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gh8l4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wrcwc"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rkd1a")
@@ -29,23 +40,6 @@ humanBg = ExtResource("10_jal8e")
 humanTibreRowsBg = Array[Texture2D]([ExtResource("11_dmcmo"), ExtResource("12_5cvut"), ExtResource("13_mea6x"), ExtResource("14_ho0an")])
 attackButtonTexture = ExtResource("15_0ll46")
 
-[node name="BackgroundImage" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -800.0
-offset_top = -600.0
-offset_right = -160.0
-offset_bottom = -120.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2.5, 2.5)
-texture = ExtResource("16_ox671")
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("17_h15om")
-autoplay = true
-
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Parameters" type="Node" parent="."]
@@ -53,3 +47,70 @@ script = ExtResource("3_pg3ul")
 WorldSize = 7
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BackgroundImage" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -960.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("16_ox671")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 492.0
+offset_right = -492.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BattleButton" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "准备战斗"
+icon = ExtResource("18_5cokb")
+flat = true
+icon_alignment = 1
+script = ExtResource("19_0nvsr")
+
+[node name="TipsLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -490.0
+offset_bottom = -432.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "请选择你的英雄"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("18_pdy4a")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h15om")
+autoplay = true
