@@ -22,7 +22,9 @@ namespace Cgj_2024.code.BackEnd.Phase
         {
             if (IsPlayerContorl)
             {
-                TerritoryRewaredTribe?.MakeADesire();
+                // Todo: 解注释这行开启额外特性
+                // 封赏新领地后增加欲望
+                //TerritoryRewaredTribe?.MakeADesire();
             }
             base.End();
         }

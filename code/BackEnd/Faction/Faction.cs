@@ -19,6 +19,10 @@ namespace Cgj_2024.code.BackEnd.Factions
             foreach (var tribe in Tribes)
             {
                 tribe.BeginTurn(EmptyWish);
+                if (World.LastTurn is null)
+                {
+                    tribe.MakeADesire();
+                }
             }
         }
 
