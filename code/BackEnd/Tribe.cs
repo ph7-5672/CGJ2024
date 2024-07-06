@@ -19,7 +19,6 @@ namespace Cgj_2024.code.BackEnd
 
         public virtual void EndTurn()
         {
-            IsMobilized = false;
         }
 
         public virtual void MakeADesire()
@@ -42,7 +41,8 @@ namespace Cgj_2024.code.BackEnd
         public int TotalRewardedTreasure { get; protected set; }
 
         public bool IsMobilized { get; protected set; } = false;
-        public bool CanBeMobilized => Desires.Count == 0 || Desires.TrueForAll(d => d.IsSatisefied());
+        public bool CanBeMobilized => !IsMobilized && DesireSatisefied;
+        public bool DesireSatisefied => Desires.Count == 0 || Desires.TrueForAll(d => d.IsSatisefied());
 
         public World World { get; protected set; }
         public Faction Faction { get; protected set; }

@@ -31,6 +31,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                         tribe.RewardTreasure(treasure);
                     }
             }
+            Turn.TreasureRewaredTribes = TreasureRewaredTribes;
             base.End();
         }
 
