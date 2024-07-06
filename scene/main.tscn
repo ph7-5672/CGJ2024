@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=19 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bd3g8rctotmr0" path="res://textures/human/领土3.png" id="14_ho0an"]
 [ext_resource type="Texture2D" uid="uid://clk3ntmjxctpg" path="res://icon.svg" id="15_0ll46"]
 [ext_resource type="Texture2D" uid="uid://cyqaa3j0ja166" path="res://textures/background.jpg" id="16_ox671"]
+[ext_resource type="AudioStream" uid="uid://d3b6qmtpt4pie" path="res://sounds/background2.wav" id="17_h15om"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rkd1a")
@@ -40,6 +41,10 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("16_ox671")
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h15om")
+autoplay = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
