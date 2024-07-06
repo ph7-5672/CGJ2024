@@ -1,23 +1,26 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cgj_2024.code.Data.Role
+namespace Cgj_2024.code.BackEnd.Factions
 {
     public class Faction
     {
-        public virtual void BeginTurn()
+        public virtual void BeginTurn(bool EmptyWish = false)
         {
+            GD.Print($"{this} Begin");
             foreach (var tribe in Tribes)
             {
-                tribe.BeginTurn();
+                tribe.BeginTurn(EmptyWish);
             }
         }
 
         public virtual void EndTurn()
         {
+            GD.Print($"{this} End");
             foreach (var tribe in Tribes)
             {
                 tribe.EndTurn();

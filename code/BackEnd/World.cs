@@ -1,5 +1,4 @@
-﻿using Cgj_2024.code.Data;
-using Cgj_2024.code.Data.Role;
+﻿using Cgj_2024.code.BackEnd.Factions;
 using System.Collections.Generic;
 using Godot;
 using Cgj_2024.code.BackEnd.Phase;
@@ -18,10 +17,6 @@ namespace Cgj_2024.code.BackEnd
 
         public void Initialzize()
         {
-            PhaseType = PhaseType.Begin;
-            CurrentPhase = TurnPhase.New(PhaseType);
-            IsPlayerControl = true;
-
             Rng.Seed = (ulong)Parameters.Instance.Seed;
 
             for (int i = 0; i < Parameters.Instance.WorldSize; i++)
@@ -35,10 +30,18 @@ namespace Cgj_2024.code.BackEnd
             int size = Territory.Count >> 1;
             Goblin.Initialze(Territory[..size]);
             Human.Initialze(Territory[size..]);
+
+            PhaseType = PhaseType.Begin;
+            CurrentPhase = TurnPhase.New(PhaseType);
+            IsPlayerControl = true;
+            CurrentControl = Goblin;
+            Goblin.BeginTurn(true);
+            CurrentPhase.Begin(IsPlayerControl);
         }
 
         public void NextPhase()
         {
+            bool takeControl = false;
             if (PhaseType != PhaseType.End)
             {
                 PhaseType++;
@@ -46,17 +49,23 @@ namespace Cgj_2024.code.BackEnd
             else
             {
                 PhaseType = PhaseType.Begin;
+                takeControl = true;
                 IsPlayerControl = !IsPlayerControl;
             }
 
             CurrentPhase.End(IsPlayerControl);
-            GD.Print($"{CurrentPhase} End");
+            if (takeControl)
+            {
+                CurrentControl.EndTurn();
+                CurrentControl = IsPlayerControl ? Goblin : Human;
+                CurrentControl.BeginTurn();
+            }
+
             CurrentPhase = TurnPhase.New(PhaseType);
-            GD.Print($"{CurrentPhase} Begin");
             CurrentPhase.Begin(IsPlayerControl);
         }
 
-        public RandomNumberGenerator Rng {  get; private set; }
+        public RandomNumberGenerator Rng { get; private set; }
 
         public List<Territory> Territory { get; private set; }
 
@@ -65,7 +74,8 @@ namespace Cgj_2024.code.BackEnd
 
         public TurnPhase CurrentPhase { get; private set; }
         public PhaseType PhaseType { get; private set; }
-        public bool IsPlayerControl = true;
+        public Factions.Faction CurrentControl { get; private set; }
+        public bool IsPlayerControl { get; private set; }
     }
 
     public enum PhaseType

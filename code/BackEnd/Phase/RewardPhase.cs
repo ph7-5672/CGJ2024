@@ -10,10 +10,12 @@ namespace Cgj_2024.code.BackEnd.Phase
     {
         public override void Begin(bool isPlayerContorl)
         {
+            base.Begin(isPlayerContorl);
         }
 
         public override void End(bool isPlayerContorl)
         {
+            base.End(isPlayerContorl);
         }
     }
 }

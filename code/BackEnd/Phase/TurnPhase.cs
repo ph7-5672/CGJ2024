@@ -35,7 +35,13 @@ namespace Cgj_2024.code.BackEnd.Phase
             return phase;
         }
 
-        public abstract void Begin(bool isPlayerContorl);
-        public abstract void End(bool isPlayerContorl);
+        public virtual void Begin(bool isPlayerContorl)
+        {
+            GD.Print($"{this} Begin");
+        }
+        public virtual void End(bool isPlayerContorl)
+        {
+            GD.Print($"{this} End");
+        }
     }
 }

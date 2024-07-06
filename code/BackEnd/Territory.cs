@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cgj_2024.code.Data
+namespace Cgj_2024.code.BackEnd
 {
     public class Territory
     {
