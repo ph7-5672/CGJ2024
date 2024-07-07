@@ -26,8 +26,8 @@ public partial class PlayerRound_SettlePhase : Control
 
         if (Visible)
         {
-            LabelAttacker.Text = $"Troops: {World.CurrentTurn.CurrentRound.PlayerMobilizedTribes.Sum(t => t.Troops)}";
-            LabelDefender.Text = $"Troops: {World.CurrentTurn.CurrentRound.AIMobilizedTribes.Sum(t => t.Troops)}";
+            LabelAttacker.Text = $"哥布林兵力: {World.CurrentTurn.CurrentRound.PlayerMobilizedTribes.Sum(t => t.Troops)}";
+            LabelDefender.Text = $"领主兵力: {World.CurrentTurn.CurrentRound.AIMobilizedTribes.Sum(t => t.Troops)}";
             LabelResult.Text = World.CurrentTurn.CurrentRound.BattleResult ? ResultWin : ResultLose;
         }
         SetVisable(Visible);
