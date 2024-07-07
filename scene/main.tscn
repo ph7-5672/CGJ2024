@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=28 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
 [ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
 [ext_resource type="Script" path="res://code/layer/CancelButton.cs" id="20_2a0ae"]
+[ext_resource type="Script" path="res://code/layer/ConfirmButton.cs" id="21_juv07"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
 
@@ -71,6 +72,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BattleButton" type="Button" parent="CanvasLayer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -97,16 +99,15 @@ icon_alignment = 1
 script = ExtResource("19_0nvsr")
 
 [node name="CancelButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.5
+offset_left = 8.5
 offset_top = -32.0
-offset_right = 55.5
+offset_right = 119.5
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -124,16 +125,15 @@ icon_alignment = 1
 script = ExtResource("20_2a0ae")
 
 [node name="ConfirmButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.5
+offset_left = -120.5
 offset_top = -32.0
-offset_right = 55.5
+offset_right = -9.5
 offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -144,11 +144,11 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
+text = "确认"
 icon = ExtResource("18_5cokb")
 flat = true
 icon_alignment = 1
-script = ExtResource("20_2a0ae")
+script = ExtResource("21_juv07")
 
 [node name="TipsLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 1

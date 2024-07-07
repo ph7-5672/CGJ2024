@@ -42,7 +42,7 @@ public partial class Game
 
     public System.Collections.Generic.Dictionary<int, bool> SelectedGoblinMap { get; private set; } = new();
 
-    public int SelectedHumanIndex { get; private set; } = -1;
+    public int SelectedHumanIndex { get; private set; }
 
     bool mousePressedLastFrame;
 
@@ -133,9 +133,9 @@ public partial class Game
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
-                ImGui.Text(territory.Name ?? "领地");
-                ImGui.Text($"兵力：{territory.Troops}");
-                ImGui.Text($"财力：{territory.Treasure}");
+                Text(territory.Name ?? "领地", Colors.Black);
+                Text($"兵力：{territory.Troops}", Colors.Black);
+                Text($"财力：{territory.Treasure}", Colors.Black);
                 ImGui.EndGroup();
 
                 tribeRect.Size = new Vector2(tribeRect.Size.X, tribeRect.Size.Y + height);
@@ -268,10 +268,10 @@ public partial class Game
                     && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
             {
                 SelectedHumanIndex = i;
-                World.NextPhase();
             }
 
-            if (visible && SelectedHumanIndex != i)
+            if ((phaseType == BackEnd.PhaseType.SelectEnemyTerritory
+                   || phaseType == BackEnd.PhaseType.Mobilise) && SelectedHumanIndex != i)
             {
                 var drawList = ImGui.GetWindowDrawList();
                 drawList.AddRectFilled(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());

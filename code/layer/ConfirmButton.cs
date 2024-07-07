@@ -8,13 +8,13 @@ public partial class ConfirmButton : Button
     {
         Pressed += () =>
         {
-            //Game.Instance.World.();
+            Game.Instance.World.NextPhase();
         };
     }
 
     public override void _Process(double delta)
     {
         var phaseType = Game.Instance.World.CurrentTurn.CurrentRound.PhaseType;
-        Visible = phaseType == Cgj_2024.code.BackEnd.PhaseType.Mobilise;
+        Visible = phaseType == Cgj_2024.code.BackEnd.PhaseType.SelectEnemyTerritory || phaseType == Cgj_2024.code.BackEnd.PhaseType.Mobilise;
     }
 }
