@@ -25,6 +25,13 @@ public partial class PlayerRound_MobillsePhase : Control
         base._Process(delta);
         Visible = World.IsPlayerControl && World.CurrentPhase is MobilisePhase;
         SetVisable(Visible);
+        Confirm.Disabled = Game.Instance.SelectedGoblinTribes.Count == 0;
+
+        if (Visible)
+        {
+            GoblinTroopsLabel.Text = Game.Instance.SelectedGoblinTribes.Select(t => t.Troops).Sum().ToString();
+            HumanTroopsLabel.Text = Game.Instance.SelectedHumanTerritory.Troops.ToString();
+        }
     }
 
     void SetVisable(bool visable)
@@ -33,6 +40,9 @@ public partial class PlayerRound_MobillsePhase : Control
     }
 
     [Export] Button Confirm;
+    [Export] Label GoblinTroopsLabel;
+    [Export] Label HumanTroopsLabel;
+
     World World => Game.Instance.World;
     MobilisePhase CurrentPhase => World.CurrentPhase as MobilisePhase;
 }

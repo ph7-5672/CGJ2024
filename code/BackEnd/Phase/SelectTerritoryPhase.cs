@@ -27,6 +27,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             base.End();
 
             Turn.CurrentRound.TargetedTerritory = SeletecedTerritory;
+            GD.Print($"选择了\"{Turn.CurrentRound.TargetedTerritory?.Name}\"进攻");
         }
 
         public Territory SeletecedTerritory { get; set; }

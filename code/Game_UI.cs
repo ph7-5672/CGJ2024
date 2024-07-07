@@ -61,9 +61,8 @@ public partial class Game
     /// </summary>
     void GoblinTerritories_UI()
     {
-        var phaseType = World.CurrentTurn.PlayerRound.PhaseType;
-        var visible = phaseType == BackEnd.PhaseType.Begin
-                   || phaseType == BackEnd.PhaseType.Mobilise;
+        var visible = World.CurrentPhase is BeginPhase
+                   || World.CurrentPhase is MobilisePhase;
 
 
         var pos = new System.Numerics.Vector2(10f, 10f);
@@ -161,7 +160,7 @@ public partial class Game
             ImGui.PopStyleVar();
             ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
 
-            if (phaseType == BackEnd.PhaseType.Mobilise)
+            if (World.CurrentPhase is MobilisePhase)
             {
                 var contains = SelectedGoblinTribes.Contains(tribe);
 
@@ -211,10 +210,9 @@ public partial class Game
     /// </summary>
     void HumanTerritories_UI()
     {
-        var phaseType = World.CurrentTurn.PlayerRound.PhaseType;
-        var visible = phaseType == BackEnd.PhaseType.Begin
-                   || phaseType == BackEnd.PhaseType.SelectEnemyTerritory
-                   || phaseType == BackEnd.PhaseType.Mobilise;
+        var visible = World.CurrentPhase is BeginPhase
+                   || World.CurrentPhase is SelectTerritoryPhase
+                   || World.CurrentPhase is MobilisePhase;
 
         var displaySize = DisplayServer.WindowGetSize();
         var offset = new System.Numerics.Vector2(10f, 10f);
@@ -279,14 +277,14 @@ public partial class Game
                 Text($"收入：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
 
-                if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory
+                if (World.CurrentPhase is SelectTerritoryPhase
                     && Input.IsMouseButtonPressed(MouseButton.Left)
                     && ImGui.IsMouseHoveringRect(territoryRect.Position.ToSystemNumerics(), territoryRect.Position.ToSystemNumerics() + territoryRect.Size.ToSystemNumerics()))
                 {
                     SelectedHumanTerritory = territory;
                 }
 
-                if ((phaseType == BackEnd.PhaseType.SelectEnemyTerritory || phaseType == BackEnd.PhaseType.Mobilise) && SelectedHumanTerritory != territory)
+                if ((World.CurrentPhase is SelectTerritoryPhase || World.CurrentPhase is MobilisePhase) && SelectedHumanTerritory != territory)
                 {
                     var drawList = ImGui.GetWindowDrawList();
                     drawList.AddRectFilled(territoryRect.Position.ToSystemNumerics(), territoryRect.Position.ToSystemNumerics() + territoryRect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());

@@ -15,7 +15,6 @@ public partial class Player_SelectEnemy_UI : Control
     public override void _Ready()
     {
         confirmButton.Pressed += Game.Instance.World.NextPhase;
-        //cancelButton.Pressed += 
     }
 
     public override void _Process(double delta)
