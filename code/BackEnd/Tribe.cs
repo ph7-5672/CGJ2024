@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Cgj_2024.code.BackEnd.Factions;
 using Godot;
@@ -13,6 +14,11 @@ namespace Cgj_2024.code.BackEnd
             World = world;
             Faction = faction;
             GenerateName();
+
+            if (faction is Goblin)
+            {
+                MakeADesire();
+            }
         }
 
         public void Initialize(RandomNumberGenerator rng, Parameters parameters)
