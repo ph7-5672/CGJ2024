@@ -8,6 +8,12 @@ public partial class Player_Reward_UI : Control
 	{
 		rewardTerritoryConfirmButton.Pressed += () =>
 		{
+			var allItems = rewardTerritoryTribeInfoList.GetChildren();
+			foreach (var item in allItems)
+			{
+				item.QueueFree();
+			}
+
 			isRewardingTerritory = false;
 			rewardTerritoryContainer.Visible = false;
 			rewardTreasureContainer.Visible = true;
@@ -15,7 +21,20 @@ public partial class Player_Reward_UI : Control
 			FillTribeList();
 		};
 
-		rewardTreasureConfirmButton.Pressed += Game.Instance.World.NextPhase;
+		rewardTreasureConfirmButton.Pressed += () =>
+		{
+			Game.Instance.World.NextPhase();
+
+			var allTreasureItems = rewardTreasureTribeInfoList.GetChildren();
+			foreach (var item in allTreasureItems)
+			{
+				item.QueueFree();
+			}
+
+			isRewardingTerritory = true;
+			rewardTerritoryContainer.Visible = true;
+			rewardTreasureContainer.Visible = false;
+		};
 
 		isRewardingTerritory = true;
 	}
@@ -47,12 +66,14 @@ public partial class Player_Reward_UI : Control
 			}
 			else
 			{
-				var infoItem = tribeInfoItemForTreasure.Instantiate() as TribeInfoItem;
+				var infoItem = tribeInfoItemForTreasure.Instantiate() as TribeInfoItemForTreasure;
 				infoItem.Tribe = tribe;
 				rewardTreasureTribeInfoList.AddChild(infoItem);
 			}
 		}
 	}
+
+	public static int rewardedTerritoryCount = 0;
 
 	bool isRewardingTerritory;
 

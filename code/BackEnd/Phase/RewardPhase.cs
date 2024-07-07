@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,13 @@ namespace Cgj_2024.code.BackEnd.Phase
             if (!IsPlayerContorl)
             {
                 HandleDefence(Turn.CurrentRound.BattleResult);
+                World.NextPhase();
             }
         }
 
         public override void End()
         {
-            if (IsPlayerContorl)
+            if (IsPlayerContorl && Turn.CurrentRound.BattleResult)
             {
                 // Todo: 解注释这行开启额外特性
                 // 封赏新领地后增加欲望
@@ -30,9 +32,28 @@ namespace Cgj_2024.code.BackEnd.Phase
                     {
                         tribe.RewardTreasure(treasure);
                     }
+                GiveTerritory(Turn.TerritoryRewaredTribeGoblin, Turn.CurrentRound.TargetedTerritory);
             }
+            else if (!IsPlayerContorl && !Turn.CurrentRound.BattleResult)
+            {
+                GiveTerritory(Turn.TerritoryRewaredTribeHuman, Turn.CurrentRound.TargetedTerritory);
+            }
+
+
             Turn.TreasureRewaredTribes = TreasureRewaredTribes;
             base.End();
+        }
+
+        void GiveTerritory(Tribe tribe, Territory territory)
+        {
+            if (tribe is null || territory is null) {
+                GD.Print($"本轮没有封赏！ 部落：{tribe?.Name} 领地:{territory?.Name}");
+                return;
+            }
+            GD.Print($"领地{territory.Name}从{territory.Tribe.Name}分给了{tribe.Name}");
+            territory.Tribe.Territory.Remove(territory);
+            territory.Tribe = tribe;
+            tribe.Territory.Add(territory);
         }
 
         void HandleDefence(bool win)
