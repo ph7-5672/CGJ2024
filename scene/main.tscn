@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=36 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
 [ext_resource type="Script" path="res://code/layer/CancelButton.cs" id="20_2a0ae"]
 [ext_resource type="Texture2D" uid="uid://dc1emb235ixa0" path="res://textures/button/确认按钮.png" id="22_cq158"]
+[ext_resource type="Script" path="res://code/layer/AIRound_MobilisePhase/AI_Mobilise_UI.cs" id="22_ryvx0"]
 [ext_resource type="Texture2D" uid="uid://djfan3n6psaap" path="res://textures/button/顶栏.png" id="22_t18p0"]
 [ext_resource type="Script" path="res://code/layer/AIRound_SettlePhase/AI_Settle_UI.cs" id="22_uflg7"]
 [ext_resource type="Texture2D" uid="uid://c0g7sls1w0drr" path="res://textures/button/胜利图标.png" id="23_36de7"]
@@ -174,7 +175,132 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("18_pdy4a")
 
+[node name="AIRound_MobilisePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("attackerDetailsLabel", "defenderDetailsLabel", "confirmButton")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 492.0
+offset_right = -492.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("22_ryvx0")
+attackerDetailsLabel = NodePath("CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/DetailsLabel")
+defenderDetailsLabel = NodePath("CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/DetailsLabel")
+confirmButton = NodePath("CenterContainer/VBoxContainer/MarginContainer2/CenterContainer/ConfirmButton")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_MobilisePhase"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="DefenderDetails" type="VBoxContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DefenderImage" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/DefenderDetails"]
+layout_mode = 2
+texture = ExtResource("26_vq8gi")
+stretch_mode = 3
+
+[node name="DetailsPanel" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/DefenderDetails"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "领地：XXX
+兵力：3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+texture = ExtResource("18_5cokb")
+
+[node name="AttackerDetails" type="VBoxContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttackerImage" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackerDetails"]
+layout_mode = 2
+texture = ExtResource("23_36de7")
+stretch_mode = 3
+
+[node name="DetailsPanel" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackerDetails"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "兵力：3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/MarginContainer2/CenterContainer"]
+layout_mode = 2
+icon = ExtResource("22_cq158")
+flat = true
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TipsPanel" type="TextureRect" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="TipsLabel" type="Label" parent="CanvasLayer/AIRound_MobilisePhase/CenterContainer/VBoxContainer/CenterContainer/TipsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "请从列表选择要动员的部落"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="AIRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("battleWin", "battleLose", "detailsLabel", "confirmButton")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

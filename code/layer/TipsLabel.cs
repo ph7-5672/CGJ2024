@@ -28,9 +28,13 @@ public partial class TipsLabel : Label
             {
                 Text = "要把领地赏赐给哪个部落？";
             }
-            if (phase is SelectTerritoryPhase)
+            if (phase is RewardPhase)
             {
                 Text = "请选择要进攻的人类领地";
+            }
+            else
+            {
+                Visible = false;
             }
         }
         else // AI Round
