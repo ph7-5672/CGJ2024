@@ -73,6 +73,8 @@ public partial class Player_Reward_UI : Control
 		}
 	}
 
+	public static int rewardedTerritoryCount = 0;
+
 	bool isRewardingTerritory;
 
 	[Export]

@@ -9,7 +9,20 @@ public partial class TribeInfoItem : Button
 		isSelected = false;
 		Pressed += () =>
 		{
-			isSelected = !isSelected;
+			if (!isSelected)
+			{
+				if (Player_Reward_UI.rewardedTerritoryCount == 0)
+				{
+					isSelected = true;
+					Player_Reward_UI.rewardedTerritoryCount += 1;
+				}
+			}
+			else
+			{
+				isSelected = false;
+				Player_Reward_UI.rewardedTerritoryCount -= 1;
+			}
+
 			GD.Print(Tribe.Name);
 		};
 	}
