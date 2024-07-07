@@ -34,7 +34,7 @@
 [ext_resource type="Script" path="res://code/layer/PlayerRound_SettlePhase/PlayerRound_SettlePhase.cs" id="31_ujmog"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_MobillsePhase/PlayerRound_MobillsePhase.cs" id="32_ipdww"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_RewardPhase/Player_Reward_UI.cs" id="32_ppu77"]
-[ext_resource type="PackedScene" uid="uid://d1sllv48ih2u2" path="res://scene/tribeInfoItem.tscn" id="33_lp5dn"]
+[ext_resource type="PackedScene" path="res://scene/tribeInfoItem.tscn" id="33_lp5dn"]
 [ext_resource type="Texture2D" uid="uid://bg772ebjse0h3" path="res://textures/button/部落信息框.png" id="34_qfsjl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
@@ -174,6 +174,7 @@ offset_right = 50.0
 offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "你的回合
 "
@@ -192,7 +193,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("21_756vt")
 confirmButton = NodePath("ConfirmButton")
-cancelButton = NodePath("CancelButton")
+cancelButton = NodePath("")
 
 [node name="Top" type="TextureRect" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
 layout_mode = 1
@@ -231,10 +232,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -146.0
-offset_top = 164.0
-offset_right = -30.0
-offset_bottom = 228.0
+offset_left = -58.0
+offset_top = 160.0
+offset_right = 58.0
+offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -245,31 +246,6 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
 icon = ExtResource("22_cq158")
-flat = true
-icon_alignment = 1
-
-[node name="CancelButton" type="Button" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 32.5
-offset_top = 164.0
-offset_right = 143.5
-offset_bottom = 228.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
-icon = ExtResource("18_5cokb")
 flat = true
 icon_alignment = 1
 
@@ -295,6 +271,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "请选择要进攻的人类领地
 
@@ -303,8 +280,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
-visible = false
+[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "GoblinTroopsLabel", "HumanTroopsLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -313,6 +289,39 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_ipdww")
 Confirm = NodePath("ConfirmButton")
+GoblinTroopsLabel = NodePath("MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer/DetailsLabel2")
+HumanTroopsLabel = NodePath("MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer/DetailsLabel2")
+
+[node name="TipsBg" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.5
+offset_top = -108.0
+offset_right = 153.5
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_arbjc")
+
+[node name="TipsLabel" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/TipsBg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "请选择要动员的哥布林部落
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
 layout_mode = 1
@@ -322,9 +331,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -58.0
-offset_top = -27.5
+offset_top = 160.0
 offset_right = 58.0
-offset_bottom = 27.5
+offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -337,6 +346,118 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PlayerRound_MobillsePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -323.5
+offset_top = -305.5
+offset_right = 323.5
+offset_bottom = -78.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer"]
+layout_mode = 2
+
+[node name="DefenderDetails" type="VBoxContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DefenderImage" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails"]
+layout_mode = 2
+texture = ExtResource("26_vq8gi")
+stretch_mode = 3
+
+[node name="DetailsPanel" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -20.0
+offset_right = 34.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "总兵力"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DetailsLabel2" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_right = 40
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+texture = ExtResource("18_5cokb")
+
+[node name="AttackerDetails" type="VBoxContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AttackerImage" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails"]
+layout_mode = 2
+texture = ExtResource("23_36de7")
+stretch_mode = 3
+
+[node name="DetailsPanel" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -20.0
+offset_right = 34.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "总兵力"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DetailsLabel2" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "LabelAttacker", "LabelDefender", "LabelResult")]
 visible = false
@@ -353,6 +474,7 @@ LabelDefender = NodePath("HSplitContainer/Defender/Label")
 LabelResult = NodePath("LabelResult")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -438,7 +560,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
@@ -553,7 +674,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
@@ -648,7 +768,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1

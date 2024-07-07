@@ -18,8 +18,9 @@ public partial class AI_Mobilise_UI : Control
 
 		if (Visible)
 		{
+			var defenderTroops = Game.Instance.SelectedGoblinTribes.Select(t => t.Troops).Sum();
 			attackerDetailsLabel.Text = $"兵力：{currentRound.AIMobilizedTribes.Sum(tribe => tribe.Troops)}";
-			defenderDetailsLabel.Text = $"领地：{currentRound.TargetedTerritory.Name}\n兵力：{currentRound.PlayerMobilizedTribes.Sum(tribe => tribe.Troops)}";
+			defenderDetailsLabel.Text = $"兵力：{defenderTroops}";
 		}
 	}
 
