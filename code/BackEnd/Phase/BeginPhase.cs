@@ -11,6 +11,7 @@ namespace Cgj_2024.code.BackEnd.Phase
         public override void Begin()
         {
             base.Begin();
+            World.NextPhase();
         }
 
         public override void End()
