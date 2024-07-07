@@ -14,6 +14,7 @@ public partial class AI_Mobilise_UI : Control
             CurrentPhase.PlayerMobilizedTribes = Game.Instance.SelectedGoblinTribes.ToList();
 
             Game.Instance.SelectedGoblinTribes.Clear();
+			Game.Instance.SelectedHumanTerritory = null;
             Game.Instance.World.NextPhase();
 		};
 	}

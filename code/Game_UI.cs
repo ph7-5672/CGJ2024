@@ -44,7 +44,7 @@ public partial class Game
 
     public List<Tribe> SelectedGoblinTribes { get; private set; } = new();
 
-    public Territory SelectedHumanTerritory { get; private set; }
+    public Territory SelectedHumanTerritory { get; set; }
 
 
     bool mousePressedLastFrame;
