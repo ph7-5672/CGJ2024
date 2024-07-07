@@ -25,7 +25,7 @@ namespace Cgj_2024.code.BackEnd
 			}
 			else
 			{
-				if (lastTurn.TreasureRewaredTribes.TryGetValue(Tribe, out var rewardedTreasure))
+				if (lastTurn.TreasureRewaredTribes?.TryGetValue(Tribe, out var rewardedTreasure) ?? false)
 				{
 					result = rewardedTreasure == lastTurn.TreasureRewaredTribes.Max(tribe => tribe.Value);
 				}
