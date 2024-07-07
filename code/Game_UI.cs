@@ -42,7 +42,7 @@ public partial class Game
 
     public System.Collections.Generic.Dictionary<int, bool> SelectedGoblinMap { get; private set; } = new();
 
-    public int SelectedHumanIndex { get; private set; }
+    public int SelectedHumanIndex { get; private set; } = -1;
 
     bool mousePressedLastFrame;
 
@@ -107,8 +107,23 @@ public partial class Game
             {
                 ImGui.SetNextWindowBgAlpha(0);
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 0);
+                // 每行最多显示11个等距像素字符
                 ImGui.BeginTooltip();
                 Image(goblinTipsBg, goblinTipsBg.GetSize() * uiScale);
+                ImGui.SameLine(35f);
+                ImGui.BeginGroup();
+                ImGui.Dummy(new System.Numerics.Vector2(0f, 20f));
+				Text($"欲望{(tribe.CanBeMobilized ? "已" : "未")}被满足", Colors.Black, 11);
+                foreach (var desire in tribe.Desires)
+                {
+                    Text($"- {desire.Description}", Colors.Black, 11);
+                }
+                Text(string.Empty, Colors.Black, 11);
+                Text($"领地：{tribe.Territory.Count}", Colors.Black, 11);
+                Text($"总兵力：{tribe.Troops}", Colors.Black, 11);
+                Text($"总收入：{tribe.Treasure}", Colors.Black, 11);
+                Text($"总赏赐：{tribe.TotalRewardedTreasure}", Colors.Black, 11);
+				ImGui.EndGroup();
                 ImGui.EndTooltip();
                 ImGui.PopStyleVar();
             }
@@ -135,7 +150,7 @@ public partial class Game
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 Text(territory.Name ?? "领地", Colors.Black);
                 Text($"兵力：{territory.Troops}", Colors.Black);
-                Text($"财力：{territory.Treasure}", Colors.Black);
+                Text($"收入：{territory.Treasure}", Colors.Black);
                 ImGui.EndGroup();
 
                 tribeRect.Size = new Vector2(tribeRect.Size.X, tribeRect.Size.Y + height);
@@ -255,7 +270,7 @@ public partial class Game
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
                 Text(territory.Name ?? "领地", Colors.White);
                 Text($"兵力：{territory.Troops}", Colors.White);
-                Text($"财力：{territory.Treasure}", Colors.White);
+                Text($"收入：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
 
                 rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
@@ -268,10 +283,10 @@ public partial class Game
                     && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
             {
                 SelectedHumanIndex = i;
+                World.NextPhase();
             }
 
-            if ((phaseType == BackEnd.PhaseType.SelectEnemyTerritory
-                   || phaseType == BackEnd.PhaseType.Mobilise) && SelectedHumanIndex != i)
+            if (visible && SelectedHumanIndex != i)
             {
                 var drawList = ImGui.GetWindowDrawList();
                 drawList.AddRectFilled(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
@@ -302,11 +317,27 @@ public partial class Game
     }
 
 
-    public static void Text(string text, Color color)
+    public static void Text(string text, Color color, int newLineCharCount = 0)
     {
+        var textToDisplay = text;
+        var remainingText = string.Empty;
+        if (newLineCharCount > 0)
+        {
+            textToDisplay = text.Substr(0, newLineCharCount);
+            if (text.Length > newLineCharCount)
+            {
+                remainingText = text.Substr(newLineCharCount, text.Length);
+            }
+        }
+
         ImGui.PushStyleColor(ImGuiCol.Text, color.ToVector4());
-        ImGui.Text(text);
+        ImGui.Text(textToDisplay);
         ImGui.PopStyleColor();
+
+        if (remainingText.Length > 0)
+        {
+            Text(remainingText, color, newLineCharCount);
+        }
     }
 
     public static void Text(params (string, Color)[] texts)

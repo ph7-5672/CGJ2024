@@ -3,7 +3,7 @@
 namespace Cgj_2024.code.BackEnd
 {
 	/// <summary>
-	/// 01 领地总财宝最多
+	/// 01 领地总收入最多
 	/// </summary>
 	public class Desire01 : Desire
 	{
@@ -31,5 +31,7 @@ namespace Cgj_2024.code.BackEnd
 
 			return result;
 		}
+
+		public override string Description => "总收入最多";
 	}
 }

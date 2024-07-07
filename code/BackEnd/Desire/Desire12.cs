@@ -30,5 +30,7 @@ namespace Cgj_2024.code.BackEnd
 
 			return result;
 		}
+
+		public override string Description => "上回合其他部落被攻";
 	}
 }

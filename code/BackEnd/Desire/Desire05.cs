@@ -28,5 +28,7 @@
 
 			return result;
 		}
+
+		public override string Description => "上回合被赏赐";
 	}
 }

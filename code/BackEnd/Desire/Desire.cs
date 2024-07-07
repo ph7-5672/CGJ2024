@@ -7,7 +7,8 @@ namespace Cgj_2024.code.BackEnd
 	{
 		public static Desire New(Tribe tribe)
 		{
-			var maker = makers[(int)(tribe.World.Rng.Randi() % makers.Count)];
+			var rand = new Random();
+			var maker = makers[rand.Next(makers.Count)];
 			var d = maker(tribe);
 			return d;
 		}
@@ -35,5 +36,6 @@ namespace Cgj_2024.code.BackEnd
 
 		public virtual bool IsSatisefied() => false;
 		public Tribe Tribe { get; }
+		public abstract string Description { get; }
 	}
 }

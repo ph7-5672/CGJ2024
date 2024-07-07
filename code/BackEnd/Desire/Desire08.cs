@@ -30,5 +30,7 @@
 
 			return result;
 		}
+
+		public override string Description => "上回合进攻成功或未动员";
 	}
 }

@@ -31,5 +31,7 @@
 
 			return result;
 		}
+
+		public override string Description => "上回合未丢领地";
 	}
 }

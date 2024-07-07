@@ -37,5 +37,7 @@ namespace Cgj_2024.code.BackEnd
 
 			return result;
 		}
+
+		public override string Description => $"领地数超过{compareTargetTribe.Name}部落";
 	}
 }

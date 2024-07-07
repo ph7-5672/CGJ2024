@@ -49,8 +49,6 @@ namespace Cgj_2024.code.BackEnd
 
                 usedHumanLordNames.Add(Name);
             }
-
-            GD.Print(Name);
         }
 
         string GenerateRandomGoblinTribeName()
@@ -60,7 +58,7 @@ namespace Cgj_2024.code.BackEnd
 		}
 
 		string[] goblinTribeNamePrefixes = ["毒", "恶", "尖", "大", "滑", "泥", "臭", "绿", "小", "邪"];
-        string[] goblinTribeNameSuffixes = ["骨", "锤", "狼", "棒", "蛇", "猪", "粪", "矛", "皮", "头"];
+        string[] goblinTribeNameSuffixes = ["骨", "锤", "狼", "棒", "蛇", "猪", "脚", "矛", "皮", "头"];
 
 		static HashSet<string> usedGoblinTribeNames = new HashSet<string>();
 
