@@ -6,7 +6,17 @@ public partial class TribeInfoItem : Button
 {
 	public override void _Ready()
 	{
-		Pressed += () => { GD.Print(Tribe.Name); };
+		isSelected = false;
+		Pressed += () =>
+		{
+			isSelected = !isSelected;
+			GD.Print(Tribe.Name);
+		};
+	}
+
+	public override void _Process(double delta)
+	{
+		goblinHead.Visible = isSelected;
 	}
 
 	public Tribe Tribe
@@ -21,6 +31,11 @@ public partial class TribeInfoItem : Button
 	}
 
 	Tribe tribe;
+
+	bool isSelected;
+
+	[Export]
+	TextureRect goblinHead;
 
 	[Export]
 	Label tribeNameLabel;
