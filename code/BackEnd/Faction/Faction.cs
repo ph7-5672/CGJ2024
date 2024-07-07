@@ -22,6 +22,15 @@ namespace Cgj_2024.code.BackEnd.Factions
         public virtual void EndTurn()
         {
             GD.Print($"{this} End Turn");
+
+			foreach (var tribe in Tribes)
+			{
+				if (tribe.Territory.Count == 0)
+				{
+					GD.Print($"因为没有领地，{tribe.Name} 已死亡");
+                    Tribes.Remove(tribe);
+                }
+			}
         }
 
 		public virtual void Initialze(int tribeCount, RandomNumberGenerator rng, Parameters parameters)
