@@ -1,6 +1,8 @@
 using Cgj_2024.code;
+using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Factions;
 using Godot;
+using System.Linq;
 
 public partial class Player_Reward_UI : Control
 {
@@ -8,6 +10,8 @@ public partial class Player_Reward_UI : Control
 	{
 		rewardTerritoryConfirmButton.Pressed += () =>
 		{
+			rewardedTribeForTerritory = rewardTerritoryTribeInfoList.GetChildren().OfType<TribeInfoItem>().First().Tribe;
+
 			var allItems = rewardTerritoryTribeInfoList.GetChildren();
 			foreach (var item in allItems)
 			{
@@ -23,7 +27,7 @@ public partial class Player_Reward_UI : Control
 
 		rewardTreasureConfirmButton.Pressed += () =>
 		{
-			Game.Instance.World.NextPhase();
+			Game.Instance.World.CurrentTurn.TerritoryRewaredTribeGoblin = rewardedTribeForTerritory;
 
 			var allTreasureItems = rewardTreasureTribeInfoList.GetChildren();
 			foreach (var item in allTreasureItems)
@@ -34,6 +38,8 @@ public partial class Player_Reward_UI : Control
 			isRewardingTerritory = true;
 			rewardTerritoryContainer.Visible = true;
 			rewardTreasureContainer.Visible = false;
+
+			Game.Instance.World.NextPhase();
 		};
 
 		isRewardingTerritory = true;
@@ -51,6 +57,8 @@ public partial class Player_Reward_UI : Control
 		{
 			FillTribeList();
 		}
+
+		rewardTerritoryConfirmButton.Disabled = rewardedTerritoryCount == 0;
 	}
 
 	void FillTribeList()
@@ -76,6 +84,8 @@ public partial class Player_Reward_UI : Control
 	public static int rewardedTerritoryCount = 0;
 
 	bool isRewardingTerritory;
+
+	Tribe rewardedTribeForTerritory;
 
 	[Export]
 	PackedScene tribeInfoItemForTerritory;
