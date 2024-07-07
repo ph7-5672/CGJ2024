@@ -30,19 +30,19 @@ namespace Cgj_2024.code.BackEnd
 
         public WorldState NextPhase()
         {
-            if (CurrentTurn.Next())
+            WorldState result = IsWin();
+            if (result == WorldState.Ongoing)
             {
-                WorldState result = IsWin();
-                if (result == WorldState.Ongoing)
+                if (CurrentTurn.Next())
                 {
                     CurrentTurn.End();
                     LastTurn = CurrentTurn;
                     CurrentTurn = new Turn(this);
                     CurrentTurn.Begin();
                 }
-                return result;
             }
-            return WorldState.Ongoing;
+            
+            return result;
         }
 
         public WorldState IsWin()
