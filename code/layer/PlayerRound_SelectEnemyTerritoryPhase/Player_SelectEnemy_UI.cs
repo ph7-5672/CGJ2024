@@ -14,7 +14,13 @@ public partial class Player_SelectEnemy_UI : Control
 
     public override void _Ready()
     {
-        confirmButton.Pressed += Game.Instance.World.NextPhase;
+        confirmButton.Pressed +=
+            () =>
+            {
+                CurrentPhase.SeletecedTerritory = Game.Instance.SelectedHumanTerritory;
+                Game.Instance.World.NextPhase();
+            };
+            
     }
 
     public override void _Process(double delta)
@@ -23,4 +29,5 @@ public partial class Player_SelectEnemy_UI : Control
         Visible = Game.Instance.World.CurrentPhase is SelectTerritoryPhase && Game.Instance.World.CurrentControl is Goblin;
     }
 
+    SelectTerritoryPhase CurrentPhase => Game.Instance.World.CurrentPhase as SelectTerritoryPhase;
 }
