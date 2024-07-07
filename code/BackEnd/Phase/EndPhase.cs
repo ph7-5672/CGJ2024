@@ -20,6 +20,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             {
                 SplitTribe(World.Human.Tribes);
             }
+            World.NextPhase();
         }
 
         public override void End()
