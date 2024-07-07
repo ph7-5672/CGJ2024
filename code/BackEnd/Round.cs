@@ -73,7 +73,7 @@ namespace Cgj_2024.code.BackEnd
         public IList<Tribe> PlayerMobilizedTribes { get; set; } = new List<Tribe>();
         public IList<Tribe> AIMobilizedTribes { get; set; } = new List<Tribe>();
 
-        public PhaseType PhaseType { get; private set; }
+        public PhaseType PhaseType { get; set; }
         public RoundPhase CurrentPhase { get; private set; }
     }
 
@@ -85,5 +85,7 @@ namespace Cgj_2024.code.BackEnd
         Settle,
         Reward,
         End,
+        Win,
+        Lose,
     }
 }

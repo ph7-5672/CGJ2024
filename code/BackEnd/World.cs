@@ -49,10 +49,12 @@ namespace Cgj_2024.code.BackEnd
         {
             if (Goblin.Tribes.Count == 0)
             {
+                CurrentTurn.CurrentRound.PhaseType = PhaseType.Lose;
                 return WorldState.Lose;
             }
             else if (Human.Tribes.Count == 0)
             {
+                CurrentTurn.CurrentRound.PhaseType = PhaseType.Win;
                 return WorldState.Win;
             }
             return WorldState.Ongoing;
