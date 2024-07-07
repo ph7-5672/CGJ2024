@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0eyyernfraec"]
+
+[ext_resource type="Texture2D" uid="uid://cwkahe3qfrn1w" path="res://textures/goblin/领地背景1.png" id="1_2p4qd"]
+[ext_resource type="Script" path="res://code/layer/TribeInfoItemForTreasure.cs" id="1_wjuxq"]
+[ext_resource type="Texture2D" uid="uid://c32ovwxxxkvq7" path="res://textures/button/加号.png" id="3_k23cg"]
+[ext_resource type="Texture2D" uid="uid://cvv30rwwpwvhk" path="res://textures/button/减号.png" id="4_glbg3"]
+
+[node name="TribeInfoItemForTreasure" type="Control" node_paths=PackedStringArray("treasureLabel", "addTreasure", "removeTreasure", "tribeNameLabel", "tribeDesiresLabel")]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1400.0
+offset_bottom = -1125.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wjuxq")
+treasureLabel = NodePath("TreasureLabel")
+addTreasure = NodePath("AddTreasureButton")
+removeTreasure = NodePath("RemoveTreasureButton")
+tribeNameLabel = NodePath("TextureRect/MarginContainer/VBoxContainer/TribeNameLabel")
+tribeDesiresLabel = NodePath("TextureRect/MarginContainer/VBoxContainer/TribeDesiresLabel")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2p4qd")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+
+[node name="TribeNameLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "部落A"
+vertical_alignment = 1
+
+[node name="TribeDesiresLabel" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "- 总收入最多"
+vertical_alignment = 1
+
+[node name="AddTreasureButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 3.0
+offset_right = 106.0
+offset_bottom = 30.0
+icon = ExtResource("3_k23cg")
+flat = true
+
+[node name="RemoveTreasureButton" type="Button" parent="."]
+offset_left = 105.0
+offset_top = 3.0
+offset_right = 131.0
+offset_bottom = 30.0
+icon = ExtResource("4_glbg3")
+flat = true
+
+[node name="TreasureLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -32.5
+offset_right = -10.0
+offset_bottom = -15.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0金币"
+horizontal_alignment = 2
