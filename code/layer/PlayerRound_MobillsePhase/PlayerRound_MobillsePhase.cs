@@ -30,7 +30,7 @@ public partial class PlayerRound_MobillsePhase : Control
         if (Visible)
         {
             GoblinTroopsLabel.Text = Game.Instance.SelectedGoblinTribes.Select(t => t.Troops).Sum().ToString();
-            HumanTroopsLabel.Text = Game.Instance.SelectedHumanTerritory.Troops.ToString();
+            HumanTroopsLabel.Text = Game.Instance.SelectedHumanTerritory.Tribe.Troops.ToString();
         }
     }
 
