@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=38 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://b1i3806xlky3f" path="res://textures/button/信息框.png" id="25_arbjc"]
 [ext_resource type="Texture2D" uid="uid://capgyjovtygfj" path="res://textures/button/失败图标.png" id="26_vq8gi"]
 [ext_resource type="Texture2D" uid="uid://cn31hir3qbxf" path="res://textures/button/失败文字.png" id="27_t3pnk"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_SettlePhase/PlayerRound_SettlePhase.cs" id="31_ujmog"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_MobillsePhase/PlayerRound_MobillsePhase.cs" id="32_ipdww"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
 
@@ -403,6 +405,113 @@ vertical_alignment = 1
 
 [node name="ConfirmButton" type="Button" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_ujmog")
+Confirm = NodePath("ConfirmButton")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -27.5
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -326.0
+offset_top = -160.0
+offset_right = 326.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Attacker" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Attacker"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Defender" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Defender"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_ipdww")
+Confirm = NodePath("ConfirmButton")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 25
