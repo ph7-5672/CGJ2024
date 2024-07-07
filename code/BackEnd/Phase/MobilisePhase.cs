@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Godot;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cgj_2024.code.BackEnd.Phase
@@ -38,12 +39,15 @@ namespace Cgj_2024.code.BackEnd.Phase
             tribes.Sort((t1, t2) => t1.Troops.CompareTo(t2.Troops));
             int tot = 0;
             for (int i = 0;
-                i < tribes.Count && tot < Turn.CurrentRound.TargetedTerritory.Troops;
+                i < tribes.Count && tot < Turn.CurrentRound.TargetedTerritory.Tribe.Troops;
                 i++)
             {
                 tot += tribes[i].Troops;
                 AIMobilizedTribes.Add(tribes[i]);
             }
+
+            var TargetedTerritory = Turn.CurrentRound.TargetedTerritory;
+            GD.Print($"AI 进攻{TargetedTerritory.Name}领地， 目标领地 部落：{TargetedTerritory.Tribe.Name}, 兵力：{TargetedTerritory.Tribe.Troops}， 人类兵力：{AIMobilizedTribes.Sum(t => t.Troops)}");
         }
 
         public List<Tribe> PlayerMobilizedTribes = [];

@@ -1,5 +1,7 @@
 using Cgj_2024.code;
+using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Factions;
+using Cgj_2024.code.BackEnd.Phase;
 using Godot;
 using System.Linq;
 
@@ -14,12 +16,12 @@ public partial class AI_Mobilise_UI : Control
 	{
 		var currentRound = Game.Instance.World.CurrentTurn.CurrentRound;
 		var phaseType = currentRound.PhaseType;
-		Visible = currentRound.CurrentContorl is Human && phaseType == Cgj_2024.code.BackEnd.PhaseType.Mobilise;
+		Visible = currentRound.CurrentContorl is Human && phaseType == PhaseType.Mobilise;
 
 		if (Visible)
 		{
-			attackerDetailsLabel.Text = $"兵力：{currentRound.AIMobilizedTribes.Sum(tribe => tribe.Troops)}";
-			defenderDetailsLabel.Text = $"领地：{currentRound.TargetedTerritory.Name}\n兵力：{currentRound.PlayerMobilizedTribes.Sum(tribe => tribe.Troops)}";
+			attackerDetailsLabel.Text = $"兵力：{CurrentPhase.AIMobilizedTribes.Sum(tribe => tribe.Troops)}";
+			defenderDetailsLabel.Text = $"领地：{Round.TargetedTerritory.Name}\n兵力：{Game.Instance.SelectedGoblinTribes.Sum(tribe => tribe.Troops)}";
 		}
 	}
 
@@ -31,4 +33,7 @@ public partial class AI_Mobilise_UI : Control
 
 	[Export]
 	Button confirmButton;
+
+	MobilisePhase CurrentPhase => Game.Instance.World.CurrentPhase as MobilisePhase;
+	Round Round => Game.Instance.World.CurrentTurn.AIRound;
 }
