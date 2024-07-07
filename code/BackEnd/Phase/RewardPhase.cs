@@ -50,14 +50,24 @@ namespace Cgj_2024.code.BackEnd.Phase
 
         void GiveTerritory(Tribe tribe, Territory territory)
         {
+            var prevTribe = territory.Tribe;
             if (tribe is null || territory is null) {
                 GD.Print($"本轮没有封赏！ 部落：{tribe?.Name} 领地:{territory?.Name}");
                 return;
             }
             GD.Print($"领地{territory.Name}从{territory.Tribe.Name}分给了{tribe.Name}");
+            
             territory.Tribe.Territory.Remove(territory);
             territory.Tribe = tribe;
             tribe.Territory.Add(territory);
+
+            GD.Print($"{prevTribe.Name} 领地：{GetTerritoryName(prevTribe)}");
+            GD.Print($"{tribe.Name} 领地：{GetTerritoryName(tribe)}");
+        }
+
+        string GetTerritoryName(Tribe tribe)
+        {
+            return string.Join(',', tribe.Territory.Select(t => t.Name).ToList());
         }
 
         void HandleDefence(bool win)
