@@ -31,11 +31,11 @@
 [ext_resource type="Texture2D" uid="uid://b1i3806xlky3f" path="res://textures/button/信息框.png" id="25_arbjc"]
 [ext_resource type="Texture2D" uid="uid://capgyjovtygfj" path="res://textures/button/失败图标.png" id="26_vq8gi"]
 [ext_resource type="Texture2D" uid="uid://cn31hir3qbxf" path="res://textures/button/失败文字.png" id="27_t3pnk"]
-[ext_resource type="PackedScene" path="res://scene/tribeInfoItemForTreasure.tscn" id="30_dy0j4"]
+[ext_resource type="PackedScene" uid="uid://c0eyyernfraec" path="res://scene/tribeInfoItemForTreasure.tscn" id="30_dy0j4"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_SettlePhase/PlayerRound_SettlePhase.cs" id="31_ujmog"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_MobillsePhase/PlayerRound_MobillsePhase.cs" id="32_ipdww"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_RewardPhase/Player_Reward_UI.cs" id="32_ppu77"]
-[ext_resource type="PackedScene" path="res://scene/tribeInfoItem.tscn" id="33_lp5dn"]
+[ext_resource type="PackedScene" uid="uid://d1sllv48ih2u2" path="res://scene/tribeInfoItem.tscn" id="33_lp5dn"]
 [ext_resource type="Texture2D" uid="uid://bg772ebjse0h3" path="res://textures/button/部落信息框.png" id="34_qfsjl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
