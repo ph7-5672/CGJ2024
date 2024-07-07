@@ -45,7 +45,7 @@ public partial class TribeInfoItem : Button
 
 	Tribe tribe;
 
-	bool isSelected;
+	public bool isSelected { get; private set; }
 
 	[Export]
 	TextureRect goblinHead;

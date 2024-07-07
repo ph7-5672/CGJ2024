@@ -10,7 +10,10 @@ public partial class Player_Reward_UI : Control
 	{
 		rewardTerritoryConfirmButton.Pressed += () =>
 		{
-			rewardedTribeForTerritory = rewardTerritoryTribeInfoList.GetChildren().OfType<TribeInfoItem>().First().Tribe;
+			rewardedTribeForTerritory = rewardTerritoryTribeInfoList.GetChildren()
+			.OfType<TribeInfoItem>()
+			.First(item => item.isSelected)
+			.Tribe;
 
 			var allItems = rewardTerritoryTribeInfoList.GetChildren();
 			foreach (var item in allItems)
@@ -33,7 +36,7 @@ public partial class Player_Reward_UI : Control
 		rewardTreasureConfirmButton.Pressed += () =>
 		{
 			Game.Instance.World.CurrentTurn.TerritoryRewaredTribeGoblin = rewardedTribeForTerritory;
-
+			GD.Print($"领地封赏给:{Game.Instance.World.CurrentTurn.TerritoryRewaredTribeGoblin.Name}");
 			var allTreasureItems = rewardTreasureTribeInfoList.GetChildren().OfType<TribeInfoItemForTreasure>();
 			foreach (var item in allTreasureItems)
 			{
