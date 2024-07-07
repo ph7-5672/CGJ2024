@@ -19,10 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://cyqaa3j0ja166" path="res://textures/background.jpg" id="16_ox671"]
 [ext_resource type="AudioStream" uid="uid://d3b6qmtpt4pie" path="res://sounds/background2.wav" id="17_h15om"]
 [ext_resource type="Texture2D" uid="uid://ca2rwtrmtr12y" path="res://textures/button/开战.png" id="18_5cokb"]
-[ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
-[ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
-[ext_resource type="Script" path="res://code/layer/CancelButton.cs" id="20_2a0ae"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_BeginPhase/Player_Begin_UI.cs" id="18_vvwxf"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_SelectEnemyTerritoryPhase/Player_SelectEnemy_UI.cs" id="21_756vt"]
 [ext_resource type="Texture2D" uid="uid://dc1emb235ixa0" path="res://textures/button/确认按钮.png" id="22_cq158"]
+[ext_resource type="Script" path="res://code/layer/AIRound_SelectTargetPhase/AI_SelectTarget_UI.cs" id="22_qq1e4"]
 [ext_resource type="Script" path="res://code/layer/AIRound_MobilisePhase/AI_Mobilise_UI.cs" id="22_ryvx0"]
 [ext_resource type="Texture2D" uid="uid://djfan3n6psaap" path="res://textures/button/顶栏.png" id="22_t18p0"]
 [ext_resource type="Script" path="res://code/layer/AIRound_SettlePhase/AI_Settle_UI.cs" id="22_uflg7"]
@@ -71,7 +71,8 @@ grow_vertical = 2
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("16_ox671")
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="PlayerRound_BeginPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("battleButton")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,8 +81,10 @@ offset_left = 492.0
 offset_right = -492.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("18_vvwxf")
+battleButton = NodePath("BattleButton")
 
-[node name="BattleButton" type="Button" parent="CanvasLayer/Control"]
+[node name="BattleButton" type="Button" parent="CanvasLayer/PlayerRound_BeginPhase"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -105,63 +108,8 @@ text = "准备战斗"
 icon = ExtResource("18_5cokb")
 flat = true
 icon_alignment = 1
-script = ExtResource("19_0nvsr")
 
-[node name="CancelButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -55.5
-offset_top = -32.0
-offset_right = 55.5
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
-icon = ExtResource("18_5cokb")
-flat = true
-icon_alignment = 1
-script = ExtResource("20_2a0ae")
-
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -55.5
-offset_top = -32.0
-offset_right = 55.5
-offset_bottom = 32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
-icon = ExtResource("18_5cokb")
-flat = true
-icon_alignment = 1
-script = ExtResource("20_2a0ae")
-
-[node name="TipsLabel" type="Label" parent="CanvasLayer/Control"]
+[node name="TipsLabel" type="Label" parent="CanvasLayer/PlayerRound_BeginPhase"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -172,10 +120,169 @@ offset_bottom = -432.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
-text = "请选择你的英雄"
+text = "你的回合
+"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("18_pdy4a")
+
+[node name="PlayerRound_SelectEnemyTerritoryPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton", "cancelButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 492.0
+offset_right = -492.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("21_756vt")
+confirmButton = NodePath("ConfirmButton")
+cancelButton = NodePath("CancelButton")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.5
+offset_top = -32.0
+offset_right = -32.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认
+"
+icon = ExtResource("18_5cokb")
+flat = true
+icon_alignment = 1
+
+[node name="CancelButton" type="Button" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.5
+offset_top = -32.0
+offset_right = 143.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "取消"
+icon = ExtResource("18_5cokb")
+flat = true
+icon_alignment = 1
+
+[node name="TipsLabel" type="Label" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -490.0
+offset_bottom = -432.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "请选择要进攻的人类领地
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AIRound_SelectTargetPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 494.0
+offset_right = -490.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("22_qq1e4")
+confirmButton = NodePath("CenterContainer/VBoxContainer/CenterContainer/ConfirmButton")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_SelectTargetPhase"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="HumanPanel" type="TextureRect" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HumanImage" type="TextureRect" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer/MarginContainer/HumanPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.5
+offset_top = -62.5
+offset_right = 50.5
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_36de7")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="DetailsPanel" type="TextureRect" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("25_arbjc")
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer/MarginContainer2/DetailsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -8.5
+offset_right = 64.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "人类正在策划进攻"
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/AIRound_SelectTargetPhase/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+icon = ExtResource("22_cq158")
+flat = true
 
 [node name="AIRound_MobilisePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("attackerDetailsLabel", "defenderDetailsLabel", "confirmButton")]
 visible = false
@@ -183,8 +290,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 492.0
-offset_right = -492.0
+offset_left = 494.0
+offset_right = -490.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("22_ryvx0")

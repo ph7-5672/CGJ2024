@@ -1,12 +1,14 @@
 ﻿/*
  * ImGui，负责UI显示。
  */
+using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Phase;
 using Godot;
 using Godot.Collections;
 using ImGuiGodot;
 using ImGuiNET;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cgj_2024.code;
 
@@ -40,9 +42,10 @@ public partial class Game
     [Export]
     Texture2D attackButtonTexture;
 
-    public System.Collections.Generic.Dictionary<int, bool> SelectedGoblinMap { get; private set; } = new();
+    public List<Tribe> SelectedGoblinTribes { get; private set; } = new();
 
-    public int SelectedHumanIndex { get; private set; } = -1;
+    public Territory SelectedHumanTerritory { get; private set; }
+
 
     bool mousePressedLastFrame;
 
@@ -160,22 +163,23 @@ public partial class Game
 
             if (phaseType == BackEnd.PhaseType.Mobilise)
             {
+                var contains = SelectedGoblinTribes.Contains(tribe);
+
                 if (tribe.CanBeMobilized 
                     && !Input.IsMouseButtonPressed(MouseButton.Left) && mousePressedLastFrame
                     && ImGui.IsMouseHoveringRect(tribeRect.Position.ToSystemNumerics(), tribeRect.Size.ToSystemNumerics() + tribeRect.Position.ToSystemNumerics()))
                 {
-                    if (SelectedGoblinMap.TryGetValue(i, out var selected))
+                    if (contains)
                     {
-                        selected = !selected;
-                        SelectedGoblinMap[i] = selected;
+                        SelectedGoblinTribes.Remove(tribe);
                     }
                     else
                     {
-                        SelectedGoblinMap.Add(i, true);
+                        SelectedGoblinTribes.Add(tribe);
                     }
                 }
 
-                if (!SelectedGoblinMap.TryGetValue(i, out var s) || !s)
+                if (!contains)
                 {
                     var drawList = ImGui.GetWindowDrawList();
                     drawList.AddRectFilled(tribeRect.Position.ToSystemNumerics(), tribeRect.Position.ToSystemNumerics() + tribeRect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
@@ -242,8 +246,8 @@ public partial class Game
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, System.Numerics.Vector2.Zero);
             var tribe = World.Human.Tribes[i];
             var title = humanTibreRowsBg[0];
-            var rect = Image(title, title.GetSize() * uiScale);
-            rect.Position = new Vector2(rect.Position.X, rect.Position.Y - ImGui.GetScrollY());
+            Image(title, title.GetSize() * uiScale);
+            
             ImGui.SameLine(20f, 0f);
             ImGui.BeginGroup();
             ImGui.Dummy(new System.Numerics.Vector2(0f, 23f));
@@ -252,19 +256,21 @@ public partial class Game
             for (int j = 0; j < tribe.Territory.Count; ++j)
             {
                 var territory = tribe.Territory[j];
-                float height;
+                Rect2 territoryRect;
                 if (j == tribe.Territory.Count - 1)
                 {
-                    height = Image(humanTibreRowsBg[3], title.GetSize() * uiScale).Size.Y;
+                    territoryRect = Image(humanTibreRowsBg[3], title.GetSize() * uiScale);
                 }
                 else if (j == 0)
                 {
-                    height = Image(humanTibreRowsBg[1], title.GetSize() * uiScale).Size.Y;
+                    territoryRect = Image(humanTibreRowsBg[1], title.GetSize() * uiScale);
                 }
                 else
                 {
-                    height = Image(humanTibreRowsBg[2], title.GetSize() * uiScale).Size.Y;
+                    territoryRect = Image(humanTibreRowsBg[2], title.GetSize() * uiScale);
                 }
+                territoryRect.Position = new Vector2(territoryRect.Position.X, territoryRect.Position.Y - ImGui.GetScrollY());
+
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
@@ -273,24 +279,26 @@ public partial class Game
                 Text($"收入：{territory.Treasure}", Colors.White);
                 ImGui.EndGroup();
 
-                rect.Size = new Vector2(rect.Size.X, rect.Size.Y + height);
+                if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory
+                    && Input.IsMouseButtonPressed(MouseButton.Left)
+                    && ImGui.IsMouseHoveringRect(territoryRect.Position.ToSystemNumerics(), territoryRect.Position.ToSystemNumerics() + territoryRect.Size.ToSystemNumerics()))
+                {
+                    SelectedHumanTerritory = territory;
+                }
+
+                if ((phaseType == BackEnd.PhaseType.SelectEnemyTerritory || phaseType == BackEnd.PhaseType.Mobilise) && SelectedHumanTerritory != territory)
+                {
+                    var drawList = ImGui.GetWindowDrawList();
+                    drawList.AddRectFilled(territoryRect.Position.ToSystemNumerics(), territoryRect.Position.ToSystemNumerics() + territoryRect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
+                }
+
             }
             ImGui.PopStyleVar();
             ImGui.Dummy(new System.Numerics.Vector2(0, 10f));
 
-            if (phaseType == BackEnd.PhaseType.SelectEnemyTerritory
-                    && Input.IsMouseButtonPressed(MouseButton.Left)
-                    && ImGui.IsMouseHoveringRect(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics()))
-            {
-                SelectedHumanIndex = i;
-                World.NextPhase();
-            }
+            
 
-            if (visible && SelectedHumanIndex != i)
-            {
-                var drawList = ImGui.GetWindowDrawList();
-                drawList.AddRectFilled(rect.Position.ToSystemNumerics(), rect.Position.ToSystemNumerics() + rect.Size.ToSystemNumerics(), new Color(0, 0, 0, 0.5f).ToArgb32());
-            }
+
         }
 
         ImGui.End();
