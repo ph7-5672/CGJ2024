@@ -1,4 +1,5 @@
 ﻿using Cgj_2024.code.BackEnd.Factions;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                 if (tribe.Territory.Count == 1)
                 {
                     World.Human.Tribes.Remove(tribe);
+                    GD.Print($"由于失去最后一块领地{territory.Name}， {tribe}灭亡了");
                 }
             }
         }
@@ -50,6 +52,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                 if(tribe.Territory.Count == 1)
                 {
                     World.Goblin.Tribes.Remove(tribe);
+                    GD.Print($"由于失去最后一块领地{territory.Name}， {tribe}灭亡了");
                 }
             }
         }
