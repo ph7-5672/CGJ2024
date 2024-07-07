@@ -43,7 +43,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                     var territory = t.Territory;
                     t.Territory = territory[..newSize];
                     newTribe.Territory = territory[newSize..];
-                    GD.Print($"分裂部落{t.Name} 领地:{string.Join(',', t.Territory.ToList())}, 新部落:{newTribe.Name} 领地:{string.Join(',', newTribe.Territory.ToList())}");
+                    GD.Print($"分裂部落{t.Name} 领地:{GetTerritoryName(t)}, 新部落:{newTribe.Name} 领地:{GetTerritoryName(newTribe)}");
                     break;
                 }
             }
@@ -51,6 +51,11 @@ namespace Cgj_2024.code.BackEnd.Phase
             {
                 list.Add(newTribe);
             }
+        }
+
+        string GetTerritoryName(Tribe tribe)
+        {
+            return string.Join(',', tribe.Territory.Select(t => t.Name).ToList());
         }
     }
 }
