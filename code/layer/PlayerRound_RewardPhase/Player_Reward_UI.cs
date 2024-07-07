@@ -22,6 +22,11 @@ public partial class Player_Reward_UI : Control
 			rewardTerritoryContainer.Visible = false;
 			rewardTreasureContainer.Visible = true;
 
+			rewardedTerritoryCount = 0;
+			totalTreasureForReward = Game.Instance.SelectedHumanTerritory.Treasure;
+
+			GD.Print(Game.Instance.SelectedHumanTerritory.Name, " ", $"可分配{totalTreasureForReward}财宝");
+
 			FillTribeList();
 		};
 
@@ -29,15 +34,22 @@ public partial class Player_Reward_UI : Control
 		{
 			Game.Instance.World.CurrentTurn.TerritoryRewaredTribeGoblin = rewardedTribeForTerritory;
 
-			var allTreasureItems = rewardTreasureTribeInfoList.GetChildren();
+			var allTreasureItems = rewardTreasureTribeInfoList.GetChildren().OfType<TribeInfoItemForTreasure>();
 			foreach (var item in allTreasureItems)
 			{
+				if (item.treasure > 0)
+				{
+					Game.Instance.World.CurrentTurn.TreasureRewaredTribes.Add(item.Tribe, item.treasure);
+				}
+
 				item.QueueFree();
 			}
 
 			isRewardingTerritory = true;
 			rewardTerritoryContainer.Visible = true;
 			rewardTreasureContainer.Visible = false;
+
+			totalTreasureForReward = 0;
 
 			Game.Instance.World.NextPhase();
 		};
@@ -51,7 +63,7 @@ public partial class Player_Reward_UI : Control
 		var phaseType = currentRound.PhaseType;
 
 		var previousVisible = Visible;
-		Visible = currentRound.CurrentContorl is Goblin && phaseType == Cgj_2024.code.BackEnd.PhaseType.Reward;
+		Visible = currentRound.CurrentContorl is Goblin && phaseType == PhaseType.Reward;
 
 		if (!previousVisible && Visible)
 		{
@@ -59,6 +71,7 @@ public partial class Player_Reward_UI : Control
 		}
 
 		rewardTerritoryConfirmButton.Disabled = rewardedTerritoryCount == 0;
+		rewardTreasureConfirmButton.Disabled = totalTreasureForReward > 0;
 	}
 
 	void FillTribeList()
@@ -82,6 +95,7 @@ public partial class Player_Reward_UI : Control
 	}
 
 	public static int rewardedTerritoryCount = 0;
+	public static int totalTreasureForReward = 0;
 
 	bool isRewardingTerritory;
 
