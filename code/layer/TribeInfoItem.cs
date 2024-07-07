@@ -2,8 +2,13 @@ using Cgj_2024.code.BackEnd;
 using Godot;
 using System.Linq;
 
-public partial class TribeInfoItem : Control
+public partial class TribeInfoItem : Button
 {
+	public override void _Ready()
+	{
+		Pressed += () => { GD.Print(Tribe.Name); };
+	}
+
 	public Tribe Tribe
 	{
 		get => tribe;

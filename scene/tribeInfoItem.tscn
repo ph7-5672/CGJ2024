@@ -3,9 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cwkahe3qfrn1w" path="res://textures/goblin/领地背景1.png" id="1_3a7dl"]
 [ext_resource type="Script" path="res://code/layer/TribeInfoItem.cs" id="1_4k3f8"]
 
-[node name="TribeInfoItem" type="Control" node_paths=PackedStringArray("tribeNameLabel", "tribeDesiresLabel")]
+[node name="TribeInfoItem" type="Button" node_paths=PackedStringArray("tribeNameLabel", "tribeDesiresLabel")]
 custom_minimum_size = Vector2(0, 75)
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
