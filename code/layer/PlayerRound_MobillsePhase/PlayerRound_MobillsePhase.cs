@@ -3,6 +3,7 @@ using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Phase;
 using Godot;
 using System;
+using System.Linq;
 
 public partial class PlayerRound_MobillsePhase : Control
 {
@@ -14,6 +15,7 @@ public partial class PlayerRound_MobillsePhase : Control
 
     void ConfirmPressed()
     {
+        CurrentPhase.PlayerMobilizedTribes = [.. Game.Instance.SelectedGoblinTribes];
         Game.Instance.World.NextPhase();
     }
 
@@ -21,10 +23,15 @@ public partial class PlayerRound_MobillsePhase : Control
     {
         base._Process(delta);
         Visible = World.IsPlayerControl && World.CurrentPhase is MobilisePhase;
+        SetVisable(Visible);
+    }
 
-        
+    void SetVisable(bool visable)
+    {
+        Confirm.Visible = visable;
     }
 
     [Export] Button Confirm;
     World World => Game.Instance.World;
+    MobilisePhase CurrentPhase => World.CurrentPhase as MobilisePhase;
 }

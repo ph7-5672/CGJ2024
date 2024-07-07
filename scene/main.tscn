@@ -524,7 +524,7 @@ icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
 
-[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
+[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "LabelAttacker", "LabelDefender", "LabelResult")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -533,28 +533,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("31_ujmog")
 Confirm = NodePath("ConfirmButton")
-
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -27.5
-offset_bottom = 27.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
-icon = ExtResource("22_cq158")
-flat = true
-icon_alignment = 1
+LabelAttacker = NodePath("HSplitContainer/Attacker/Label")
+LabelDefender = NodePath("HSplitContainer/Defender/Label")
+LabelResult = NodePath("LabelResult")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
 layout_mode = 1
@@ -608,6 +589,45 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="LabelResult" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = 56.085
+offset_right = 0.5
+offset_bottom = 79.085
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
 [node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
 layout_mode = 3
 anchors_preset = 15
@@ -619,6 +639,18 @@ script = ExtResource("32_ipdww")
 Confirm = NodePath("ConfirmButton")
 
 [node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 25
@@ -626,7 +658,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
