@@ -11,7 +11,7 @@ public partial class Player_Begin_UI : Control
 
     public override void _Ready()
     {
-        battleButton.Pressed += Game.Instance.World.NextPhase;
+        battleButton.Pressed += () => { Game.Instance.World.NextPhase(); };
     }
 
     public override void _Process(double delta)

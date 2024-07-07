@@ -2,6 +2,8 @@
 using Cgj_2024.code.BackEnd.Phase;
 using Godot;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using static Godot.HttpRequest;
 
 namespace Cgj_2024.code.BackEnd
 {
@@ -26,15 +28,21 @@ namespace Cgj_2024.code.BackEnd
             CurrentTurn.Begin();
         }
 
-        public void NextPhase()
+        public WorldState NextPhase()
         {
             if (CurrentTurn.Next())
             {
-                CurrentTurn.End();
-                LastTurn = CurrentTurn;
-                CurrentTurn = new Turn(this);
-                CurrentTurn.Begin();
+                WorldState result = IsWin();
+                if (result == WorldState.Ongoing)
+                {
+                    CurrentTurn.End();
+                    LastTurn = CurrentTurn;
+                    CurrentTurn = new Turn(this);
+                    CurrentTurn.Begin();
+                }
+                return result;
             }
+            return WorldState.Ongoing;
         }
 
         public WorldState IsWin()

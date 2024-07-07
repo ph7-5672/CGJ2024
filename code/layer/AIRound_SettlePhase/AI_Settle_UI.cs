@@ -6,8 +6,8 @@ public partial class AI_Settle_UI : Control
 {
 	public override void _Ready()
 	{
-		confirmButton.Pressed += Game.Instance.World.NextPhase;
-	}
+		confirmButton.Pressed += () => { Game.Instance.World.NextPhase(); };
+    }
 
 	public override void _Process(double delta)
 	{
