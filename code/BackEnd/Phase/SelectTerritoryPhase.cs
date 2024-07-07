@@ -27,7 +27,8 @@ namespace Cgj_2024.code.BackEnd.Phase
             base.End();
 
             Turn.CurrentRound.TargetedTerritory = SeletecedTerritory;
-            GD.Print($"选择了\"{Turn.CurrentRound.TargetedTerritory?.Name}\"进攻");
+            var targeted = Turn.CurrentRound.TargetedTerritory;
+            GD.Print($"选择了\"{targeted?.Name}\"进攻 目标信息:{targeted?.Tribe.Name}, {targeted.Tribe.Troops}");
         }
 
         public Territory SeletecedTerritory { get; set; }

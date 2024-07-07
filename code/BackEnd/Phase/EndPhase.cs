@@ -19,7 +19,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             }
             else
             {
-                SplitTribe(World.Human.Tribes);
+                //SplitTribe(World.Human.Tribes);
             }
             World.NextPhase();
         }
