@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,7 @@ namespace Cgj_2024.code.BackEnd.Phase
                     var territory = t.Territory;
                     t.Territory = territory[..newSize];
                     newTribe.Territory = territory[newSize..];
+                    GD.Print($"分裂部落{t.Name} 领地:{string.Join(',', t.Territory.ToList())}, 新部落:{newTribe.Name} 领地:{string.Join(',', newTribe.Territory.ToList())}");
                     break;
                 }
             }

@@ -47,6 +47,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             }
 
             var TargetedTerritory = Turn.CurrentRound.TargetedTerritory;
+            Turn.CurrentRound.AIMobilizedTribes = AIMobilizedTribes;
             GD.Print($"AI 进攻{TargetedTerritory.Name}领地， 目标领地 部落：{TargetedTerritory.Tribe.Name}, 兵力：{TargetedTerritory.Tribe.Troops}， 人类兵力：{AIMobilizedTribes.Sum(t => t.Troops)}");
         }
 
