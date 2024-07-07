@@ -16,6 +16,7 @@ public partial class PlayerRound_MobillsePhase : Control
     void ConfirmPressed()
     {
         CurrentPhase.PlayerMobilizedTribes = [.. Game.Instance.SelectedGoblinTribes];
+        Game.Instance.SelectedGoblinTribes.Clear();
         Game.Instance.World.NextPhase();
     }
 
