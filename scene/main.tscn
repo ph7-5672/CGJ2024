@@ -732,6 +732,7 @@ offset_left = 492.0
 offset_right = -492.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("32_ppu77")
 tribeInfoItem = ExtResource("33_lp5dn")
 rewardTerritoryTribeInfoList = NodePath("RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer/VBoxContainer")
@@ -800,7 +801,6 @@ vertical_alignment = 1
 
 [node name="TribeList" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 0
 mouse_force_pass_scroll_events = false
 texture = ExtResource("34_qfsjl")
 stretch_mode = 5
