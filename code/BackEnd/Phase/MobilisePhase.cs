@@ -31,6 +31,8 @@ namespace Cgj_2024.code.BackEnd.Phase
             base.End();
             Turn.CurrentRound.AIMobilizedTribes = AIMobilizedTribes;
             Turn.CurrentRound.PlayerMobilizedTribes = PlayerMobilizedTribes;
+
+            PlayerMobilizedTribes.ForEach(t => t.IsMobilized = true);
         }
 
         void AIMobilize()

@@ -111,8 +111,22 @@ namespace Cgj_2024.code.BackEnd
 
         public int TotalRewardedTreasure { get; protected set; }
 
-        public bool IsMobilized { get; protected set; } = false;
-        public bool CanBeMobilized => !IsMobilized && DesireSatisefied;
+        public bool IsMobilized { get; set; } = false;
+        public bool CanBeMobilized {
+            get
+            {
+                if (!IsMobilized && DesireSatisefied)
+                {
+                    return true;
+                }
+
+                if (World.CurrentTurn.AIRound.TargetedTerritory is not null && Territory.Contains(World.CurrentTurn.AIRound.TargetedTerritory))
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
         public bool DesireSatisefied => Desires.Count == 0 || Desires.TrueForAll(d => d.IsSatisefied());
 
         public World World { get; protected set; }
