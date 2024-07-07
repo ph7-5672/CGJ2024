@@ -31,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://b1i3806xlky3f" path="res://textures/button/信息框.png" id="25_arbjc"]
 [ext_resource type="Texture2D" uid="uid://capgyjovtygfj" path="res://textures/button/失败图标.png" id="26_vq8gi"]
 [ext_resource type="Texture2D" uid="uid://cn31hir3qbxf" path="res://textures/button/失败文字.png" id="27_t3pnk"]
-[ext_resource type="PackedScene" uid="uid://c0eyyernfraec" path="res://scene/tribeInfoItemForTreasure.tscn" id="30_dy0j4"]
+[ext_resource type="PackedScene" path="res://scene/tribeInfoItemForTreasure.tscn" id="30_dy0j4"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_SettlePhase/PlayerRound_SettlePhase.cs" id="31_ujmog"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_MobillsePhase/PlayerRound_MobillsePhase.cs" id="32_ipdww"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_RewardPhase/Player_Reward_UI.cs" id="32_ppu77"]
@@ -182,7 +182,7 @@ text = "你的回合
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayerRound_SelectEnemyTerritoryPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton", "cancelButton")]
+[node name="PlayerRound_SelectEnemyTerritoryPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -194,7 +194,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("21_756vt")
 confirmButton = NodePath("ConfirmButton")
-cancelButton = NodePath("")
 
 [node name="Top" type="TextureRect" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
 layout_mode = 1
@@ -290,8 +289,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("32_ipdww")
 Confirm = NodePath("ConfirmButton")
-GoblinTroopsLabel = NodePath("MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer/DetailsLabel2")
-HumanTroopsLabel = NodePath("MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer/DetailsLabel2")
+GoblinTroopsLabel = NodePath("MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer/GoblinTroops")
+HumanTroopsLabel = NodePath("MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer/HumanTroops")
 
 [node name="TipsBg" type="TextureRect" parent="CanvasLayer/PlayerRound_MobillsePhase"]
 layout_mode = 1
@@ -400,7 +399,7 @@ text = "总兵力"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DetailsLabel2" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer"]
+[node name="GoblinTroops" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/DefenderDetails/DetailsPanel/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "10"
@@ -453,7 +452,7 @@ text = "总兵力"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DetailsLabel2" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer"]
+[node name="HumanTroops" type="Label" parent="CanvasLayer/PlayerRound_MobillsePhase/MarginContainer/HBoxContainer/AttackerDetails/DetailsPanel/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "10"
