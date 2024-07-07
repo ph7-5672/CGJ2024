@@ -148,7 +148,7 @@ public partial class Game
                 ImGui.SameLine(20f, 0f);
                 ImGui.BeginGroup();
                 ImGui.Dummy(new System.Numerics.Vector2(0f, 5f));
-                Text("领地", Colors.Black);
+                Text(territory.Name ?? "领地", Colors.Black);
                 Text($"兵力：{territory.Troops}", Colors.Black);
                 Text($"收入：{territory.Treasure}", Colors.Black);
                 ImGui.EndGroup();
