@@ -2,34 +2,24 @@ using Cgj_2024.code.BackEnd;
 using Godot;
 using System.Linq;
 
-public partial class TribeInfoItem : Button
+public partial class TribeInfoItemForTreasure : Control
 {
 	public override void _Ready()
 	{
-		isSelected = false;
-		Pressed += () =>
+		addTreasure.Pressed += () =>
 		{
-			if (!isSelected)
-			{
-				if (Player_Reward_UI.rewardedTerritoryCount == 0)
-				{
-					isSelected = true;
-					Player_Reward_UI.rewardedTerritoryCount += 1;
-				}
-			}
-			else
-			{
-				isSelected = false;
-				Player_Reward_UI.rewardedTerritoryCount -= 1;
-			}
+			treasure += 1;
+		};
 
-			GD.Print(Tribe.Name);
+		removeTreasure.Pressed += () =>
+		{
+			treasure -= 1;
 		};
 	}
 
 	public override void _Process(double delta)
 	{
-		goblinHead.Visible = isSelected;
+		treasureLabel.Text = $"{treasure}金币";
 	}
 
 	public Tribe Tribe
@@ -45,10 +35,16 @@ public partial class TribeInfoItem : Button
 
 	Tribe tribe;
 
-	bool isSelected;
+	int treasure;
 
 	[Export]
-	TextureRect goblinHead;
+	Label treasureLabel;
+
+	[Export]
+	Button addTreasure;
+
+	[Export]
+	Button removeTreasure;
 
 	[Export]
 	Label tribeNameLabel;
