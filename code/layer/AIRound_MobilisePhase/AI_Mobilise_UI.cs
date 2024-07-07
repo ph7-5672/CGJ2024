@@ -9,7 +9,13 @@ public partial class AI_Mobilise_UI : Control
 {
 	public override void _Ready()
 	{
-		confirmButton.Pressed += Game.Instance.World.NextPhase;
+		confirmButton.Pressed += () =>
+		{
+            CurrentPhase.PlayerMobilizedTribes = Game.Instance.SelectedGoblinTribes.ToList();
+
+            Game.Instance.SelectedGoblinTribes.Clear();
+            Game.Instance.World.NextPhase();
+		};
 	}
 
 	public override void _Process(double delta)

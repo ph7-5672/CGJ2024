@@ -18,6 +18,10 @@ namespace Cgj_2024.code.BackEnd.Phase
                 HandleDefence(Turn.CurrentRound.BattleResult);
                 World.NextPhase();
             }
+            else if (IsPlayerContorl && !Turn.CurrentRound.BattleResult)
+            {
+                World.NextPhase();
+            }
         }
 
         public override void End()
