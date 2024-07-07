@@ -15,7 +15,7 @@ public partial class Player_Reward_UI : Control
 			FillTribeList();
 		};
 
-		//rewardTreasureConfirmButton.Pressed += Game.Instance.World.NextPhase;
+		rewardTreasureConfirmButton.Pressed += Game.Instance.World.NextPhase;
 
 		isRewardingTerritory = true;
 	}

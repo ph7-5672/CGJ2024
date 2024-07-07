@@ -55,6 +55,10 @@ humanBg = ExtResource("10_jal8e")
 humanTibreRowsBg = Array[Texture2D]([ExtResource("11_dmcmo"), ExtResource("12_5cvut"), ExtResource("13_mea6x"), ExtResource("14_ho0an")])
 attackButtonTexture = ExtResource("15_0ll46")
 
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h15om")
+autoplay = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Parameters" type="Node" parent="."]
@@ -298,6 +302,355 @@ text = "请选择要进攻的人类领地
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_ipdww")
+Confirm = NodePath("ConfirmButton")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "LabelAttacker", "LabelDefender", "LabelResult")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_ujmog")
+Confirm = NodePath("ConfirmButton")
+LabelAttacker = NodePath("HSplitContainer/Attacker/Label")
+LabelDefender = NodePath("HSplitContainer/Defender/Label")
+LabelResult = NodePath("LabelResult")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -326.0
+offset_top = -160.0
+offset_right = 326.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Attacker" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Attacker"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Defender" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Defender"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LabelResult" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = 56.085
+offset_right = 0.5
+offset_bottom = 79.085
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="PlayerRound_RewardPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardTerritoryTribeInfoList", "rewardTreasureTribeInfoList", "rewardTerritoryContainer", "rewardTreasureContainer", "rewardTerritoryConfirmButton", "rewardTreasureConfirmButton")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 492.0
+offset_right = -492.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("32_ppu77")
+tribeInfoItem = ExtResource("33_lp5dn")
+rewardTerritoryTribeInfoList = NodePath("RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer/VBoxContainer")
+rewardTreasureTribeInfoList = NodePath("RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer/VBoxContainer")
+rewardTerritoryContainer = NodePath("RewardTerritoryControl")
+rewardTreasureContainer = NodePath("RewardTreasureControl")
+rewardTerritoryConfirmButton = NodePath("RewardTerritoryControl/VBoxContainer/ConfirmButton")
+rewardTreasureConfirmButton = NodePath("RewardTreasureControl/VBoxContainer/ConfirmButton")
+
+[node name="RewardTerritoryControl" type="CenterContainer" parent="CanvasLayer/PlayerRound_RewardPhase"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="BattleWin" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GoblinHead" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("23_36de7")
+
+[node name="ResultText" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("24_kfbhf")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="RewardInfo" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "要把领地赏赐给哪个部落？"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TribeList" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+texture = ExtResource("34_qfsjl")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="RewardTreasureControl" type="CenterContainer" parent="CanvasLayer/PlayerRound_RewardPhase"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="BattleWin" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer/BattleWin"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GoblinHead" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("23_36de7")
+
+[node name="ResultText" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("24_kfbhf")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="RewardInfo" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "要把领地赏赐给哪个部落？"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TribeList" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+texture = ExtResource("34_qfsjl")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
 
 [node name="AIRound_SelectTargetPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton")]
 visible = false
@@ -617,272 +970,3 @@ text = "确认"
 icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
-
-[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "LabelAttacker", "LabelDefender", "LabelResult")]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("31_ujmog")
-Confirm = NodePath("ConfirmButton")
-LabelAttacker = NodePath("HSplitContainer/Attacker/Label")
-LabelDefender = NodePath("HSplitContainer/Defender/Label")
-LabelResult = NodePath("LabelResult")
-
-[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -326.0
-offset_top = -160.0
-offset_right = 326.0
-offset_bottom = 160.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Attacker" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
-custom_minimum_size = Vector2(320, 320)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Attacker"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Defender" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
-custom_minimum_size = Vector2(320, 320)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Defender"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -23.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="LabelResult" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -0.5
-offset_top = 56.085
-offset_right = 0.5
-offset_bottom = 79.085
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -58.0
-offset_top = -27.5
-offset_right = 58.0
-offset_bottom = 27.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
-icon = ExtResource("22_cq158")
-flat = true
-icon_alignment = 1
-
-[node name="PlayerRound_RewardPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardTerritoryTribeInfoList", "rewardTerritoryContainer", "rewardTreasureContainer", "rewardTerritoryConfirmButton")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 492.0
-offset_right = -492.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("32_ppu77")
-tribeInfoItem = ExtResource("33_lp5dn")
-rewardTerritoryTribeInfoList = NodePath("RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer/VBoxContainer")
-rewardTerritoryContainer = NodePath("RewardTerritoryControl")
-rewardTreasureContainer = NodePath("RewardTreasureControl")
-rewardTerritoryConfirmButton = NodePath("RewardTerritoryControl/VBoxContainer/ConfirmButton")
-
-[node name="RewardTerritoryControl" type="CenterContainer" parent="CanvasLayer/PlayerRound_RewardPhase"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_bottom = 50
-
-[node name="BattleWin" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("22_t18p0")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -25.0
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GoblinHead" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("23_36de7")
-
-[node name="ResultText" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("24_kfbhf")
-
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_bottom = 50
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2"]
-layout_mode = 2
-
-[node name="RewardInfo" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("22_t18p0")
-
-[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "要把领地赏赐给哪个部落？"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TribeList" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
-layout_mode = 2
-mouse_force_pass_scroll_events = false
-texture = ExtResource("34_qfsjl")
-stretch_mode = 5
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 7.0
-offset_right = -18.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_force_pass_scroll_events = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer/TribeList/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "确认"
-icon = ExtResource("22_cq158")
-flat = true
-icon_alignment = 1
-
-[node name="RewardTreasureControl" type="CenterContainer" parent="CanvasLayer/PlayerRound_RewardPhase"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl"]
-layout_mode = 2
-
-[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("32_ipdww")
-Confirm = NodePath("ConfirmButton")
-
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -58.0
-offset_top = -27.5
-offset_right = 58.0
-offset_bottom = 27.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-icon = ExtResource("22_cq158")
-flat = true
-icon_alignment = 1
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("17_h15om")
-autoplay = true
