@@ -39,15 +39,16 @@ public partial class Player_Reward_UI : Control
 		var allGoblinTribes = Game.Instance.World.Goblin.Tribes;
 		foreach (var tribe in allGoblinTribes)
 		{
-			var infoItem = tribeInfoItem.Instantiate() as TribeInfoItem;
-			infoItem.Tribe = tribe;
-
 			if (isRewardingTerritory)
 			{
+				var infoItem = tribeInfoItemForTerritory.Instantiate() as TribeInfoItem;
+				infoItem.Tribe = tribe;
 				rewardTerritoryTribeInfoList.AddChild(infoItem);
 			}
 			else
 			{
+				var infoItem = tribeInfoItemForTreasure.Instantiate() as TribeInfoItem;
+				infoItem.Tribe = tribe;
 				rewardTreasureTribeInfoList.AddChild(infoItem);
 			}
 		}
@@ -56,7 +57,10 @@ public partial class Player_Reward_UI : Control
 	bool isRewardingTerritory;
 
 	[Export]
-	PackedScene tribeInfoItem;
+	PackedScene tribeInfoItemForTerritory;
+
+	[Export]
+	PackedScene tribeInfoItemForTreasure;
 
 	[Export]
 	VBoxContainer rewardTerritoryTribeInfoList;
