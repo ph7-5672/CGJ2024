@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=35 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -22,6 +22,14 @@
 [ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
 [ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
 [ext_resource type="Script" path="res://code/layer/CancelButton.cs" id="20_2a0ae"]
+[ext_resource type="Texture2D" uid="uid://dc1emb235ixa0" path="res://textures/button/确认按钮.png" id="22_cq158"]
+[ext_resource type="Texture2D" uid="uid://djfan3n6psaap" path="res://textures/button/顶栏.png" id="22_t18p0"]
+[ext_resource type="Script" path="res://code/layer/AIRound_SettlePhase/AI_Settle_UI.cs" id="22_uflg7"]
+[ext_resource type="Texture2D" uid="uid://c0g7sls1w0drr" path="res://textures/button/胜利图标.png" id="23_36de7"]
+[ext_resource type="Texture2D" uid="uid://cm7flv1ul3tlm" path="res://textures/button/胜利文字.png" id="24_kfbhf"]
+[ext_resource type="Texture2D" uid="uid://b1i3806xlky3f" path="res://textures/button/信息框.png" id="25_arbjc"]
+[ext_resource type="Texture2D" uid="uid://capgyjovtygfj" path="res://textures/button/失败图标.png" id="26_vq8gi"]
+[ext_resource type="Texture2D" uid="uid://cn31hir3qbxf" path="res://textures/button/失败文字.png" id="27_t3pnk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejvjg"]
 
@@ -165,6 +173,121 @@ text = "请选择你的英雄"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("18_pdy4a")
+
+[node name="AIRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("battleWin", "battleLose", "detailsLabel", "confirmButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 494.0
+offset_right = -490.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("22_uflg7")
+battleWin = NodePath("CenterContainer/VBoxContainer/MarginContainer/BattleWin")
+battleLose = NodePath("CenterContainer/VBoxContainer/MarginContainer/BattleLose")
+detailsLabel = NodePath("CenterContainer/VBoxContainer/MarginContainer2/BattleResultDetails/DetailsLabel")
+confirmButton = NodePath("CenterContainer/VBoxContainer/ConfirmButton")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/AIRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="BattleWin" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleWin"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GoblinHead" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("23_36de7")
+
+[node name="ResultText" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleWin/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("24_kfbhf")
+
+[node name="BattleLose" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("22_t18p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleLose"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GoblinHead" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleLose/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("26_vq8gi")
+
+[node name="ResultText" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer/BattleLose/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("27_t3pnk")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="BattleResultDetails" type="TextureRect" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("25_arbjc")
+
+[node name="DetailsLabel" type="Label" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer/MarginContainer2/BattleResultDetails"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -8.5
+offset_right = 32.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "防守成功"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/AIRound_SettlePhase/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_h15om")
