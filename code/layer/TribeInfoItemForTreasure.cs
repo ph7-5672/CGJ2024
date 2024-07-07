@@ -8,12 +8,20 @@ public partial class TribeInfoItemForTreasure : Control
 	{
 		addTreasure.Pressed += () =>
 		{
-			treasure += 1;
+			if (Player_Reward_UI.totalTreasureForReward > 0)
+			{
+				Player_Reward_UI.totalTreasureForReward -= 1;
+				treasure += 1;
+			}
 		};
 
 		removeTreasure.Pressed += () =>
 		{
-			treasure -= 1;
+			if (treasure > 0)
+			{
+				treasure -= 1;
+				Player_Reward_UI.totalTreasureForReward += 1;
+			}
 		};
 	}
 
@@ -35,7 +43,7 @@ public partial class TribeInfoItemForTreasure : Control
 
 	Tribe tribe;
 
-	int treasure;
+	public int treasure;
 
 	[Export]
 	Label treasureLabel;
