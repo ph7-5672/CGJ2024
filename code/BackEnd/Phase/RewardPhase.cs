@@ -20,7 +20,7 @@ namespace Cgj_2024.code.BackEnd.Phase
 
         public override void End()
         {
-            if (IsPlayerContorl)
+            if (IsPlayerContorl && Turn.CurrentRound.BattleResult)
             {
                 // Todo: 解注释这行开启额外特性
                 // 封赏新领地后增加欲望
@@ -30,9 +30,23 @@ namespace Cgj_2024.code.BackEnd.Phase
                     {
                         tribe.RewardTreasure(treasure);
                     }
+                GiveTerritory(Turn.TerritoryRewaredTribeGoblin, Turn.CurrentRound.TargetedTerritory);
             }
+            else if (!IsPlayerContorl && !Turn.CurrentRound.BattleResult)
+            {
+                GiveTerritory(Turn.TerritoryRewaredTribeHuman, Turn.CurrentRound.TargetedTerritory);
+            }
+
+
             Turn.TreasureRewaredTribes = TreasureRewaredTribes;
             base.End();
+        }
+
+        void GiveTerritory(Tribe tribe, Territory territory)
+        {
+            territory.Tribe.Territory.Remove(territory);
+            territory.Tribe = tribe;
+            tribe.Territory.Add(territory);
         }
 
         void HandleDefence(bool win)

@@ -17,6 +17,7 @@ namespace Cgj_2024.code.BackEnd.Phase
             {
                 var t = World.Goblin.Territories;
                 SeletecedTerritory = t.ElementAt((int)(World.Rng.Randi() % t.Count()));
+                Turn.CurrentRound.TargetedTerritory = SeletecedTerritory;
             }
         }
 
