@@ -23,9 +23,11 @@ public partial class PlayerRound_MobillsePhase : Control
     public override void _Process(double delta)
     {
         base._Process(delta);
-        Visible = World.IsPlayerControl && World.CurrentPhase is MobilisePhase;
+        Visible = World.IsPlayerControl && World.CurrentPhase is MobilisePhase
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
         SetVisable(Visible);
-        Confirm.Disabled = Game.Instance.SelectedGoblinTribes.Count == 0;
+        //Confirm.Disabled = Game.Instance.SelectedGoblinTribes.Count == 0;
 
         if (Visible)
         {

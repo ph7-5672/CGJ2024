@@ -22,7 +22,9 @@ public partial class PlayerRound_SettlePhase : Control
     public override void _Process(double delta)
     {
         base._Process(delta);
-        Visible = World.IsPlayerControl && World.CurrentPhase is SettlePhase;
+        Visible = World.IsPlayerControl && World.CurrentPhase is SettlePhase
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
 
         if (Visible)
         {

@@ -23,9 +23,13 @@ public partial class AI_Mobilise_UI : Control
 	{
 		var currentRound = Game.Instance.World.CurrentTurn.CurrentRound;
 		var phaseType = currentRound.PhaseType;
-		Visible = currentRound.CurrentContorl is Human && phaseType == PhaseType.Mobilise;
+		Visible = currentRound.CurrentContorl is Human 
+			&& phaseType == PhaseType.Mobilise 
+			&& Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+			&& Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
+       
 
-		if (Visible)
+        if (Visible)
 		{
             var defenderTroops = Game.Instance.SelectedGoblinTribes.Select(t => t.Troops).Sum();
             attackerDetailsLabel.Text = $"兵力：{currentRound.AIMobilizedTribes.Sum(tribe => tribe.Troops)}";

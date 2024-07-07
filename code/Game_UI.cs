@@ -61,8 +61,10 @@ public partial class Game
     /// </summary>
     void GoblinTerritories_UI()
     {
-        var visible = World.CurrentPhase is BeginPhase
-                   || World.CurrentPhase is MobilisePhase;
+        var visible = (World.CurrentPhase is BeginPhase
+                   || World.CurrentPhase is MobilisePhase)
+                   && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+                    && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
 
 
         var pos = new System.Numerics.Vector2(10f, 10f);
@@ -210,9 +212,11 @@ public partial class Game
     /// </summary>
     void HumanTerritories_UI()
     {
-        var visible = World.CurrentPhase is BeginPhase
+        var visible = (World.CurrentPhase is BeginPhase
                    || World.CurrentPhase is SelectTerritoryPhase
-                   || World.CurrentPhase is MobilisePhase;
+                   || World.CurrentPhase is MobilisePhase)
+                   && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+                   && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
 
         var displaySize = DisplayServer.WindowGetSize();
         var offset = new System.Numerics.Vector2(10f, 10f);

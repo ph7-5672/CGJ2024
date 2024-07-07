@@ -1,5 +1,6 @@
 ﻿
 using Cgj_2024.code;
+using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Factions;
 using Cgj_2024.code.BackEnd.Phase;
 using Godot;
@@ -16,7 +17,9 @@ public partial class Player_Begin_UI : Control
 
     public override void _Process(double delta)
     {
-        Visible = Game.Instance.World.CurrentPhase is BeginPhase && Game.Instance.World.CurrentControl is Goblin;
+        Visible = Game.Instance.World.CurrentPhase is BeginPhase && Game.Instance.World.CurrentControl is Goblin
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
     }
 
 }

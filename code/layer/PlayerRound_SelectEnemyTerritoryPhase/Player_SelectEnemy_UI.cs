@@ -1,5 +1,6 @@
 ﻿
 using Cgj_2024.code;
+using Cgj_2024.code.BackEnd;
 using Cgj_2024.code.BackEnd.Factions;
 using Cgj_2024.code.BackEnd.Phase;
 using Godot;
@@ -26,7 +27,9 @@ public partial class Player_SelectEnemy_UI : Control
     public override void _Process(double delta)
     {
         confirmButton.Disabled = Game.Instance.SelectedHumanTerritory == null;
-        Visible = Game.Instance.World.CurrentPhase is SelectTerritoryPhase && Game.Instance.World.CurrentControl is Goblin;
+        Visible = Game.Instance.World.CurrentPhase is SelectTerritoryPhase && Game.Instance.World.CurrentControl is Goblin
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
     }
 
     SelectTerritoryPhase CurrentPhase => Game.Instance.World.CurrentPhase as SelectTerritoryPhase;

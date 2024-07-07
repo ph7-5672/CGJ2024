@@ -66,7 +66,9 @@ public partial class Player_Reward_UI : Control
 		var phaseType = currentRound.PhaseType;
 
 		var previousVisible = Visible;
-		Visible = currentRound.CurrentContorl is Goblin && phaseType == PhaseType.Reward;
+		Visible = currentRound.CurrentContorl is Goblin && phaseType == PhaseType.Reward
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Lose
+            && Game.Instance.World.CurrentTurn.CurrentRound.PhaseType != PhaseType.Win;
 
 		if (!previousVisible && Visible)
 		{
