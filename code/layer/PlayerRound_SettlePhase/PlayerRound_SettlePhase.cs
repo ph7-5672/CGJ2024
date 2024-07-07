@@ -47,7 +47,7 @@ public partial class PlayerRound_SettlePhase : Control
     [Export] Label LabelDefender;
     [Export] Label LabelResult;
 
-    static readonly string ResultWin = @$"我们胜利了！哦我是说，您胜利了。
+    string ResultWin => @$"我们胜利了！哦我是说，您胜利了。
 占领了{Game.Instance.SelectedHumanTerritory.Name}。
 兵力：{Game.Instance.SelectedHumanTerritory.Troops}
 收入：{Game.Instance.SelectedHumanTerritory.Treasure}";
