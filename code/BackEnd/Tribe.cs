@@ -49,8 +49,6 @@ namespace Cgj_2024.code.BackEnd
 
                 usedHumanLordNames.Add(Name);
             }
-
-            GD.Print(Name);
         }
 
         string GenerateRandomGoblinTribeName()
