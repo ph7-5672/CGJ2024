@@ -599,7 +599,7 @@ icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
 
-[node name="PlayerRound_RewardPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardTerritoryTribeInfoList", "rewardTreasureTribeInfoList", "rewardTerritoryContainer", "rewardTreasureContainer", "rewardTerritoryConfirmButton", "rewardTreasureConfirmButton")]
+[node name="PlayerRound_RewardPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardTerritoryTribeInfoList", "rewardTreasureTribeInfoList", "rewardTerritoryContainer", "rewardTreasureContainer", "rewardTerritoryConfirmButton", "rewardTreasureConfirmButton", "rewardTreasureTipsLabel")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -619,6 +619,7 @@ rewardTerritoryContainer = NodePath("RewardTerritoryControl")
 rewardTreasureContainer = NodePath("RewardTreasureControl")
 rewardTerritoryConfirmButton = NodePath("RewardTerritoryControl/VBoxContainer/ConfirmButton")
 rewardTreasureConfirmButton = NodePath("RewardTreasureControl/VBoxContainer/ConfirmButton")
+rewardTreasureTipsLabel = NodePath("RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo/RewardTreasureTips")
 
 [node name="RewardTerritoryControl" type="CenterContainer" parent="CanvasLayer/PlayerRound_RewardPhase"]
 layout_mode = 1
@@ -762,7 +763,7 @@ layout_mode = 2
 layout_mode = 2
 texture = ExtResource("22_t18p0")
 
-[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo"]
+[node name="RewardTreasureTips" type="Label" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl/VBoxContainer/MarginContainer2/VBoxContainer/RewardInfo"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

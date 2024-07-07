@@ -75,6 +75,11 @@ public partial class Player_Reward_UI : Control
 
 		rewardTerritoryConfirmButton.Disabled = rewardedTerritoryCount == 0;
 		rewardTreasureConfirmButton.Disabled = totalTreasureForReward > 0;
+
+		if (Visible)
+		{
+			rewardTreasureTipsLabel.Text = $"要把{totalTreasureForReward}个财宝赏赐给哪些部落？";
+		}
 	}
 
 	void FillTribeList()
@@ -127,4 +132,7 @@ public partial class Player_Reward_UI : Control
 
 	[Export]
 	Button rewardTreasureConfirmButton;
+
+	[Export]
+	Label rewardTreasureTipsLabel;
 }
