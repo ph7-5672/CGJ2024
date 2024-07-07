@@ -12,6 +12,7 @@ namespace Cgj_2024.code.BackEnd
         {
             World = world;
             Faction = faction;
+            GenerateName();
         }
 
         public void Initialize(RandomNumberGenerator rng, Parameters parameters)
@@ -28,24 +29,27 @@ namespace Cgj_2024.code.BackEnd
                 Territory.Add(territory);
                 territory.Tribe = this;
             }
+        }
 
+        void GenerateName()
+        {
             if (Faction is Goblin)
             {
                 Name = GenerateRandomGoblinTribeName();
-				while (usedGoblinTribeNames.Contains(Name))
-				{
-					Name = GenerateRandomGoblinTribeName();
-				}
+                while (usedGoblinTribeNames.Contains(Name))
+                {
+                    Name = GenerateRandomGoblinTribeName();
+                }
 
-				usedGoblinTribeNames.Add(Name);
-			}
+                usedGoblinTribeNames.Add(Name);
+            }
             else if (Faction is Human)
             {
                 Name = GenerateRandomHumanLordName();
                 while (usedHumanLordNames.Contains(Name))
                 {
-					Name = GenerateRandomHumanLordName();
-				}
+                    Name = GenerateRandomHumanLordName();
+                }
 
                 usedHumanLordNames.Add(Name);
             }
