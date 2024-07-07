@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://c43x58oyk5u80"]
+
+[ext_resource type="Texture2D" uid="uid://bk1kr2rg6revs" path="res://textures/gameTitle/开始页面背景.png" id="1_45wre"]
+[ext_resource type="Script" path="res://code/layer/GameTitle.cs" id="1_y46ex"]
+[ext_resource type="Texture2D" uid="uid://d04buoo1rfvyy" path="res://textures/gameTitle/游戏名_哥布林之王.png" id="2_grixu"]
+[ext_resource type="PackedScene" uid="uid://b7arsryq25r8d" path="res://scene/main.tscn" id="2_jlg52"]
+[ext_resource type="Texture2D" uid="uid://diqiappjot5as" path="res://textures/gameTitle/开始游戏.png" id="3_ppyok"]
+[ext_resource type="Texture2D" uid="uid://dblxl31wmdej8" path="res://textures/gameTitle/退出游戏.png" id="4_6tdaw"]
+[ext_resource type="Texture2D" uid="uid://cfdhs1bno6tyy" path="res://textures/gameTitle/开始游戏_选中.png" id="6_q2e8i"]
+[ext_resource type="Texture2D" uid="uid://bin5ol54p35x2" path="res://textures/gameTitle/退出游戏_选中.png" id="8_wrvoo"]
+
+[node name="GameTitle" type="Control" node_paths=PackedStringArray("startGameButton", "exitGameButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_y46ex")
+startGameButton = NodePath("VBoxContainer/MarginContainer2/CenterContainer/TextureButton")
+exitGameButton = NodePath("VBoxContainer/CenterContainer/TextureButton")
+gameScene = ExtResource("2_jlg52")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_45wre")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 200.0
+offset_right = 1000.0
+offset_bottom = 1200.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_bottom = 50
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_grixu")
+stretch_mode = 5
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainer2/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_ppyok")
+texture_hover = ExtResource("6_q2e8i")
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_6tdaw")
+texture_hover = ExtResource("8_wrvoo")
