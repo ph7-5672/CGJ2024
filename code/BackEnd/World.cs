@@ -21,8 +21,8 @@ namespace Cgj_2024.code.BackEnd
         {
             Rng.Seed = (ulong)parameters.Seed;
 
-            Goblin.Initialze(Rng.RandiRange(4, parameters.WorldSize), Rng, parameters);
-            Human.Initialze(Rng.RandiRange(4, parameters.WorldSize), Rng, parameters);
+            Goblin.Initialze(Rng.RandiRange(1, parameters.WorldSize), Rng, parameters);
+            Human.Initialze(Rng.RandiRange(10, parameters.WorldSize), Rng, parameters);
 
             CurrentTurn = new Turn(this);
             CurrentTurn.Begin();

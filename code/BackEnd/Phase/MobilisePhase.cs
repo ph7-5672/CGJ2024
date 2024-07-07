@@ -16,12 +16,6 @@ namespace Cgj_2024.code.BackEnd.Phase
             }
             else
             {
-                //debug
-                if (Turn.CurrentRound.TargetedTerritory is null)
-                {
-                    Turn.CurrentRound.TargetedTerritory = World.Human.Territories.First();
-                }
-
                 AIMobilizedTribes = [Turn.CurrentRound.TargetedTerritory.Tribe];
             }
         }

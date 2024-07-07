@@ -43,6 +43,8 @@ namespace Cgj_2024.code.BackEnd.Phase
                     var territory = t.Territory;
                     t.Territory = territory[..newSize];
                     newTribe.Territory = territory[newSize..];
+                    newTribe.Territory.ForEach(t=>t.Tribe = newTribe);
+
                     GD.Print($"分裂部落{t.Name} 领地:{GetTerritoryName(t)}, 新部落:{newTribe.Name} 领地:{GetTerritoryName(newTribe)}");
                     break;
                 }
