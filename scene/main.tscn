@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b7arsryq25r8d"]
+[gd_scene load_steps=40 format=3 uid="uid://b7arsryq25r8d"]
 
 [ext_resource type="Script" path="res://code/Game.cs" id="1_rkd1a"]
 [ext_resource type="Texture2D" uid="uid://b845u5eh165gb" path="res://textures/goblin/背景框.png" id="2_vlhxf"]
@@ -19,9 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://cyqaa3j0ja166" path="res://textures/background.jpg" id="16_ox671"]
 [ext_resource type="AudioStream" uid="uid://d3b6qmtpt4pie" path="res://sounds/background2.wav" id="17_h15om"]
 [ext_resource type="Texture2D" uid="uid://ca2rwtrmtr12y" path="res://textures/button/开战.png" id="18_5cokb"]
-[ext_resource type="Script" path="res://code/layer/TipsLabel.cs" id="18_pdy4a"]
-[ext_resource type="Script" path="res://code/layer/BattleButton.cs" id="19_0nvsr"]
-[ext_resource type="Script" path="res://code/layer/CancelButton.cs" id="20_2a0ae"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_BeginPhase/Player_Begin_UI.cs" id="18_vvwxf"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_SelectEnemyTerritoryPhase/Player_SelectEnemy_UI.cs" id="21_756vt"]
 [ext_resource type="Texture2D" uid="uid://dc1emb235ixa0" path="res://textures/button/确认按钮.png" id="22_cq158"]
 [ext_resource type="Script" path="res://code/layer/AIRound_SelectTargetPhase/AI_SelectTarget_UI.cs" id="22_qq1e4"]
 [ext_resource type="Script" path="res://code/layer/AIRound_MobilisePhase/AI_Mobilise_UI.cs" id="22_ryvx0"]
@@ -32,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://b1i3806xlky3f" path="res://textures/button/信息框.png" id="25_arbjc"]
 [ext_resource type="Texture2D" uid="uid://capgyjovtygfj" path="res://textures/button/失败图标.png" id="26_vq8gi"]
 [ext_resource type="Texture2D" uid="uid://cn31hir3qbxf" path="res://textures/button/失败文字.png" id="27_t3pnk"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_SettlePhase/PlayerRound_SettlePhase.cs" id="31_ujmog"]
+[ext_resource type="Script" path="res://code/layer/PlayerRound_MobillsePhase/PlayerRound_MobillsePhase.cs" id="32_ipdww"]
 [ext_resource type="Script" path="res://code/layer/PlayerRound_RewardPhase/Player_Reward_UI.cs" id="32_ppu77"]
 [ext_resource type="PackedScene" uid="uid://d1sllv48ih2u2" path="res://scene/tribeInfoItem.tscn" id="33_lp5dn"]
 
@@ -72,7 +73,8 @@ grow_vertical = 2
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("16_ox671")
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="PlayerRound_BeginPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("battleButton")]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,18 +83,50 @@ offset_left = 492.0
 offset_right = -492.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("18_vvwxf")
+battleButton = NodePath("BattleButton")
 
-[node name="BattleButton" type="Button" parent="CanvasLayer/Control"]
+[node name="Top" type="TextureRect" parent="CanvasLayer/PlayerRound_BeginPhase"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
+offset_left = -112.0
+offset_top = -229.5
+offset_right = 112.0
+offset_bottom = -154.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_t18p0")
+
+[node name="Avator" type="TextureRect" parent="CanvasLayer/PlayerRound_BeginPhase/Top"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.5
+offset_top = -62.0
+offset_right = 50.5
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_36de7")
+
+[node name="BattleButton" type="Button" parent="CanvasLayer/PlayerRound_BeginPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = 162.0
+offset_right = 56.0
+offset_bottom = 226.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -106,77 +140,163 @@ text = "准备战斗"
 icon = ExtResource("18_5cokb")
 flat = true
 icon_alignment = 1
-script = ExtResource("19_0nvsr")
 
-[node name="CancelButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
+[node name="TipsBg" type="TextureRect" parent="CanvasLayer/PlayerRound_BeginPhase"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.5
-offset_top = -32.0
-offset_right = 55.5
-offset_bottom = 32.0
+offset_left = -153.5
+offset_top = -108.0
+offset_right = 153.5
+offset_bottom = 108.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
-icon = ExtResource("18_5cokb")
-flat = true
-icon_alignment = 1
-script = ExtResource("20_2a0ae")
+texture = ExtResource("25_arbjc")
 
-[node name="ConfirmButton" type="Button" parent="CanvasLayer/Control"]
-visible = false
+[node name="TipsLabel" type="Label" parent="CanvasLayer/PlayerRound_BeginPhase/TipsBg"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -55.5
-offset_top = -32.0
-offset_right = 55.5
-offset_bottom = 32.0
+offset_left = -50.0
+offset_top = -29.0
+offset_right = 50.0
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 1
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
-text = "取消"
-icon = ExtResource("18_5cokb")
-flat = true
-icon_alignment = 1
-script = ExtResource("20_2a0ae")
-
-[node name="TipsLabel" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -490.0
-offset_bottom = -432.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 25
-text = "请选择你的英雄"
+text = "你的回合
+"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("18_pdy4a")
+
+[node name="PlayerRound_SelectEnemyTerritoryPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton", "cancelButton")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 492.0
+offset_right = -492.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("21_756vt")
+confirmButton = NodePath("ConfirmButton")
+cancelButton = NodePath("CancelButton")
+
+[node name="Top" type="TextureRect" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -229.5
+offset_right = 112.0
+offset_bottom = -154.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_t18p0")
+
+[node name="Avator" type="TextureRect" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase/Top"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.5
+offset_top = -62.0
+offset_right = 50.5
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("23_36de7")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = 164.0
+offset_right = -30.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
+[node name="CancelButton" type="Button" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.5
+offset_top = 164.0
+offset_right = 143.5
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "取消"
+icon = ExtResource("18_5cokb")
+flat = true
+icon_alignment = 1
+
+[node name="TipsBg" type="TextureRect" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.5
+offset_top = -108.0
+offset_right = 153.5
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("25_arbjc")
+
+[node name="TipsLabel" type="Label" parent="CanvasLayer/PlayerRound_SelectEnemyTerritoryPhase/TipsBg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 25
+text = "请选择要进攻的人类领地
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="AIRound_SelectTargetPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("confirmButton")]
 visible = false
@@ -497,6 +617,111 @@ icon = ExtResource("22_cq158")
 flat = true
 icon_alignment = 1
 
+[node name="PlayerRound_SettlePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm", "LabelAttacker", "LabelDefender", "LabelResult")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("31_ujmog")
+Confirm = NodePath("ConfirmButton")
+LabelAttacker = NodePath("HSplitContainer/Attacker/Label")
+LabelDefender = NodePath("HSplitContainer/Defender/Label")
+LabelResult = NodePath("LabelResult")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -326.0
+offset_top = -160.0
+offset_right = 326.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Attacker" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Attacker"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Defender" type="TextureRect" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase/HSplitContainer/Defender"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LabelResult" type="Label" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = 56.085
+offset_right = 0.5
+offset_bottom = 79.085
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_SettlePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+text = "确认"
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
+
 [node name="PlayerRound_RewardPhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("rewardTerritoryTribeInfoList", "rewardTerritoryContainer", "rewardTreasureContainer", "rewardTerritoryConfirmButton")]
 layout_mode = 3
 anchors_preset = 15
@@ -574,6 +799,8 @@ vertical_alignment = 1
 
 [node name="TribeList" type="TextureRect" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTerritoryControl/VBoxContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 0
+mouse_force_pass_scroll_events = false
 texture = ExtResource("2_vlhxf")
 stretch_mode = 5
 
@@ -620,6 +847,41 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PlayerRound_RewardPhase/RewardTreasureControl"]
 layout_mode = 2
+
+[node name="PlayerRound_MobillsePhase" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("Confirm")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("32_ipdww")
+Confirm = NodePath("ConfirmButton")
+
+[node name="ConfirmButton" type="Button" parent="CanvasLayer/PlayerRound_MobillsePhase"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -27.5
+offset_right = 58.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ejvjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6i7db")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gh8l4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wrcwc")
+icon = ExtResource("22_cq158")
+flat = true
+icon_alignment = 1
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_h15om")
